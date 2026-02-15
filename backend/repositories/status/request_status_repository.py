@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Real-time Status Updates
 
 from backend.models.status.request_status_model import RequestStatus
 from backend.app import db
@@ -10,11 +10,12 @@ class RequestStatusRepository:
         db.session.commit()
 
     @staticmethod
-    def get_by_request_id(request_id: int) -> RequestStatus:
-        return RequestStatus.query.filter_by(request_id=request_id).first()
+    def update(status: RequestStatus) -> None:
+        db.session.commit()
 
     @staticmethod
-    def get_by_user_id(user_id: int) -> list[RequestStatus]:
-        return RequestStatus.query.filter_by(user_id=user_id).all()
+    def find_by_request_id(request_id: int) -> list[RequestStatus]:
+        return RequestStatus.query.filter_by(request_id=request_id).order_by(RequestStatus.updated_at).all()
 
-# File 3: Request Status Service in services/status/request_status_service.py
+
+# File 3: Status Update Service in services/status/request_status_service.py
