@@ -1,12 +1,14 @@
-# Epic Title: Account Opening and Service Modifications
+# Epic Title: Streamline Account Opening Requests
 
 CREATE TABLE IF NOT EXISTS account_opening_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    request_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     account_type VARCHAR(50) NOT NULL,
-    status VARCHAR(50) NOT NULL DEFAULT 'pending',
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    submission_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    approved BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-# File 7: Update requirements.txt with Required Dependency
+
+# File 6: Update app.py to Register Account Opening Request Blueprint
