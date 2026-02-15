@@ -1,0 +1,30 @@
+# Epic Title: User Authentication and Security
+
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}
+    </div>
+    <div>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+    </div>
+    <div>
+        {{ form.token.label }}<br>
+        {{ form.token(size=6) }}
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 7: Update Main App to Register Authentication Controller in app.py
