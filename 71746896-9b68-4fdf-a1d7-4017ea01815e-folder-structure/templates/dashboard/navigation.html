@@ -1,24 +1,28 @@
-<!-- Epic Title: Consistent User Experience -->
+<!-- Epic Title: User-Friendly Interface -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation</title>
+    <title>Dashboard Navigation</title>
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
 </head>
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li><a href="/home">Home</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/settings">Settings</a></li>
-            <li><a href="/logout">Logout</a></li>
+            {% for item in navigation_items %}
+                <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+            {% endfor %}
         </ul>
     </nav>
     <div class="content">
-        <!-- Content dynamically loaded here based on user interaction -->
+        <h2>Essential Features</h2>
+        <ul class="feature-list">
+            {% for feature in essential_features %}
+                <li><a href="{{ feature.url }}">{{ feature.name }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>
