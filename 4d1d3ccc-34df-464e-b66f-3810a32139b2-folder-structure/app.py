@@ -1,10 +1,9 @@
-# Epic Title: Overview of Financial Activities
+# Epic Title: Customizable Widgets
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
 from dashboard.controllers.widget_controller import widget_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
-from dashboard.controllers.dashboard_summary_controller import dashboard_summary_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from flask_login import LoginManager
@@ -42,7 +41,6 @@ def shutdown_session(exception=None):
 app.register_blueprint(authentication_controller, url_prefix='/auth')
 app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
 app.register_blueprint(widget_controller, url_prefix='/dashboard')
-app.register_blueprint(dashboard_summary_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -50,4 +48,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt Update
+# File 6: Schema Definition for Widgets Table in database/11_create_widgets_table.sql
