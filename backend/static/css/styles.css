@@ -1,0 +1,90 @@
+# Epic Title: Responsive Design
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Desktop layout */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Tablet layout */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        margin: auto;
+        overflow: hidden;
+    }
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        margin: auto;
+        overflow: hidden;
+        padding: 10px;
+    }
+    nav ul {
+        display: none;
+    }
+    .menu-btn {
+        display: block;
+    }
+}
+
+.header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #0779e4 3px solid;
+}
+
+.header a,
+.header .menu-btn {
+    color: #fff;
+    text-decoration: none;
+}
+
+.header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+.header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header nav ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+.menu-btn {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.footer {
+    padding: 20px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
+
+
+# File 3: Base HTML Template with Responsive Meta Tags in backend/templates/base.html
