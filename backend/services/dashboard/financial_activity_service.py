@@ -1,17 +1,12 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Overview of Financial Activities
 
-from backend.models.dashboard.financial_activity_model import FinancialActivity
 from backend.repositories.dashboard.financial_activity_repository import FinancialActivityRepository
+from backend.models.dashboard.financial_activity_model import FinancialActivity
 
 class FinancialActivityService:
     @staticmethod
-    def add_financial_activity(user_id: int, activity_type: str, amount: float, date: DateTime, description: str = None) -> FinancialActivity:
-        financial_activity = FinancialActivity(user_id=user_id, activity_type=activity_type, amount=amount, date=date, description=description)
-        FinancialActivityRepository.save(financial_activity)
-        return financial_activity
+    def get_financial_summary(user_id: int) -> list:
+        return FinancialActivityRepository.find_by_user_id(user_id)
 
-    @staticmethod
-    def get_user_financial_activities(user_id: int) -> list[FinancialActivity]:
-        return FinancialActivityRepository.get_by_user_id(user_id)
 
-# File 4: Financial Summary Controller in controllers/dashboard/financial_summary_controller.py
+# File 4: Dashboard Controller Updated for Financial Summary in controllers/dashboard/dashboard_controller.py
