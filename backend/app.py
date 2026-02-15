@@ -1,4 +1,4 @@
-# Epic Title: Assign Permissions to Roles
+# Epic Title: Define User Roles
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
@@ -11,7 +11,6 @@ from sqlalchemy.orm import sessionmaker
 from flask_login import LoginManager
 from real_time import socketio, start_listener
 from accesscontrol.controllers.role_controller import role_controller
-from accesscontrol.controllers.permission_controller import permission_controller
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -20,7 +19,6 @@ app.register_blueprint(application_controller, url_prefix='/api')
 app.register_blueprint(document_controller, url_prefix='/api')
 app.register_blueprint(interaction_controller, url_prefix='/api')
 app.register_blueprint(role_controller, url_prefix='/api')
-app.register_blueprint(permission_controller, url_prefix='/api')
 
 register_blueprints(app)
 configure_cors(app)
@@ -52,4 +50,4 @@ if __name__ == '__main__':
     socketio.run(app, debug=True)
 
 
-# File 8: Schema Definition for Permissions and RolePermissions Tables in database/06_create_permissions_and_role_permissions_tables.sql
+# File 8: Schema Definition for Roles and UserRoles Tables in database/05_create_roles_and_user_roles_tables.sql
