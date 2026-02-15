@@ -14,20 +14,27 @@
     </header>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="#" id="home-link">Home</a></li>
+            <li><a href="#" id="profile-link">Profile</a></li>
+            <li><a href="#" id="settings-link">Settings</a></li>
+            <li><a href="#" id="logout-link">Logout</a></li>
         </ul>
     </nav>
     <main>
         <section>
             <h2>Welcome, {{ user.username }}</h2>
-            <p>This dashboard is designed for ease of use and intuitive navigation.</p>
+            <p>Explore the features of this user-friendly dashboard.</p>
+            <button onclick="showFeature('feature1')">Feature 1</button>
+            <button onclick="showFeature('feature2')">Feature 2</button>
         </section>
     </main>
     <footer>
         <p>&copy; 2023 My Company</p>
     </footer>
+    <script>
+        function showFeature(feature) {
+            alert('You selected ' + feature);
+        }
+    </script>
 </body>
 </html>
