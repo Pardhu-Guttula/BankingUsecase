@@ -1,6 +1,6 @@
-# Epic Title: Approval and Processing Workflows
+# Epic Title: Implement Adaptive Layouts
 
-from flask import Flask, send_from_directory, render_template, session
+from flask import Flask, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
@@ -23,6 +23,7 @@ def create_app():
         MAIL_PASSWORD='your-email-password',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
         STATIC_FOLDER='static',
+        TEMPLATES_FOLDER='templates',
         UPLOAD_FOLDER=os.path.join(os.getcwd(), 'backend/uploads')
     )
 
@@ -33,22 +34,18 @@ def create_app():
     mail.init_app(app)
 
     login_manager = LoginManager(app)
-    login_manager.login_view = "authentication_controller.login"
+    login_manager.login_view = "auth.login"
     login_manager.session_protection = "strong"
 
     from backend.controllers.access_control.role_controller import role_controller
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
-    from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
-    from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
+    from backend.routes.dashboard import dashboard
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
-    app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(service_modification_request_controller, url_prefix='/account')
-    app.register_blueprint(approval_workflow_controller, url_prefix='/approval')
+    app.register_blueprint(dashboard, url_prefix='')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -65,6 +62,10 @@ def create_app():
         if current_user.is_authenticated and not current_user.is_active:
             logout_user()
 
+    @app.route('/')
+    def home():
+        return render_template('base.html')
+
     with app.app_context():
         db.create_all()
 
@@ -77,4 +78,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: requirements.txt
+# File 6: requirements.txt
