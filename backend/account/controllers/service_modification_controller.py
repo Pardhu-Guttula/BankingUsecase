@@ -1,25 +1,27 @@
 # Epic Title: Account Opening and Service Modifications
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from backend.forms.service_modification_form import ServiceModificationForm
 from backend.account.services.service_modification_service import ServiceModificationService
 
 service_modification_controller = Blueprint('service_modification_controller', __name__)
 
-@service_modification_controller.route('/modify_services', methods=['GET', 'POST'])
+@service_modification_controller.route('/modify_service', methods=['GET', 'POST'])
 @login_required
-def modify_services():
+def modify_service():
     form = ServiceModificationForm()
     if form.validate_on_submit():
-        user_id = current_user.id
-        service_type = form.service_type.data
-        description = form.description.data
-        if ServiceModificationService.modify_service(user_id, service_type, description):
+        service_name = form.service_name.data
+        modification_type = form.modification_type.data
+        reason = form.reason.data
+        result = ServiceModificationService.modify_service(current_user.id, service_name, modification_type, reason)
+        if result:
             flash('Service modification request submitted successfully.', 'success')
+            return redirect(url_for('dashboard_controller.dashboard'))
         else:
-            flash('Failed to submit service modification request.', 'danger')
-        return redirect(url_for('dashboard_controller.dashboard'))
-    return render_template('service_modification.html', form=form)
+            flash('An error occurred while processing your request.', 'danger')
+    return render_template('modify_service.html', form=form)
 
-# File 4: Service Modification Model to Track Modification Requests in models/accounts/service_modification_model.py
+
+# File 3: Service Modification Service to Handle Business Logic in account/services/service_modification_service.py
