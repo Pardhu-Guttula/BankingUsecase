@@ -2,25 +2,22 @@
 
 from backend.models.authentication.user_model import User
 from backend.repositories.authentication.user_repository import UserRepository
-
+import bcrypt
 
 class UserService:
     @staticmethod
+    def hash_password(password: str) -> str:
+        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    @staticmethod
+    def verify_password(password: str, password_hash: str) -> bool:
+        return bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
+
+    @staticmethod
     def create_user(username: str, email: str, password: str) -> User:
-        user = User(username=username, email=email, password=password)
+        password_hash = UserService.hash_password(password)
+        user = User(username=username, email=email, password_hash=password_hash)
         UserRepository.save(user)
         return user
 
-    @staticmethod
-    def authenticate(username: str, password: str) -> User:
-        user = UserRepository.get_user_by_username(username)
-        if user and user.verify_password(password):
-            return user
-        return None
-
-    @staticmethod
-    def get_user_by_id(user_id: int) -> User:
-        return UserRepository.get_user_by_id(user_id)
-
-
-# File 4: Authentication Controller to Handle User Registration and Login in authentication/controllers/authentication_controller.py
+# File 4: User Controller in controllers/authentication/user_controller.py
