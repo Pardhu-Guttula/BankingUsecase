@@ -28,4 +28,4 @@ def get_email_notifications(user_id: int):
     return jsonify({'notifications': [notification.serialize() for notification in notifications]}), 200
 
 
-# File 5: Schema for Email Notifications Table in database/create_email_notifications_table.sql
+# File 5: Schema for Email Notifications Table in `database/create_email_notifications_table.sql`
