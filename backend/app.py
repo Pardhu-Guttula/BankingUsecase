@@ -1,4 +1,4 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Responsive Design
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -38,7 +38,8 @@ def create_app():
 
     from backend.authentication.controllers.authentication_controller import authentication_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.dashboard.widget_controller import widget_controller
+    from backend.dashboard.controllers.widget_controller import widget_controller
+    from backend.dashboard.routes.dashboard_route import dashboard_route
     from backend.account.controllers.opening.account_opening_controller import account_opening_controller
     from backend.account.controllers.modifications.service_modification_controller import service_modification_controller
     from backend.approval_workflow.controllers.approval_controller import approval_controller
@@ -57,10 +58,12 @@ def create_app():
     from backend.access_control.controllers.policy_controller import policy_controller
     from backend.notifications.controllers.in_app_notification_controller import in_app_notification_controller
     from backend.controllers.home_controller import home_controller
+    from backend.authentication.controllers.user_controller import user_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
     app.register_blueprint(widget_controller, url_prefix='/dashboard/widgets')
+    app.register_blueprint(dashboard_route, url_prefix='/dashboard')
     app.register_blueprint(account_opening_controller, url_prefix='/account')
     app.register_blueprint(service_modification_controller, url_prefix='/account')
     app.register_blueprint(approval_controller, url_prefix='/approval')
@@ -79,6 +82,7 @@ def create_app():
     app.register_blueprint(policy_controller, url_prefix='/policies')
     app.register_blueprint(in_app_notification_controller, url_prefix='/')
     app.register_blueprint(home_controller, url_prefix='/')
+    app.register_blueprint(user_controller, url_prefix='/user')
 
     @app.route('/static/<path:filename>')
     def static_files(filename):
