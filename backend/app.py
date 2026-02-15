@@ -45,7 +45,6 @@ def create_app():
     from backend.history.controllers.interaction_history_controller import interaction_history_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
-    from backend.account.controllers.incomplete_application_controller import incomplete_application_controller
     from backend.account.controllers.application_controller import application_controller
     from backend.integration.controllers.api_controller import api_controller
     from backend.integration.controllers.sync_controller import sync_controller
@@ -66,7 +65,6 @@ def create_app():
     app.register_blueprint(interaction_history_controller, url_prefix='/history')
     app.register_blueprint(interaction_controller, url_prefix='/history')
     app.register_blueprint(document_controller, url_prefix='/documents')
-    app.register_blueprint(incomplete_application_controller, url_prefix='/applications')
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
     app.register_blueprint(sync_controller, url_prefix='/sync')
@@ -101,4 +99,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Create Schema for Incomplete Applications in database/
+# File 7: Create Schema for Documents in database/
