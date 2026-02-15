@@ -1,0 +1,29 @@
+# Epic Title: Responsive Design
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Your Dashboard</h2>
+<p>Here you can view and manage all your accounts and services.</p>
+<div class="account-summary">
+    <h3>Accounts</h3>
+    <ul>
+        {% for account in accounts %}
+        <li>{{ account.account_number }} - {{ account.account_type }}: ${{ account.balance }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="service-requests">
+    <h3>Service Requests</h3>
+    <ul>
+        {% for request in service_requests %}
+        <li>{{ request.service_name }} - {{ request.status }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+
+# File 6: Update Dashboard Controller to Render Templates in backend/controllers/dashboard/dashboard_controller.py
