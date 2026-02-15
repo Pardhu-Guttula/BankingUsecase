@@ -1,8 +1,7 @@
-# Epic Title: Save and Resume Incomplete Applications
+# Epic Title: Document Upload Capability
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
-from interaction_history.controllers.application_controller import application_controller
 from interaction_history.controllers.document_controller import document_controller
 from interaction_history.controllers.interaction_controller import interaction_controller
 from sqlalchemy import create_engine
@@ -13,7 +12,6 @@ from real_time import socketio, start_listener
 app = Flask(__name__)
 app.config.from_object('config.Config')
 app.register_blueprint(auth_controller, url_prefix='/auth')
-app.register_blueprint(application_controller, url_prefix='/api')
 app.register_blueprint(document_controller, url_prefix='/api')
 app.register_blueprint(interaction_controller, url_prefix='/api')
 
@@ -44,4 +42,4 @@ if __name__ == '__main__':
     socketio.run(app, debug=True)
 
 
-# File 7: Schema Definition for Application Table in database/03_create_applications_table.sql
+# File 7: Schema Definition for Document Upload Table in database/02_create_documents_table.sql
