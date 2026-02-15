@@ -14,4 +14,4 @@ class SyncLogRepository:
         return SyncLog.query.all()
 
 
-# File 3: Data Sync Service to Handle Sync Mechanisms in services/core_banking/data_sync_service.py
+# File 6: requirements.txt Update
