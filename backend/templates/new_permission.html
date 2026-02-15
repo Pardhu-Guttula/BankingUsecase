@@ -1,0 +1,26 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Create New Permission{% endblock %}
+
+{% block content %}
+<h2>Create New Permission</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.name.label }}<br>
+        {{ form.name(size=20) }}
+    </div>
+    <div>
+        {{ form.description.label }}<br>
+        {{ form.description(rows=5) }}
+    </div>
+    <div>
+        <button type="submit">Create Permission</button>
+    </div>
+</form>
+{% endblock %}
+
+
+## Assign Permission Template in templates/assign_permission.html
