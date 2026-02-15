@@ -111,4 +111,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Schema for Email Notifications Table in database/create_email_notifications_table.sql
+# File 7: Schema for In-App Notifications Table in database/create_in_app_notifications_table.sql
