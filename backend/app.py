@@ -1,4 +1,4 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Create Secure User Sessions
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -71,4 +71,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema for Users Table in database/create_users_table.sql
+# File 4: requirements.txt (Updated)
