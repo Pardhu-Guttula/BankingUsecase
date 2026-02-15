@@ -1,9 +1,7 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
 from backend.app import db
-from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -14,21 +12,11 @@ class User(db.Model):
     email = Column(String(100), unique=True, nullable=False)
     is_2fa_enabled = Column(Boolean, default=False)
 
-    accounts = relationship('Account', back_populates='user')
-    widgets = relationship('Widget', back_populates='user')
-
-    def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
+    def __init__(self, username: str, password_hash: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
-        self.password_hash = self._generate_password_hash(password)
+        self.password_hash = password_hash
         self.email = email
         self.is_2fa_enabled = is_2fa_enabled
 
-    @staticmethod
-    def _generate_password_hash(password: str) -> str:
-        return generate_password_hash(password)
 
-    def verify_password(self, password: str) -> bool:
-        return check_password_hash(self.password_hash, password)
-
-
-# File 3: Widget Repository for CRUD Operations in repositories/dashboard/widget_repository.py
+# File 2: Two-Factor Authentication Model in models/authentication/two_factor_model.py
