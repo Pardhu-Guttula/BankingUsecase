@@ -91,4 +91,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Create Schema for Email Notifications in database/
+# File 7: Create Schema for Request Status in database/
