@@ -4,6 +4,7 @@ from datetime import datetime
 from backend.models.status.request_status_model import RequestStatus
 from backend.repositories.status.request_status_repository import RequestStatusRepository
 from backend.services.notifications.email_notification_service import EmailNotificationService
+from backend.services.notifications.in_app_notification_service import InAppNotificationService
 from backend.models.users.user_model import User
 from backend.app import db
 
@@ -27,14 +28,16 @@ class RequestStatusService:
             RequestStatusRepository.update_status(request_status)
             
             user = db.session.query(User).filter(User.id == request_status.user_id).one()
+            message = f"Your request with ID {request_id} has been updated to {status}."
             EmailNotificationService.send_email(
                 user_id=user.id,
                 email=user.email,
                 subject="Request Status Update",
-                content=f"Your request with ID {request_id} has been updated to {status}."
+                content=message
             )
+            InAppNotificationService.create_notification(user_id=user.id, message=message)
             
         return request_status
 
 
-# File 5: Real-time Status Controller Endpoint to Handle Status Updates in status/controllers/request_status_controller.py (Already Exists, Modified)
+# File 5: In-App Notification Controller Endpoint in notifications/controllers/in_app_notification_controller.py
