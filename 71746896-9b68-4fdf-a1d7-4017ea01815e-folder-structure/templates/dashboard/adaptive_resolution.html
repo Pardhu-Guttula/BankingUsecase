@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adaptive Resolution Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/adaptive_resolution_dashboard.css' %}">
+    <title>Adaptive Screen Resolutions</title>
+    <link rel="stylesheet" href="{% static 'css/adaptive_resolution.css' %}">
 </head>
 <body>
     <header>
-        <h1>Adaptive Resolution Dashboard</h1>
+        <h1>Adaptive Screen Resolutions Dashboard</h1>
     </header>
     <nav>
         <ul>
@@ -22,8 +22,8 @@
     </nav>
     <main>
         <section>
-            <h2>Welcome to the Adaptive Resolution Dashboard</h2>
-            <p>This interface adapts to various screen resolutions for optimal display clarity.</p>
+            <h2>Welcome, {{ user.username }}</h2>
+            <p>Enjoy an optimal display on any screen resolution.</p>
         </section>
     </main>
     <footer>
