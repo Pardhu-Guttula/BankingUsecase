@@ -1,4 +1,4 @@
-# Epic Title: Secure User Data
+# Epic Title: Role-Based Access Control
 
 import logging
 import os
@@ -11,7 +11,7 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Secure User Data
+    # Epic Title: Role-Based Access Control
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
