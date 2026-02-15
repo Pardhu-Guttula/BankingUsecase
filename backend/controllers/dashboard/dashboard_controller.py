@@ -3,7 +3,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from backend.services.dashboard.dashboard_service import DashboardService
-from backend.services.dashboard.widget_service import WidgetService
 
 dashboard_controller = Blueprint('dashboard_controller', __name__)
 
@@ -31,15 +30,5 @@ def get_account_transactions(account_id: int):
         "description": transaction.description
     } for transaction in transactions]), 200
 
-@dashboard_controller.route('/dashboard/widgets', methods=['GET'])
-@login_required
-def get_user_widgets():
-    widgets = WidgetService.get_widgets(current_user.id)
-    return jsonify([{
-        "id": widget.id,
-        "widget_type": widget.widget_type,
-        "widget_data": widget.widget_data
-    } for widget in widgets]), 200
 
-
-# File 7: Update Main App to Register Widget Controller in app.py
+# File 7: Update Main App to Register Dashboard Controller in app.py
