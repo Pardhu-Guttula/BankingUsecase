@@ -1,48 +1,40 @@
 # Epic Title: Real-time Status Updates and Notifications
 
-from backend.repositories.status.request_status_repository import RequestStatusRepository
+from datetime import datetime
 from backend.models.status.request_status_model import RequestStatus
+from backend.repositories.status.request_status_repository import RequestStatusRepository
 from backend.services.notifications.email_notification_service import EmailNotificationService
-from backend.models.authentication.user_model import User
+from backend.models.users.user_model import User
+from backend.app import db
 
 class RequestStatusService:
     @staticmethod
-    def create_status(request_id: int, status: str, user_id: int) -> RequestStatus:
-        request_status = RequestStatus(request_id=request_id, status=status, user_id=user_id)
+    def create_request_status(user_id: int, request_id: int, status: str) -> RequestStatus:
+        request_status = RequestStatus(user_id=user_id, request_id=request_id, status=status)
         RequestStatusRepository.save(request_status)
-        RequestStatusService.notify_user(request_status)
         return request_status
 
     @staticmethod
-    def update_status(request_id: int, status: str, user_id: int) -> RequestStatus:
-        request_status = RequestStatus.query.filter_by(request_id=request_id, user_id=user_id).first()
-        if request_status:
+    def get_request_status(request_id: int) -> RequestStatus:
+        return RequestStatusRepository.get_status_by_request_id(request_id)
+
+    @staticmethod
+    def update_request_status(request_id: int, status: str) -> RequestStatus:
+        request_status = RequestStatusRepository.get_status_by_request_id(request_id)
+        if request_status.status != status:
             request_status.status = status
-            RequestStatusRepository.update(request_status)
-            RequestStatusService.notify_user(request_status)
+            request_status.updated_at = datetime.utcnow()
+            RequestStatusRepository.update_status(request_status)
+            
+            user = db.session.query(User).filter(User.id == request_status.user_id).one()
+            EmailNotificationService.send_email(
+                user_id=user.id,
+                email=user.email,
+                subject="Request Status Update",
+                content=f"Your request with ID {request_id} has been updated to {status}."
+            )
+            
         return request_status
 
-    @staticmethod
-    def notify_user(request_status: RequestStatus) -> None:
-        user = User.query.get(request_status.user_id)
-        if user:
-            subject = f"Update on Request {request_status.request_id}"
-            content = f"Your request with ID {request_status.request_id} has a new status: {request_status.status}"
-            EmailNotificationService.create_notification(
-                request_id=request_status.request_id,
-                user_id=user.id,
-                email=user.email,
-                subject=subject,
-                content=content
-            )
-            email_notification = EmailNotificationService.create_notification(
-                request_id=request_status.request_id,
-                user_id=user.id,
-                email=user.email,
-                subject=subject,
-                content=content
-            )
-            EmailNotificationService.send_email(email_notification)
 
-
-# File 6: Update Main App to Initialize Flask-Mail in app.py
+# File 5: Real-time Status Controller Endpoint to Handle Status Updates in status/controllers/request_status_controller.py (Already Exists, Modified)
