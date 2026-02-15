@@ -1,87 +1,108 @@
-# Epic Title: Responsive Design
+# Epic Title: Implement Adaptive Layouts
 
-/* Base styles */
-body {
-    font-family: Arial, sans-serif;
+/* Basic reset for responsive design */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+/* Default body styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+/* Responsive layout */
 .container {
-    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px;
 }
 
-.header, .footer {
-    background-color: #f8f9fa;
-    padding: 10px 0;
+/* Adaptive columns */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+}
+
+.col {
+    flex: 1;
+    padding: 15px;
+    min-width: 300px;
+}
+
+/* Header styling */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
 }
 
-.menu {
+.header-logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Footer styling */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
-    padding: 10px 0;
-}
-
-.menu a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.menu a:hover {
-    text-decoration: underline;
-}
-
-.content {
     margin-top: 20px;
 }
 
-.card {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Navigation responsive styling */
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #444;
+    padding: 10px;
 }
 
-.card h3 {
-    margin-top: 0;
+.nav a {
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-    .container {
-        padding: 10px;
-    }
+.nav a:hover {
+    background: #555;
 }
 
-@media (max-width: 992px) {
-    .menu {
-        display: flex;
-        flex-direction: column;
-    }
-    .menu a {
+/* Responsive table design */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .nav a {
         display: block;
-        margin: 10px 0;
-    }
-    .card {
-        margin: 10px 0;
+        width: 100%;
     }
 }
 
-@media (max-width: 576px) {
-    .header, .footer {
-        padding: 5px 0;
-        font-size: 14px;
-    }
-    
-    .content {
-        margin-top: 10px;
+@media (max-width: 480px) {
+    .header-logo {
+        font-size: 20px;
     }
 }
 
-# File 2: Dashboard HTML Template with Responsive Layout in templates/dashboard.html
+@media (min-width: 769px) {
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+
+# File 2: Add Templates for Responsive Layout in templates/base.html
