@@ -21,4 +21,4 @@ class UserRepository:
     def find_by_id(user_id: int) -> User:
         return User.query.filter_by(id=user_id).first()
 
-# File 4: Authentication Controller in authentication/controllers/authentication_controller.py (Already exists, Modified)
+# File 3: Authentication Service for Handling Secure Credentials in services/authentication/authentication_service.py
