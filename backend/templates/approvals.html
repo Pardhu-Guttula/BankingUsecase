@@ -1,0 +1,74 @@
+# Epic Title: Account Opening and Service Modifications
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approvals</title>
+    <style>
+        .approval {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+    <script>
+        async function loadApprovals() {
+            const response = await fetch('/approvals');
+            const approvals = await response.json();
+            const approvalContainer = document.getElementById('approval-container');
+            approvalContainer.innerHTML = '';
+            approvals.forEach(approval => {
+                const approvalDiv = document.createElement('div');
+                approvalDiv.className = 'approval';
+                approvalDiv.innerHTML = `
+                    <h2>${approval.request_type}</h2>
+                    <p>Status: ${approval.status}</p>
+                    <p>Submitted at: ${approval.submitted_at}</p>
+                    <p>Reviewed at: ${approval.reviewed_at || 'Not yet reviewed'}</p>
+                    <p>Approved by: ${approval.approved_by || 'Not yet reviewed'}</p>
+                    <button onclick="approveRequest(${approval.id})">Approve</button>
+                    <button onclick="rejectRequest(${approval.id})">Reject</button>
+                `;
+                approvalContainer.appendChild(approvalDiv);
+            });
+        }
+
+        async function approveRequest(requestId) {
+            const response = await fetch(`/approve/${requestId}`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+            alert(result.message);
+            loadApprovals();
+        }
+
+        async function rejectRequest(requestId) {
+            const response = await fetch(`/reject/${requestId}`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+            alert(result.message);
+            loadApprovals();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadApprovals();
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/auth/logout">Logout</a>
+    </nav>
+    <div id="content">
+        <h1>Approvals</h1>
+        <div id="approval-container"></div>
+    </div>
+</body>
+</html>
+
+
+# File 6: Update Main App to Register Approval Controller Blueprint in app.py
