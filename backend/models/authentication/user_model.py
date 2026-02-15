@@ -23,7 +23,6 @@ class User(db.Model):
     email_notifications = relationship('EmailNotification', back_populates='user')
     in_app_notifications = relationship('InAppNotification', back_populates='user')
     interactions = relationship('InteractionHistory', back_populates='user')
-    incomplete_applications = relationship('IncompleteApplication', back_populates='user')
 
     def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
@@ -39,4 +38,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Incomplete Application Repository for CRUD Operations in repositories/account/incomplete_application_repository.py
+# File 3: Document Repository for CRUD Operations in repositories/documents/document_repository.py
