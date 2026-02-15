@@ -1,1 +1,1 @@
-# File 1: Configuration for Handling Separate Databases in core_integration/config.py
+# File 1: Data Synchronization Service for Core Banking Integration in core_integration/services/data_sync_service.py
