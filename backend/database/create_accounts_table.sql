@@ -1,4 +1,4 @@
-# Epic Title: Account Opening and Service Modifications
+# Epic Title: Personalized Dashboard
 
 CREATE TABLE IF NOT EXISTS accounts (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -8,6 +8,3 @@ CREATE TABLE IF NOT EXISTS accounts (
     balance INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-
-# File 8: Create Schema for Account Opening Form Table in database/
