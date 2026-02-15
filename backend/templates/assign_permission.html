@@ -1,0 +1,26 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Assign Permission to Role{% endblock %}
+
+{% block content %}
+<h2>Assign Permission to Role</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.roles.label }}<br>
+        {{ form.roles() }}
+    </div>
+    <div>
+        {{ form.permissions.label }}<br>
+        {{ form.permissions() }}
+    </div>
+    <div>
+        <button type="submit">Assign Permission</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 13: Update Main App to Register Permission Controller in app.py
