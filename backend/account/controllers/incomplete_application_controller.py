@@ -1,41 +1,38 @@
 # Epic Title: Interaction History and Documentation Upload
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from backend.services.account.incomplete_application_service import IncompleteApplicationService
 
 incomplete_application_controller = Blueprint('incomplete_application_controller', __name__)
 
-@incomplete_application_controller.route('/applications/save', methods=['POST'])
+@incomplete_application_controller.route('/applications/incomplete', methods=['POST'])
 @login_required
-def save_application():
-    data = request.json.get('data')
-    if not data:
-        return jsonify({"message": "No application data provided"}), 400
+def save_incomplete_application():
+    application_data = request.json.get('application_data')
+    if not application_data:
+        return jsonify({'message': 'No application data provided'}), 400
 
-    application = IncompleteApplicationService.save_application(current_user.id, data)
-    return jsonify({"message": "Application saved successfully", "application_id": application.id}), 201
+    incomplete_application = IncompleteApplicationService.save_incomplete_application(current_user.id, application_data)
+    return jsonify({
+        'id': incomplete_application.id,
+        'user_id': incomplete_application.user_id,
+        'application_data': incomplete_application.application_data,
+        'saved_at': incomplete_application.saved_at
+    }), 201
 
-@incomplete_application_controller.route('/applications/update/<int:application_id>', methods=['POST'])
+@incomplete_application_controller.route('/applications/incomplete', methods=['GET'])
 @login_required
-def update_application(application_id: int):
-    data = request.json.get('data')
-    if not data:
-        return jsonify({"message": "No application data provided"}), 400
-
-    application = IncompleteApplicationService.update_application(application_id, data)
-    return jsonify({"message": "Application updated successfully"}), 200
-
-@incomplete_application_controller.route('/applications/view', methods=['GET'])
-@login_required
-def view_applications():
-    applications = IncompleteApplicationService.get_user_applications(current_user.id)
-    applications_data = [{
-        "id": app.id,
-        "data": app.data,
-        "last_updated": app.last_updated
-    } for app in applications]
-    return jsonify(applications_data), 200
+def get_incomplete_application():
+    incomplete_application = IncompleteApplicationService.get_incomplete_application(current_user.id)
+    if incomplete_application:
+        return jsonify({
+            'id': incomplete_application.id,
+            'user_id': incomplete_application.user_id,
+            'application_data': incomplete_application.application_data,
+            'saved_at': incomplete_application.saved_at
+        })
+    return jsonify({'message': 'No incomplete application found'}), 404
 
 
-# File 6: Update Main App to Register Incomplete Application Controller in app.py
+# File 5: Update Main App to Register Incomplete Application Controller Blueprint in app.py (Already Exists, Modified)
