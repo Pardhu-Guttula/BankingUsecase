@@ -135,4 +135,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 8: Schema for Permissions Table in database/create_permissions_table.sql
+# File 8: Schema for Roles Table in database/create_roles_table.sql
