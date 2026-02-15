@@ -5,6 +5,7 @@ from flask_login import login_user, logout_user, current_user
 from datetime import datetime, timedelta
 from backend.auth.repositories.user_repository import UserRepository
 from backend.models.authentication.user_model import User
+from cryptography.fernet import Fernet
 
 class AuthenticationService:
     @staticmethod
@@ -18,7 +19,8 @@ class AuthenticationService:
     @staticmethod
     def verify_mfa_token(user: User, token: str) -> bool:
         if user.mfa_secret:
-            totp = pyotp.TOTP(user.mfa_secret)
+            decrypted_mfa_secret = user.decrypt_mfa_secret()
+            totp = pyotp.TOTP(decrypted_mfa_secret)
             return totp.verify(token)
         return False
 
@@ -48,4 +50,4 @@ class AuthenticationService:
         return False
 
 
-# File 4: Middleware to Check Session Expiry in middleware/session_middleware.py
+# File 4: Update Main App to Include Encryption Key Setup in app.py
