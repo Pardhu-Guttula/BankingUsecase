@@ -1,9 +1,12 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Manage Secure Storage of Credentials
 
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from backend.app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import os
+import base64
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -28,4 +31,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 2: User Repository in repositories/authentication/user_repository.py
+# File 2: Encryption Service in services/authentication/encryption_service.py
