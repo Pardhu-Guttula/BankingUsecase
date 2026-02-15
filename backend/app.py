@@ -3,12 +3,10 @@
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_mail import Mail
 from datetime import timedelta
 import os
 
 db = SQLAlchemy()
-mail = Mail()
 
 def create_app():
     app = Flask(__name__)
@@ -25,7 +23,6 @@ def create_app():
     )
 
     db.init_app(app)
-    mail.init_app(app)
 
     login_manager = LoginManager(app)
     login_manager.login_view = "auth_controller.login"
@@ -34,12 +31,10 @@ def create_app():
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
     from backend.status.controllers.status_controller import status_controller
-    from backend.notifications.controllers.notification_controller import notification_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
     app.register_blueprint(status_controller, url_prefix='/status')
-    app.register_blueprint(notification_controller, url_prefix='/notifications')
 
     @app.route('/')
     def home():
@@ -61,4 +56,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: requirements.txt Update
+# File 7: requirements.txt Update
