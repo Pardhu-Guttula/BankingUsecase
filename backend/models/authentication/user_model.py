@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Account Opening and Service Modifications
 
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
@@ -17,7 +17,6 @@ class User(db.Model):
     accounts = relationship('Account', back_populates='user')
     widgets = relationship('Widget', back_populates='user')
     service_modifications = relationship('ServiceModification', back_populates='user')
-    statuses = relationship('RequestStatus', back_populates='user')
     approvals = relationship('RequestApproval', back_populates='approver')
 
     def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
@@ -34,4 +33,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Status Repository for CRUD Operations in repositories/status/request_status_repository.py
+# File 3: Approval Workflow Repository for CRUD Operations in repositories/approval_workflow/approval_repository.py
