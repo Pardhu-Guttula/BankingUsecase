@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -33,7 +33,7 @@ def create_app():
     from backend.middleware.session_middleware import session_expiry_middleware
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
-    app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
+    app.register_blueprint(dashboard_controller, url_prefix='/api')
 
     session_expiry_middleware(app)
 
@@ -57,4 +57,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 5: requirements.txt Update
+# File 6: requirements.txt Update
