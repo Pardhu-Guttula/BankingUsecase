@@ -1,0 +1,30 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Create New Policy{% endblock %}
+
+{% block content %}
+<h2>Create New Policy</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.role_id.label }}<br>
+        {{ form.role_id() }}
+    </div>
+    <div>
+        {{ form.service_name.label }}<br>
+        {{ form.service_name(size=20) }}
+    </div>
+    <div>
+        {{ form.access_level.label }}<br>
+        {{ form.access_level(size=20) }}
+    </div>
+    <div>
+        <button type="submit">Create Policy</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 9: Update Main App to Register Policy Controller in app.py
