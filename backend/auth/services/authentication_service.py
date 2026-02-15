@@ -1,7 +1,8 @@
 # Epic Title: User Authentication and Security
 
 import pyotp
-from flask_login import login_user
+from flask_login import login_user, logout_user, current_user
+from datetime import datetime, timedelta
 from backend.auth.repositories.user_repository import UserRepository
 from backend.models.authentication.user_model import User
 
@@ -28,11 +29,23 @@ class AuthenticationService:
             if user.mfa_enabled:
                 if AuthenticationService.verify_mfa_token(user, token):
                     login_user(user)
+                    UserRepository.update_last_activity(user)
                     return True
             else:
                 login_user(user)
+                UserRepository.update_last_activity(user)
                 return True
         return False
 
+    @staticmethod
+    def check_session_expiry(timeout: int = 15) -> bool:
+        if current_user.is_authenticated:
+            if UserRepository.is_session_expired(current_user, timeout):
+                logout_user()
+                return True
+            else:
+                UserRepository.update_last_activity(current_user)
+        return False
 
-# File 4: MFA Form for Login in forms/mfa_form.py
+
+# File 4: Middleware to Check Session Expiry in middleware/session_middleware.py
