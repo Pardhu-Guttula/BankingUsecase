@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Role-based Access Control
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +7,7 @@ from flask_mail import Mail
 from datetime import timedelta
 import os
 from backend.middleware.session_middleware import SessionMiddleware
+from backend.middleware.policy_middleware import PolicyMiddleware
 
 db = SQLAlchemy()
 mail = Mail()
@@ -85,6 +86,7 @@ def create_app():
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
     app.before_request(SessionMiddleware.before_request)
+    app.before_request(PolicyMiddleware.enforce_policy)
     app.after_request(SessionMiddleware.after_request)
 
     @app.before_request
@@ -107,4 +109,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: Schema for Account Table in database/create_accounts_table.sql (Existing File, Re-emitting for Context)
+# File 8: Schema for Policy Table in database/create_policies_table.sql
