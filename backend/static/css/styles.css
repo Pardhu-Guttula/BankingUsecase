@@ -1,102 +1,36 @@
 # Epic Title: Responsive Design
 
-/* Base styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .container {
-    width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
+    padding: 0 20px;
     margin: 0 auto;
-    padding: 15px;
 }
 
-.header, .footer {
-    background-color: #f8f9fa;
-    padding: 10px 0;
-    text-align: center;
+.navbar-brand {
+    font-size: 1.5rem;
 }
 
-.menu {
-    text-align: center;
-    padding: 10px 0;
+.navbar-nav .nav-item .nav-link {
+    padding-right: .5rem;
+    padding-left: .5rem;
 }
 
-.menu a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.menu a:hover {
-    text-decoration: underline;
-}
-
-.content {
-    margin-top: 20px;
-}
-
-.card {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card h3 {
-    margin-top: 0;
-}
-
-/* Responsive styles */
-@media (max-width: 1200px) {
-    .container {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 992px) {
-    .menu {
-        display: flex;
-        flex-direction: column;
-    }
-    .menu a {
-        display: block;
-        margin: 10px 0;
-    }
-    .card {
-        margin: 10px 0;
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
     }
 }
 
 @media (max-width: 576px) {
-    .header, .footer {
-        padding: 5px 0;
-        font-size: 14px;
-    }
-    
-    .content {
-        margin-top: 10px;
+    .navbar-brand {
+        font-size: 1rem;
     }
 }
 
-/* Cross-Browser Compatibility */
-input, button, select, textarea {
-    /* Ensure the styles are consistent across different browsers */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.container, .card, .menu a, body {
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-
-
-# File 2: Home HTML Template with Cross-Browser Compatible Features in templates/home.html
+# File 3: Home Page Template Utilizing Base Template in templates/home.html
