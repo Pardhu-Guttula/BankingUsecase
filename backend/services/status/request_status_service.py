@@ -3,6 +3,7 @@
 from backend.models.status.request_status_model import RequestStatus
 from backend.repositories.status.request_status_repository import RequestStatusRepository
 from backend.services.notifications.email_notification_service import EmailNotificationService
+from backend.services.notifications.in_app_notification_service import InAppNotificationService
 from datetime import datetime
 
 class RequestStatusService:
@@ -14,6 +15,10 @@ class RequestStatusService:
             subject="Request Created",
             recipients=[user_email],
             body=f"Your request with ID {request_id} has been created with status '{status}'."
+        )
+        InAppNotificationService.create_notification(
+            user_id=user_id,
+            message=f"Your request with ID {request_id} has been created with status '{status}'."
         )
         return status_obj
 
@@ -29,6 +34,10 @@ class RequestStatusService:
                 recipients=[user_email],
                 body=f"Your request with ID {request_id} has been updated to status '{new_status}'."
             )
+            InAppNotificationService.create_notification(
+                user_id=status_obj.user_id,
+                message=f"Your request with ID {request_id} has been updated to status '{new_status}'."
+            )
 
     @staticmethod
     def get_status_by_request_id(request_id: int) -> RequestStatus:
@@ -38,4 +47,4 @@ class RequestStatusService:
     def get_statuses_by_user_id(user_id: int) -> list[RequestStatus]:
         return RequestStatusRepository.get_by_user_id(user_id)
 
-# File 3: Request Status Controller Update in controllers/status/request_status_controller.py (Modified)
+# File 5: Notification Controller in controllers/notifications/in_app_notification_controller.py
