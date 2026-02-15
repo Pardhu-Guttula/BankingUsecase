@@ -1,6 +1,7 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: In-app Notifications
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from backend.app import db
 from datetime import datetime
 
@@ -9,14 +10,15 @@ class InAppNotification(db.Model):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    message = Column(String(255), nullable=False)
-    timestamp = Column(DateTime, nullable=False, default=datetime.utcnow)
-    seen = Column(Integer, nullable=False, default=0)
+    message = Column(String(500), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    seen = Column(Integer, default=0)  # 0 indicates not seen, 1 indicates seen
+    user = relationship('User', back_populates='in_app_notifications')
 
-    def __init__(self, user_id: int, message: str, timestamp: datetime = datetime.utcnow(), seen: int = 0):
+    def __init__(self, user_id: int, message: str):
         self.user_id = user_id
         self.message = message
-        self.timestamp = timestamp
-        self.seen = seen
+        self.created_at = datetime.utcnow()
 
-# File 2: In-App Notification Repository in repositories/notifications/in_app_notification_repository.py
+
+# File 2: In-App Notification Repository in `repositories/notifications/in_app_notification_repository.py`
