@@ -9,5 +9,8 @@ class DocumentRepository:
         db.session.add(document)
         db.session.commit()
 
+    @staticmethod
+    def get_by_user_id(user_id: int) -> list[Document]:
+        return Document.query.filter_by(user_id=user_id).all()
 
-# File 4: Document Service Layer in services/documents/document_service.py
+# File 3: Document Service in services/documents/document_service.py
