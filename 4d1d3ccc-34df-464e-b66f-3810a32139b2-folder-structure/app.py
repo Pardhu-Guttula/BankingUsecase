@@ -1,11 +1,10 @@
-# Epic Title: Streamline Account Opening Requests
+# Epic Title: Overview of Financial Activities
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
 from dashboard.controllers.widget_controller import widget_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
 from dashboard.controllers.dashboard_summary_controller import dashboard_summary_controller
-from dashboard.controllers.account_opening_controller import account_opening_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from flask_login import LoginManager
@@ -44,7 +43,6 @@ app.register_blueprint(authentication_controller, url_prefix='/auth')
 app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
 app.register_blueprint(widget_controller, url_prefix='/dashboard')
 app.register_blueprint(dashboard_summary_controller, url_prefix='/dashboard')
-app.register_blueprint(account_opening_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -52,4 +50,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema Definition for Account Opening Requests Table in database/12_create_account_opening_requests_table.sql
+# File 4: requirements.txt Update
