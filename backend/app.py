@@ -1,10 +1,10 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: User Authentication and Security
 
-from flask import Flask, send_from_directory, render_template
+from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
 from backend.middleware.session_middleware import SessionMiddleware
 
@@ -53,8 +53,9 @@ def create_app():
     from backend.integration.controllers.api_controller import api_controller
     from backend.integration.controllers.sync_controller import sync_controller
     from backend.integration.controllers.core_banking_sync_controller import core_banking_sync_controller
+    from backend.integration.controllers.core_banking_data_controller import core_banking_data_controller
     from backend.integration.controllers.integration_controller import integration_controller
-    from backend.access.controllers.role_controller import role_controller
+    from backend.access_control.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
     from backend.access_control.controllers.policy_controller import policy_controller
     from backend.notifications.controllers.in_app_notification_controller import in_app_notification_controller
@@ -77,7 +78,8 @@ def create_app():
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
     app.register_blueprint(sync_controller, url_prefix='/sync')
-    app.register_blueprint(core_banking_sync_controller, url_prefix='/sync')
+    app.register_blueprint(core_banking_sync_controller, url_prefix='/integration')
+    app.register_blueprint(core_banking_data_controller, url_prefix='/integration')
     app.register_blueprint(integration_controller, url_prefix='/integration')
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(permission_controller, url_prefix='/permissions')
@@ -113,4 +115,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema for Incomplete Applications Table in database/create_incomplete_applications_table.sql
+# File 3: Update requirements.txt with Only Necessary Dependencies
