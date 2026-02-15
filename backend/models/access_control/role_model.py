@@ -12,11 +12,10 @@ class Role(db.Model):
     description = Column(String(255), nullable=True)
 
     users = relationship('User', back_populates='role')
-    permissions = relationship('RolePermission', back_populates='role')
 
     def __init__(self, name: str, description: str = ''):
         self.name = name
         self.description = description
 
 
-# File 4: Permission Repository for CRUD Operations in repositories/access_control/permission_repository.py
+# File 2: Update User Model to Include Role Relationship in models/authentication/user_model.py
