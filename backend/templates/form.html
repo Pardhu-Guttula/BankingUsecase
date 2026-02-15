@@ -1,0 +1,25 @@
+# Epic Title: Responsive Design
+
+{% extends "base.html" %}
+
+{% block title %}Form Template{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Sample Form</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label }}<br>
+            {{ form.name(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}<br>
+            {{ form.email(class_="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+# File 4: Contact HTML Template with Consistent Layout in templates/contact.html
