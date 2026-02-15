@@ -1,0 +1,18 @@
+# Epic Title: Core Banking System Integration
+
+{% extends "base.html" %}
+
+{% block title %}Sync Logs{% endblock %}
+
+{% block content %}
+<h2>Sync Logs</h2>
+<p>Below is a list of recent synchronization attempts:</p>
+<ul>
+    {% for log in sync_logs %}
+    <li>{{ log.created_at }} - {{ log.sync_type }} - {{ log.status }} - {{ log.details }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+# File 7: Update Main App to Register Sync Log Controller and Start Sync Scheduler in app.py
