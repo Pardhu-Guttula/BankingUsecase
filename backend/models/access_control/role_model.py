@@ -1,7 +1,6 @@
 # Epic Title: Role-based Access Control
 
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
 from backend.app import db
 
 class Role(db.Model):
@@ -11,11 +10,8 @@ class Role(db.Model):
     name = Column(String(50), unique=True, nullable=False)
     description = Column(String(255), nullable=True)
 
-    users = relationship('User', back_populates='role')
-
-    def __init__(self, name: str, description: str = ''):
+    def __init__(self, name: str, description: str = None):
         self.name = name
         self.description = description
 
-
-# File 2: Update User Model to Include Role Relationship in models/authentication/user_model.py
+# File 2: Role Repository in repositories/access_control/role_repository.py
