@@ -1,1 +1,1 @@
-# File 1: Account and Transaction Models for Dashboard in models/accounts/
+# File 1: User Model Including Second Factor in models/authentication/user_model.py
