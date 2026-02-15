@@ -1,8 +1,8 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user, logout_user
+from flask_login import LoginManager
 from flask_mail import Mail
 from datetime import timedelta
 import os
@@ -65,14 +65,6 @@ def create_app():
     def static_files(filename):
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
-    @app.before_request
-    def before_request():
-        session.permanent = True
-        app.permanent_session_lifetime = timedelta(minutes=15)
-        session.modified = True
-        if current_user.is_authenticated and not current_user.is_active:
-            logout_user()
-
     with app.app_context():
         db.create_all()
 
@@ -85,4 +77,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: Create Schema for Account and Transaction Tables in database/
+# File 8: requirements.txt Update
