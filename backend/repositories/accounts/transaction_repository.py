@@ -1,10 +1,11 @@
 # Epic Title: Personalized Dashboard
 
 from backend.models.accounts.transaction_model import Transaction
+from backend.app import db
 
 class TransactionRepository:
     @staticmethod
-    def find_by_account_id(account_id: int) -> list[Transaction]:
+    def get_transactions_by_account(account_id: int) -> list[Transaction]:
         return Transaction.query.filter_by(account_id=account_id).all()
 
     @staticmethod
@@ -13,4 +14,4 @@ class TransactionRepository:
         db.session.commit()
 
 
-# File 6: Account Service for Business Logic in services/accounts/account_service.py
+# File 5: Service Layer for Dashboard in services/dashboard/
