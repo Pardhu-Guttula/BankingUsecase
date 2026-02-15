@@ -1,15 +1,22 @@
 # Epic Title: Personalized Dashboard
 
-from backend.repositories.dashboard.financial_summary_repository import FinancialSummaryRepository
+from typing import Dict
+from backend.repositories.account.account_repository import AccountRepository
+from backend.repositories.transaction.transaction_repository import TransactionRepository
 
 class FinancialSummaryService:
     @staticmethod
-    def get_account_summary(user_id: int):
-        return FinancialSummaryRepository.get_account_summary(user_id)
+    def get_financial_summary(user_id: int) -> Dict:
+        accounts = AccountRepository.get_user_accounts(user_id)
+        transactions = TransactionRepository.get_recent_transactions(user_id)
+        total_balance = sum(account.balance for account in accounts)
+        total_transactions = len(transactions)
+        return {
+            "total_balance": total_balance,
+            "total_transactions": total_transactions,
+            "accounts_summary": [{"account_number": account.account_number, "balance": account.balance} for account in accounts],
+            "transactions_summary": [{"amount": txn.amount, "timestamp": txn.timestamp, "description": txn.description} for txn in transactions]
+        }
 
-    @staticmethod
-    def get_transaction_summary(user_id: int):
-        return FinancialSummaryRepository.get_transaction_summary(user_id)
 
-
-# File 5: Controller to handle Financial Summary in controllers/dashboard/financial_summary_controller.py
+# File 2: Dashboard Controller to Integrate Financial Summary in dashboard/controllers/dashboard_controller.py
