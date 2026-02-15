@@ -1,16 +1,21 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Maintain Separate Database
 
-from backend.models.portal_main_database.portal_main_model import PortalMainModel
+from backend.models.portal_main_database.portal_main_model import PortalMainData
 from backend.app import db
 
 class PortalMainRepository:
     @staticmethod
-    def save(data_entry: PortalMainModel) -> None:
-        db.session.add(data_entry)
+    def save(data: PortalMainData) -> None:
+        db.session.add(data)
         db.session.commit()
 
     @staticmethod
-    def get_all() -> list[PortalMainModel]:
-        return PortalMainModel.query.all()
+    def find_by_key(data_key: str) -> PortalMainData:
+        return PortalMainData.query.filter_by(data_key=data_key).first()
 
-# File 3: Portal Database Service in services/portal_main_database/portal_main_service.py
+    @staticmethod
+    def find_all() -> list[PortalMainData]:
+        return PortalMainData.query.all()
+
+
+# File 3: Portal Main Database Service in `services/portal_main_database/portal_main_service.py`
