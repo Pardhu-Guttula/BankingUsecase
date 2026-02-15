@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS notifications (
     FOREIGN KEY (request_id) REFERENCES requests(id)
 );
 
-# File 7: Update requirements.txt with Only Necessary Dependencies
+# File 6: Update requirements.txt with Only Necessary Dependencies
