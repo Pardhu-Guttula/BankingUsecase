@@ -1,4 +1,4 @@
-# Epic Title: In-app Notifications
+# Epic Title: Document Upload Capability
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -39,18 +39,14 @@ def create_app():
     from backend.controllers.access_control.role_controller import role_controller
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
-    from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
-    from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
-    from backend.controllers.notifications.in_app_notification_controller import in_app_notification_controller
+    from backend.routes.dashboard import dashboard_bp
+    from backend.controllers.documents.document_upload_controller import document_upload_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
-    app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(service_modification_request_controller, url_prefix='/account')
-    app.register_blueprint(approval_workflow_controller, url_prefix='/approval')
-    app.register_blueprint(in_app_notification_controller, url_prefix='/notifications')
+    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
+    app.register_blueprint(document_upload_controller, url_prefix='/documents')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -62,6 +58,7 @@ def create_app():
     @app.before_request
     def before_request():
         session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=15)
         session.modified = True
         if current_user.is_authenticated and not current_user.is_active:
             logout_user()
