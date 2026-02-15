@@ -9,9 +9,8 @@ from dashboard.controllers.service_modification_controller import service_modifi
 from dashboard.controllers.approval_workflow_controller import approval_workflow_controller
 from dashboard.controllers.status_update_controller import status_update_controller
 from dashboard.controllers.notification_controller import notification_controller
-from dashboard.controllers.interaction_history_controller import interaction_history_controller
-from dashboard.controllers.document_upload_controller import document_upload_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
+from dashboard.controllers.interaction_history_controller import interaction_history_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from flask_login import LoginManager
@@ -27,7 +26,6 @@ app.config.update(
     MAIL_USE_TLS=True,
     MAIL_USERNAME='your-email@example.com',
     MAIL_PASSWORD='your-email-password',
-    MAX_CONTENT_LENGTH=16 * 1024 * 1024  # set maximum file size to 16 MB
 )
 
 Path("authentication/models").mkdir(parents=True, exist_ok=True)
@@ -64,7 +62,6 @@ app.register_blueprint(approval_workflow_controller, url_prefix='/dashboard')
 app.register_blueprint(status_update_controller, url_prefix='/dashboard')
 app.register_blueprint(notification_controller, url_prefix='/dashboard')
 app.register_blueprint(interaction_history_controller, url_prefix='/dashboard')
-app.register_blueprint(document_upload_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -72,4 +69,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema Definition for Documents Table in database/18_create_documents_table.sql
+# File 6: Schema Definition for Interaction Histories Table in database/17_create_interaction_histories_table.sql
