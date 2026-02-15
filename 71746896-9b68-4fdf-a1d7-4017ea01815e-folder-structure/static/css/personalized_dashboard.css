@@ -39,28 +39,20 @@ main {
     text-align: center;
 }
 
-h3 {
-    margin-top: 0;
-}
-
-ul {
+main ul {
     list-style-type: none;
     padding: 0;
 }
 
-ul li {
-    border: 1px solid #ccc;
-    margin: 10px 0;
+main ul li {
     padding: 10px;
-    border-radius: 5px;
-}
-
-ul li h4 {
-    margin: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
-    header h1, nav ul, main, footer p, ul li h4 {
+    header h1, nav ul, main, footer p {
         font-size: 1.2em;
     }
 
@@ -75,7 +67,7 @@ ul li h4 {
 }
 
 @media (max-width: 480px) {
-    header h1, nav ul, main, footer p, ul li h4 {
+    header h1, nav ul, main, footer p {
         font-size: 1em;
     }
     
