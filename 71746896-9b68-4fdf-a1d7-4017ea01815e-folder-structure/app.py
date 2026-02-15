@@ -1,10 +1,10 @@
-# Epic Title: Adaptive Screen Resolutions
+# Epic Title: Consistent User Experience
 
 import logging
 import os
 from django.core.wsgi import get_wsgi_application
 from django.urls import path
-from backend.controllers.dashboard.adaptive_resolution_controller import adaptive_resolution_view
+from backend.controllers.dashboard.consistent_experience_controller import consistent_experience_view
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -13,7 +13,7 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Adaptive Screen Resolutions
+    # Epic Title: Consistent User Experience
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
@@ -26,5 +26,5 @@ if __name__ == "__main__":
     main()
 
 urlpatterns = [
-    path('adaptive_resolution/', adaptive_resolution_view, name='adaptive_resolution'),
+    path('consistent_experience/', consistent_experience_view, name='consistent_experience'),
 ]
