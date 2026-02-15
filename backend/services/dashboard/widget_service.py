@@ -20,4 +20,4 @@ class WidgetService:
         return WidgetRepository.find_by_user_id(user_id)
 
 
-# File 4: Dashboard Controller Updated for Widgets in controllers/dashboard/dashboard_controller.py
+# File 4: Dashboard Controller Updated for Widgets in backend/controllers/dashboard/dashboard_controller.py
