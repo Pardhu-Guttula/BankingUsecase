@@ -1,6 +1,6 @@
 # Epic Title: Personalized Dashboard
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.app import db
 
@@ -10,14 +10,14 @@ class Widget(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     widget_type = Column(String(50), nullable=False)
-    is_active = Column(Boolean, default=True, nullable=False)
+    widget_data = Column(String(255), nullable=True)
 
     user = relationship('User', back_populates='widgets')
 
-    def __init__(self, user_id: int, widget_type: str, is_active: bool = True):
+    def __init__(self, user_id: int, widget_type: str, widget_data: str = None):
         self.user_id = user_id
         self.widget_type = widget_type
-        self.is_active = is_active
+        self.widget_data = widget_data
 
 
-# File 2: Widget Repository for CRUD Operations on Widgets in repositories/dashboard/widget_repository.py
+# File 2: Update User Model to Include Relationship with Widgets in models/authentication/user_model.py
