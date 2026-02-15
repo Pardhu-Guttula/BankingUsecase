@@ -22,11 +22,10 @@ class Role(db.Model):
 
     users = relationship("User", secondary=roles_users, back_populates="roles")
     permissions = relationship("Permission", secondary=roles_permissions, back_populates="roles")
-    policies = relationship("Policy", back_populates="role")
 
     def __init__(self, name: str, description: str = None):
         self.name = name
         self.description = description
 
 
-# File 3: Policy Repository to Manage Policies in repositories/access_control/policy_repository.py
+# File 4: Update User Model to Include Roles Relationship in models/authentication/user_model.py
