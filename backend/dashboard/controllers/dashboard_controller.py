@@ -9,15 +9,8 @@ dashboard_controller = Blueprint('dashboard_controller', __name__)
 @dashboard_controller.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-    accounts = DashboardService.get_user_accounts(current_user.id)
-    account_data = []
-    for account in accounts:
-        transactions = DashboardService.get_account_transactions(account.id)
-        account_data.append({
-            "account": account,
-            "transactions": transactions
-        })
-    return render_template('dashboard.html', accounts=account_data)
+    summary = DashboardService.get_summary(current_user.id)
+    return render_template('dashboard.html', summary=summary)
 
 
-# File 8: Dashboard Template to Display Accounts and Transactions in templates/dashboard.html
+# File 3: Update Dashboard Template to Show Financial Summary in templates/dashboard.html
