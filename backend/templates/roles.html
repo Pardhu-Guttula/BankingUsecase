@@ -1,0 +1,19 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Manage Roles{% endblock %}
+
+{% block content %}
+<h2>Manage Roles</h2>
+<p>Below is a list of available roles:</p>
+<ul>
+    {% for role in roles %}
+    <li>{{ role.name }} - {{ role.description }}</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('role_controller.new_role') }}">Create New Role</a>
+{% endblock %}
+
+
+## New Role Template in templates/new_role.html
