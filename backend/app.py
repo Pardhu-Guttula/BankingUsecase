@@ -1,4 +1,4 @@
-# Epic Title: Streamline Account Opening Requests
+# Epic Title: Implement Adaptive Layouts
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -23,6 +23,7 @@ def create_app():
         MAIL_PASSWORD='your-email-password',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
         STATIC_FOLDER='static',
+        TEMPLATES_FOLDER='templates',
         UPLOAD_FOLDER=os.path.join(os.getcwd(), 'backend/uploads')
     )
 
@@ -40,13 +41,11 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.account.opening_requests.account_opening_request_controller import account_opening_request_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(account_opening_request_controller, url_prefix='/account')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -63,6 +62,10 @@ def create_app():
         if current_user.is_authenticated and not current_user.is_active:
             logout_user()
 
+    @app.route('/')
+    def home():
+        return render_template('dashboard.html')
+
     with app.app_context():
         db.create_all()
 
@@ -75,4 +78,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: requirements.txt
+# File 5: requirements.txt
