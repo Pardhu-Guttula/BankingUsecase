@@ -1,12 +1,12 @@
-# Epic Title: Display Tailored Products
+# Epic Title: Secure User Data
 
 from django.contrib.auth.models import User
-from typing import Dict, Any, Optional
+from typing import Optional, Dict, Any
 
 class UserRepository:
     @staticmethod
     def get_user_by_username(username: str) -> Optional[User]:
-        # Epic Title: Display Tailored Products
+        # Epic Title: Secure User Data
         try:
             return User.objects.get(username=username)
         except User.DoesNotExist:
@@ -14,16 +14,14 @@ class UserRepository:
 
     @staticmethod
     def get_profile(user: User) -> Dict[str, Any]:
-        # Epic Title: Display Tailored Products
+        # Epic Title: Secure User Data
         # Mock profile for the sake of example
         return {
-            'credit_score': 720,
-            'income': 60000,
-            'age': 30
+            'encrypted_data': None
         }
 
     @staticmethod
     def set_profile(user: User, profile: Dict[str, Any]) -> None:
-        # Epic Title: Display Tailored Products
+        # Epic Title: Secure User Data
         # In reality, this would save to a database
         pass
