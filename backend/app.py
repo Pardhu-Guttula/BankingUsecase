@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates
+# Epic Title: Email Notifications
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -23,7 +23,6 @@ def create_app():
         MAIL_PASSWORD='your-email-password',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
         STATIC_FOLDER='static',
-        TEMPLATES_FOLDER='templates',
         UPLOAD_FOLDER=os.path.join(os.getcwd(), 'backend/uploads')
     )
 
@@ -41,13 +40,13 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.routes.dashboard import dashboard_bp
-    from backend.controllers.status.request_status_controller import request_status_controller
+    from backend.controllers.notifications.email_notification_controller import email_notification_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
-    app.register_blueprint(request_status_controller, url_prefix='/status')
+    app.register_blueprint(email_notification_controller, url_prefix='/notifications')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -59,6 +58,7 @@ def create_app():
     @app.before_request
     def before_request():
         session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=15)
         session.modified = True
         if current_user.is_authenticated and not current_user.is_active:
             logout_user()
