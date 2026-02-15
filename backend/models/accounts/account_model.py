@@ -26,4 +26,4 @@ class Account(db.Model):
         self.balance = balance
 
 
-# File 2: Transaction Model to Hold Transaction Details in models/accounts/transaction_model.py
+# File 2: Transaction Model Content in models/accounts/transaction_model.py
