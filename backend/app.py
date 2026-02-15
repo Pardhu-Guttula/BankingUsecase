@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Interaction History and Documentation Upload
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -48,7 +48,7 @@ def create_app():
     from backend.history.controllers.interaction_history_controller import interaction_history_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
-    from backend.documents.controllers.document_upload_controller import document_upload_controller
+    from backend.document_upload.controllers.document_upload_controller import document_upload_controller
     from backend.account.controllers.incomplete_application_controller import incomplete_application_controller
     from backend.account.controllers.application_controller import application_controller
     from backend.integration.controllers.api_controller import api_controller
@@ -116,4 +116,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 5: Schema for Notifications Table in database/create_notifications_table.sql (Already Exists)
+# File 6: Schema for Incomplete Applications Table in database/create_incomplete_applications_table.sql
