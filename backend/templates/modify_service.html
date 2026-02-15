@@ -1,0 +1,30 @@
+# Epic Title: Account Opening and Service Modifications
+
+{% extends "base.html" %}
+
+{% block title %}Modify Service{% endblock %}
+
+{% block content %}
+<h2>Modify Service</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.service_name.label }}<br>
+        {{ form.service_name(size=32) }}
+    </div>
+    <div>
+        {{ form.modification_type.label }}<br>
+        {{ form.modification_type() }}
+    </div>
+    <div>
+        {{ form.reason.label }}<br>
+        {{ form.reason(cols=32, rows=4) }}
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 7: Update Main App to Register Service Modification Controller in app.py
