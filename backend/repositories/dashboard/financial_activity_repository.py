@@ -14,4 +14,4 @@ class FinancialActivityRepository:
         return FinancialActivity.query.filter_by(user_id=user_id).all()
 
 
-# File 3: Financial Activities Service in services/dashboard/financial_activity_service.py
+# File 3: Financial Activities Service in backend/services/dashboard/financial_activity_service.py
