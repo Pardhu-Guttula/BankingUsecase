@@ -5,26 +5,16 @@ from backend.app import db
 
 class PermissionRepository:
     @staticmethod
-    def get_all_permissions() -> list[Permission]:
-        return Permission.query.all()
-
-    @staticmethod
-    def get_permission_by_id(permission_id: int) -> Permission:
-        return Permission.query.get(permission_id)
-
-    @staticmethod
     def save(permission: Permission) -> None:
         db.session.add(permission)
         db.session.commit()
 
     @staticmethod
-    def update(permission: Permission) -> None:
-        db.session.commit()
+    def find_all() -> list[Permission]:
+        return Permission.query.all()
 
     @staticmethod
-    def delete(permission: Permission) -> None:
-        db.session.delete(permission)
-        db.session.commit()
+    def find_by_name(name: str) -> Permission | None:
+        return Permission.query.filter_by(name=name).first()
 
-
-# File 5: RolePermission Repository for CRUD Operations in repositories/access_control/role_permission_repository.py
+# File 4: Role Service Updated for Permission Assignment in services/access_control/role_service.py (Modified)
