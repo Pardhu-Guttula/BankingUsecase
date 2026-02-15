@@ -1,8 +1,9 @@
-# Epic Title: Maintain Interaction History
+# Epic Title: In-app Notifications
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
-from interaction_history.controllers.interaction_controller import interaction_controller
+from authentication.controllers.dashboard_controller import dashboard_controller
+from notifications.controllers.notification_controller import notification_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_login import LoginManager
@@ -11,7 +12,8 @@ from real_time import socketio, start_listener
 app = Flask(__name__)
 app.config.from_object('config.Config')
 app.register_blueprint(auth_controller, url_prefix='/auth')
-app.register_blueprint(interaction_controller, url_prefix='/api')
+app.register_blueprint(dashboard_controller, url_prefix='/')
+app.register_blueprint(notification_controller, url_prefix='/api')
 
 DATABASE_URI = 'mysql+pymysql://username:password@localhost/db_name'
 engine = create_engine(DATABASE_URI)
@@ -40,4 +42,4 @@ if __name__ == '__main__':
     socketio.run(app, debug=True)
 
 
-# File 7: Schema Definition for Interaction History Table in database/01_create_interactions_table.sql
+# File 7: requirements.txt Update
