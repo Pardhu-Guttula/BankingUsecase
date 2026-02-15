@@ -1,10 +1,9 @@
-variable "sql_admin_username" {
-  description = "Admin username for the SQL server."
+variable "resource_group_name" {
+  description = "The name of the resource group"
   type        = string
 }
 
-variable "sql_admin_password" {
-  description = "Admin password for the SQL server."
+variable "location" {
+  description = "The Azure location where the resources will be deployed"
   type        = string
-  sensitive   = true
 }
