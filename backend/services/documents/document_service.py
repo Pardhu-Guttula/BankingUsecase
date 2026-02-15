@@ -1,26 +1,31 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Document Upload Capability
 
-from backend.models.documents.document_model import Document
 from backend.repositories.documents.document_repository import DocumentRepository
+from backend.models.documents.document_model import Document
+from werkzeug.utils import secure_filename
 import os
 
 class DocumentService:
-    @staticmethod
-    def save_document(file, user_id: int) -> Document:
-        filename = file.filename
-        file_path = os.path.join('uploads', filename)
-        file.save(file_path)
-        
-        document = Document(
-            user_id=user_id,
-            filename=filename,
-            file_path=file_path
-        )
-        DocumentRepository.save(document)
-        return document
+    
+    UPLOAD_FOLDER = 'backend/uploads/documents'
+    ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
     @staticmethod
-    def get_user_documents(user_id: int) -> list[Document]:
-        return DocumentRepository.get_by_user_id(user_id)
+    def allowed_file(filename: str) -> bool:
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in DocumentService.ALLOWED_EXTENSIONS
 
-# File 4: Document Upload Controller in controllers/documents/document_upload_controller.py
+    @staticmethod
+    def upload_document(user_id: int, file) -> Document:
+        if file and DocumentService.allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(DocumentService.UPLOAD_FOLDER, filename)
+            file.save(filepath)
+
+            document = Document(user_id=user_id, filename=filename, filepath=filepath)
+            DocumentRepository.save(document)
+            return document
+        else:
+            raise ValueError("File type not allowed")
+
+
+# File 4: Document Upload Controller in `controllers/documents/document_upload_controller.py`
