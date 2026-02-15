@@ -1,9 +1,8 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from backend.services.accounts.account_service import AccountService
-from backend.services.dashboard.widget_service import WidgetService
 
 dashboard_controller = Blueprint('dashboard_controller', __name__)
 
@@ -12,22 +11,8 @@ dashboard_controller = Blueprint('dashboard_controller', __name__)
 def get_dashboard():
     user_id = current_user.id
     user_accounts = AccountService.get_user_accounts(user_id)
-    user_widgets = WidgetService.get_user_widgets(user_id)
-    response = []
-
-    for account in user_accounts:
-        transactions = AccountService.get_account_transactions(account.id)
-        account_info = {
-            "account_number": account.account_number,
-            "account_type": account.account_type,
-            "balance": account.balance,
-            "transactions": [{"amount": t.amount, "transaction_type": t.transaction_type, "description": t.description, "created_at": t.created_at} for t in transactions]
-        }
-        response.append(account_info)
-
-    widgets_info = [{"widget_name": w.widget_name, "widget_settings": w.widget_settings, "created_at": w.created_at} for w in user_widgets]
-
-    return jsonify({"accounts": response, "widgets": widgets_info}), 200
+    user_service_requests = AccountService.get_service_modification_requests(user_id)
+    return render_template('dashboard.html', accounts=user_accounts, service_requests=user_service_requests)
 
 
-# File 8: App Update to Register Dashboard Controller in app.py
+# File 6: Update Main App to Serve Static Files and Register Blueprint in backend/app.py
