@@ -121,5 +121,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-# File 6: Schema for Widgets Table in database/create_widgets_table.sql
