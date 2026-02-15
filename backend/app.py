@@ -51,4 +51,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: requirements.txt Update
+# File 6: CSS Styles Update for Cross-Browser Compatibility in backend/static/css/styles.css
