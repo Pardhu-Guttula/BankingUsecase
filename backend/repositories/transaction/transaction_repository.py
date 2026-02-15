@@ -1,13 +1,12 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Develop a User-Friendly Dashboard
 
-from typing import List
-from backend.models.account.transaction_model import Transaction
+from backend.models.transaction.transaction_model import Transaction
 from backend.app import db
 
 class TransactionRepository:
     @staticmethod
-    def get_recent_transactions(user_id: int) -> List[Transaction]:
-        return Transaction.query.filter_by(user_id=user_id).order_by(Transaction.timestamp.desc()).limit(10).all()
+    def find_by_user_id(user_id: int) -> list[Transaction]:
+        return Transaction.query.filter_by(user_id=user_id).all()
 
 
-# File 5: Account Model in models/account/account_model.py (Existing File, Re-emitting for Context)
+# File 5: Account Model in models/accounts/account_model.py
