@@ -1,4 +1,4 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Personalized Dashboard
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -122,4 +122,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 3: Update requirements.txt with Required Dependency
+# File 6: Schema for Widgets Table in database/create_widgets_table.sql
