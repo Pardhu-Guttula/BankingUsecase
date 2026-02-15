@@ -1,18 +1,23 @@
 # Epic Title: Personalized Dashboard
 
-from backend.repositories.accounts.account_repository import AccountRepository
-from backend.repositories.accounts.transaction_repository import TransactionRepository
-from backend.models.accounts.account_model import Account
-from backend.models.accounts.transaction_model import Transaction
+from backend.repositories.dashboard.dashboard_repository import DashboardRepository
+from backend.models.dashboard.dashboard_model import Account, Transaction
 
 class DashboardService:
     @staticmethod
-    def get_user_accounts(user_id: int) -> list[Account]:
-        return AccountRepository.get_accounts_by_user(user_id)
+    def get_user_dashboard(user_id: int) -> dict:
+        accounts = DashboardRepository.get_user_accounts(user_id)
+        dashboard_data = {'accounts': []}
 
-    @staticmethod
-    def get_account_transactions(account_id: int) -> list[Transaction]:
-        return TransactionRepository.get_transactions_by_account(account_id)
+        for account in accounts:
+            transactions = DashboardRepository.get_account_transactions(account.id)
+            account_data = {
+                'account_number': account.account_number,
+                'balance': account.balance,
+                'transactions': [{'amount': t.amount, 'transaction_type': t.transaction_type, 'timestamp': t.timestamp} for t in transactions]
+            }
+            dashboard_data['accounts'].append(account_data)
 
+        return dashboard_data
 
-# File 6: Controller to handle Dashboard requests in controllers/dashboard/
+# File 4: Dashboard Controller in controllers/dashboard/dashboard_controller.py
