@@ -9,7 +9,7 @@ from backend.models.authentication.user_model import User
 class AuthenticationService:
     @staticmethod
     def verify_password(user: User, password: str) -> bool:
-        return user.password == password
+        return user.verify_password(password)
 
     @staticmethod
     def generate_mfa_secret() -> str:
@@ -48,4 +48,4 @@ class AuthenticationService:
         return False
 
 
-# File 4: Middleware to Check Session Expiry in middleware/session_middleware.py
+# File 4: Update Main App to Register Authentication Service in app.py
