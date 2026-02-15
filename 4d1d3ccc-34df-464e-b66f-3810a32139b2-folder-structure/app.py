@@ -13,7 +13,6 @@ from dashboard.controllers.interaction_history_controller import interaction_his
 from dashboard.controllers.document_upload_controller import document_upload_controller
 from dashboard.controllers.incomplete_application_controller import incomplete_application_controller
 from dashboard.controllers.api_controller import api_controller
-from dashboard.controllers.data_sync_controller import data_sync_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -69,7 +68,6 @@ app.register_blueprint(interaction_history_controller, url_prefix='/dashboard')
 app.register_blueprint(document_upload_controller, url_prefix='/dashboard')
 app.register_blueprint(incomplete_application_controller, url_prefix='/dashboard')
 app.register_blueprint(api_controller, url_prefix='/dashboard')
-app.register_blueprint(data_sync_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
