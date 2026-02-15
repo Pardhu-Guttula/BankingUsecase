@@ -1,23 +1,18 @@
-# Epic Title: Manage Secure Storage of Credentials
+# Epic Title: Create Secure User Sessions
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from flask_login import LoginManager
+from authentication.services.session_service import SessionService
 from pathlib import Path
-from authentication.services.encryption_service import EncryptionService
-import os
 
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY='yoursecretkey',
     SQLALCHEMY_DATABASE_URI='mysql+pymysql://username:password@localhost/db_name',
 )
-
-# Generate and store encryption key securely
-key = os.environ.get('ENCRYPTION_KEY').encode()
-encryption_service = EncryptionService(key)
 
 Path("authentication/models").mkdir(parents=True, exist_ok=True)
 Path("authentication/repositories").mkdir(parents=True, exist_ok=True)
@@ -33,11 +28,18 @@ Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=en
 login_manager = LoginManager(app)
 login_manager.login_view = "authentication_controller.login"
 
+@app.before_request
+def before_request():
+    # Reset the session timeout on each request
+    session.modified = True
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     Session.remove()
 
 app.register_blueprint(authentication_controller, url_prefix='/auth')
+
+SessionService.configure_session(app)
 
 if __name__ == '__main__':
     with app.app_context():
@@ -45,4 +47,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Schema Definition for Users Table in database/09_create_users_table.sql
+# File 3: requirements.txt Update
