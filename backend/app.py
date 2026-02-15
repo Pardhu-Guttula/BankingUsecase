@@ -37,7 +37,6 @@ def create_app():
     from backend.controllers.dashboard.sync_log_controller import sync_log_controller
     from backend.controllers.dashboard.role_controller import role_controller
     from backend.controllers.dashboard.permission_controller import permission_controller
-    from backend.controllers.dashboard.policy_controller import policy_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/api')
@@ -48,7 +47,6 @@ def create_app():
     app.register_blueprint(sync_log_controller, url_prefix='/api')
     app.register_blueprint(role_controller, url_prefix='/api')
     app.register_blueprint(permission_controller, url_prefix='/api')
-    app.register_blueprint(policy_controller, url_prefix='/api')
 
     @app.route('/')
     def home():
@@ -71,4 +69,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 10: requirements.txt Update
+# File 14: requirements.txt Update
