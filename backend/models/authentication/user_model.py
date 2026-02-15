@@ -1,9 +1,10 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Role-based Access Control
 
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, LargeBinary
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from backend.app import db
+from backend.models.access_control.role_model import roles_users
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -18,8 +19,14 @@ class User(db.Model):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
 
-    roles = relationship("Role", back_populates="users")
+    roles = relationship("Role", secondary=roles_users, back_populates="users")
     accounts = relationship("Account", back_populates="user")
+    account_opening_requests = relationship("AccountOpeningRequest", back_populates="user")
+    service_modification_requests = relationship("ServiceModificationRequest", back_populates="user")
+    status_updates = relationship("StatusUpdate", back_populates="user")
+    interactions = relationship("Interaction", back_populates="user")
+    documents = relationship("Document", back_populates="user")
+    applications = relationship("Application", back_populates="user")
 
     def __init__(self, username: str, password: str, email: str, mfa_enabled: bool = False, mfa_secret: str = None, session_key: bytes = None):
         self.username = username
@@ -30,4 +37,4 @@ class User(db.Model):
         self.session_key = session_key
 
 
-# File 4: Account Repository for Account Operations in repositories/accounts/account_repository.py
+# File 5: Permission Repository to Manage Permissions in repositories/access_control/permission_repository.py
