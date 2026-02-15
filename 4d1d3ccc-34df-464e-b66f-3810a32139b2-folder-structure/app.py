@@ -8,7 +8,6 @@ from dashboard.controllers.account_opening_controller import account_opening_con
 from dashboard.controllers.service_modification_controller import service_modification_controller
 from dashboard.controllers.approval_workflow_controller import approval_workflow_controller
 from dashboard.controllers.status_update_controller import status_update_controller
-from dashboard.controllers.notification_controller import notification_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -59,7 +58,6 @@ app.register_blueprint(account_opening_controller, url_prefix='/dashboard')
 app.register_blueprint(service_modification_controller, url_prefix='/dashboard')
 app.register_blueprint(approval_workflow_controller, url_prefix='/dashboard')
 app.register_blueprint(status_update_controller, url_prefix='/dashboard')
-app.register_blueprint(notification_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -67,4 +65,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema Definition for Notifications Table in database/16_create_notifications_table.sql
+# File 4: requirements.txt Update
