@@ -39,46 +39,33 @@ main {
     text-align: center;
 }
 
-@media (max-width: 1024px) {
+/* Styles for high-resolution screens */
+@media (min-width: 1280px) {
     header h1, .navbar ul, main, footer p {
-        font-size: 1.5em;
+        font-size: 2em; /* Larger font for high-res */
     }
-
     .navbar ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar ul li {
-        padding: 5px;
+        padding: 20px;
     }
 }
 
-@media (max-width: 768px) {
+/* Styles for medium-resolution screens */
+@media (max-width: 1280px) and (min-width: 768px) {
     header h1, .navbar ul, main, footer p {
-        font-size: 1.2em;
+        font-size: 1.5em; /* Medium font for mid-res */
     }
-
     .navbar ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar ul li {
-        padding: 5px;
+        padding: 15px;
     }
 }
 
-@media (max-width: 480px) {
+/* Styles for low-resolution screens */
+@media (max-width: 767px) {
     header h1, .navbar ul, main, footer p {
-        font-size: 1em;
+        font-size: 1em; /* Smaller font for low-res */
     }
-    
     .navbar ul {
         flex-direction: column;
-    }
-
-    .navbar ul li {
-        padding: 5px;
+        padding: 10px;
     }
 }
