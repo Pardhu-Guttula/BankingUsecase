@@ -1,2 +1,1 @@
-resource_group_name = "example-rg"
-location           = "West Europe"
+sql_password = "YourStrong(!)Password"
