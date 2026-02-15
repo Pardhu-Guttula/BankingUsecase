@@ -1,26 +1,28 @@
 # Epic Title: User Authentication and Security
 
-from flask import session, redirect, url_for
-from datetime import timedelta, datetime
+from flask import session, redirect, url_for, request
+from datetime import timedelta
 
 class SessionMiddleware:
-    
     @staticmethod
     def before_request():
         session.permanent = True
-        app.permanent_session_lifetime = timedelta(minutes=15)
         session.modified = True
+        
         if 'last_activity' in session:
-            now = datetime.utcnow()
+            now = datetime.now()
             last_activity = session['last_activity']
-            if now - last_activity > app.permanent_session_lifetime:
+            time_delta = now - last_activity
+
+            if timedelta(minutes=15) < time_delta:
                 session.clear()
                 return redirect(url_for('authentication_controller.login'))
-        session['last_activity'] = datetime.utcnow()
+
+        session['last_activity'] = datetime.now()
 
     @staticmethod
     def after_request(response):
         session.modified = True
         return response
 
-# File 2: User Model in models/authentication/user_model.py (Already exists, Modified)
+# File 2: Register Session Middleware in app.py (Already Exists, Modified)
