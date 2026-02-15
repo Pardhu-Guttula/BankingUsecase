@@ -30,12 +30,12 @@ def create_app():
 
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.account.controllers.service_modification_controller import service_modification_controller
+    from backend.account.controllers.account_controller import account_controller
     from backend.middleware.session_middleware import session_expiry_middleware
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(service_modification_controller, url_prefix='/account')
+    app.register_blueprint(account_controller, url_prefix='/account')
 
     session_expiry_middleware(app)
 
@@ -59,4 +59,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: requirements.txt Update
+# File 7: requirements.txt Update
