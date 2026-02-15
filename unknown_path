@@ -1,1 +1,1 @@
-# File 1: Account Model to Define User Accounts in models/accounts/account_model.py
+# File 1: Update User Model to Include MFA Fields in models/authentication/user_model.py
