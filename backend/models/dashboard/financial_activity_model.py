@@ -19,4 +19,4 @@ class FinancialActivity(db.Model):
         self.description = description
 
 
-# File 2: Financial Activities Repository in repositories/dashboard/financial_activity_repository.py
+# File 2: Financial Activities Repository in backend/repositories/dashboard/financial_activity_repository.py
