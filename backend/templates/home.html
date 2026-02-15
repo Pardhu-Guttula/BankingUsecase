@@ -1,31 +1,18 @@
 # Epic Title: Responsive Design
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="header">
-        <h1>Welcome to Our Portal</h1>
-    </div>
-    <div class="menu">
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('dashboard_controller.dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('auth_controller.login') }}">Login</a>
-    </div>
-    <div class="container content">
-        <h2>Home Page</h2>
-        <p>This portal is designed to work seamlessly across major web browsers.</p>
-    </div>
-    <div class="footer">
-        <p>&copy; 2023 Our Portal</p>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
 
+{% block title %}Home{% endblock %}
 
-# File 3: Form HTML Template with Cross-Browser Compatible Features in templates/form.html
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to My Portal</h1>
+    <p class="lead">This is a responsive portal that adapts to various screen sizes and devices.</p>
+    <hr class="my-4">
+    <p>Get started by logging in or registering an account.</p>
+    <a class="btn btn-primary btn-lg" href="/auth/login" role="button">Login</a>
+    <a class="btn btn-secondary btn-lg" href="/auth/register" role="button">Register</a>
+</div>
+{% endblock %}
+
+# File 4: Environment Configuration and Final Setup in app.py
