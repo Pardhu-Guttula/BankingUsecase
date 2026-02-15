@@ -1,0 +1,29 @@
+<!-- Epic Title: Display Tailored Products -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/product_dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Welcome, {{ user.username }}</h1>
+        </header>
+        <main>
+            <h2>Tailored Products for You</h2>
+            <div class="products">
+                {% for product in products %}
+                    <div class="product-card">
+                        <h3>{{ product.name }}</h3>
+                        <p>Eligibility: {{ product.eligibility }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>
