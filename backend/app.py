@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import timedelta
 import os
+from cryptography.fernet import Fernet
 
 db = SQLAlchemy()
 
@@ -24,6 +25,9 @@ def create_app():
 
     db.init_app(app)
 
+    encryption_key = Fernet.generate_key()
+    app.config['ENCRYPTION_KEY'] = encryption_key
+
     login_manager = LoginManager(app)
     login_manager.login_view = "auth_controller.login"
     login_manager.session_protection = "strong"
@@ -33,7 +37,7 @@ def create_app():
     from backend.middleware.session_middleware import session_expiry_middleware
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
-    app.register_blueprint(dashboard_controller, url_prefix='/api')
+    app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
 
     session_expiry_middleware(app)
 
@@ -57,4 +61,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: requirements.txt Update
+# File 5: requirements.txt Update
