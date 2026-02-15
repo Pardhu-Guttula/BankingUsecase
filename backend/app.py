@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -69,7 +69,6 @@ def create_app():
     from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
     from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
     from backend.controllers.status.request_status_controller import request_status_controller
-    from backend.controllers.interactions.interaction_history_controller import interaction_history_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -131,4 +130,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Interaction Histories Table in database/create_interaction_histories_table.sql
+# File 7: Schema for In-App Notifications Table in database/create_in_app_notifications_table.sql
