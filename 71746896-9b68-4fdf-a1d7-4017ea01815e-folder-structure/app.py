@@ -1,4 +1,4 @@
-# Epic Title: Implement Multi-Factor Authentication
+# Epic Title: User-Friendly Interface
 
 import logging
 import os
@@ -11,11 +11,11 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Implement Multi-Factor Authentication
+    # Epic Title: User-Friendly Interface
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
-        
+
     except Exception as e:
         logger.error(f"Error during startup: {e}")
         raise
