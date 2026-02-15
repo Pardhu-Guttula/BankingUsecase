@@ -1,8 +1,7 @@
-# Epic Title: Customizable Widgets
+# Epic Title: Develop a User-Friendly Dashboard
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
-from dashboard.controllers.widget_controller import widget_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -40,7 +39,6 @@ def shutdown_session(exception=None):
 
 app.register_blueprint(authentication_controller, url_prefix='/auth')
 app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-app.register_blueprint(widget_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -48,4 +46,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Schema Definition for Widgets Table in database/11_create_widgets_table.sql
+# File 8: Schema Definition for Accounts and Transactions Tables in database/10_create_accounts_and_transactions_tables.sql
