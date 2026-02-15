@@ -10,4 +10,4 @@ class TransactionRepository:
         return Transaction.query.filter_by(user_id=user_id).order_by(Transaction.timestamp.desc()).limit(10).all()
 
 
-# File 5: Account Model in models/account/account_model.py
+# File 5: Account Model in models/account/account_model.py (Existing File, Re-emitting for Context)
