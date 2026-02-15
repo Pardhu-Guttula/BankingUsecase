@@ -3,6 +3,7 @@
 from backend.models.notifications.in_app_notification_model import InAppNotification
 from backend.app import db
 
+
 class InAppNotificationRepository:
     @staticmethod
     def save(in_app_notification: InAppNotification) -> None:
@@ -10,9 +11,8 @@ class InAppNotificationRepository:
         db.session.commit()
 
     @staticmethod
-    def mark_as_read(in_app_notification: InAppNotification) -> None:
-        in_app_notification.is_read = True
-        db.session.commit()
+    def get_notifications_by_user(user_id: int) -> list[InAppNotification]:
+        return InAppNotification.query.filter_by(user_id=user_id).all()
 
 
-# File 4: In-App Notification Service Layer in services/notifications/in_app_notification_service.py
+# File 3: In-App Notification Service to Handle Notification Logic in services/notifications/in_app_notification_service.py
