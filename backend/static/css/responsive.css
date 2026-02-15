@@ -1,0 +1,72 @@
+# Epic Title: Responsive Design
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation styles */
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    margin: 0 1em;
+    text-decoration: none;
+}
+
+/* Container styles */
+#content {
+    padding: 1em;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        margin: 1em 0;
+    }
+
+    #widgets, #summary {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    #widgets {
+        flex-wrap: wrap;
+    }
+
+    .widget {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (min-width: 1025px) {
+    #widgets {
+        flex-wrap: wrap;
+    }
+
+    .widget {
+        width: calc(33.333% - 20px);
+    }
+}
+
+.widget {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+
+# File 2: Update Dashboard HTML Template to Include Responsive CSS in templates/dashboard.html (Already Exists, Modified)
