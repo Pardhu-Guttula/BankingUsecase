@@ -1,1 +1,1 @@
-# File 1: Account and Transaction Summarization in Dashboard Service in dashboard/services/dashboard_service.py
+# File 1: Update User Repository to Manage User Sessions in auth/repositories/user_repository.py
