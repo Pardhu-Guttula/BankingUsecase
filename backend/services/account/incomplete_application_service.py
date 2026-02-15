@@ -1,30 +1,24 @@
 # Epic Title: Interaction History and Documentation Upload
 
-from backend.repositories.account.incomplete_application_repository import IncompleteApplicationRepository
 from backend.models.account.incomplete_application_model import IncompleteApplication
+from backend.repositories.account.incomplete_application_repository import IncompleteApplicationRepository
+
 
 class IncompleteApplicationService:
     @staticmethod
-    def save_application(user_id: int, data: str) -> IncompleteApplication:
-        application = IncompleteApplication(user_id=user_id, data=data)
-        IncompleteApplicationRepository.save(application)
-        return application
+    def save_incomplete_application(user_id: int, application_data: str) -> IncompleteApplication:
+        incomplete_application = IncompleteApplicationRepository.get_incomplete_application(user_id)
+        if incomplete_application:
+            incomplete_application.application_data = application_data
+            IncompleteApplicationRepository.update(incomplete_application)
+        else:
+            incomplete_application = IncompleteApplication(user_id=user_id, application_data=application_data)
+            IncompleteApplicationRepository.save(incomplete_application)
+        return incomplete_application
 
     @staticmethod
-    def update_application(application_id: int, data: str) -> IncompleteApplication:
-        application = IncompleteApplicationRepository.get_incomplete_application_by_id(application_id)
-        if application:
-            application.data = data
-            IncompleteApplicationRepository.update(application)
-        return application
-
-    @staticmethod
-    def get_user_applications(user_id: int) -> list[IncompleteApplication]:
-        return IncompleteApplicationRepository.get_incomplete_applications_by_user(user_id)
-
-    @staticmethod
-    def get_application_by_id(application_id: int) -> IncompleteApplication:
-        return IncompleteApplicationRepository.get_incomplete_application_by_id(application_id)
+    def get_incomplete_application(user_id: int) -> IncompleteApplication:
+        return IncompleteApplicationRepository.get_incomplete_application(user_id)
 
 
-# File 5: Controller to Handle Incomplete Applications in account/controllers/incomplete_application_controller.py
+# File 4: Incomplete Application Controller Endpoint in account/controllers/incomplete_application_controller.py
