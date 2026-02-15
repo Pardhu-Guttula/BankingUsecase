@@ -19,4 +19,4 @@ class WidgetRepository:
         db.session.commit()
 
 
-# File 3: Service Layer for Widgets Operations in services/dashboard/widget_service.py
+# File 4: Service Layer for Widget Management in services/dashboard/widget_service.py
