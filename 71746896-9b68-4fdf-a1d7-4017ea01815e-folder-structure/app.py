@@ -1,4 +1,4 @@
-# Epic Title: Quick Access to Features
+# Epic Title: Display Tailored Products
 
 import logging
 import os
@@ -11,7 +11,7 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Quick Access to Features
+    # Epic Title: Display Tailored Products
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
