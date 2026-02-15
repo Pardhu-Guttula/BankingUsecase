@@ -19,11 +19,6 @@ app = Flask(__name__)
 app.config.update(
     SECRET_KEY='yoursecretkey',
     SQLALCHEMY_DATABASE_URI='mysql+pymysql://username:password@localhost/db_name',
-    MAIL_SERVER='smtp.example.com',
-    MAIL_PORT=587,
-    MAIL_USE_TLS=True,
-    MAIL_USERNAME='your-email@example.com',
-    MAIL_PASSWORD='your-email-password',
 )
 
 Path("authentication/models").mkdir(parents=True, exist_ok=True)
@@ -65,4 +60,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt Update
+# File 6: Schema Definition for Status Updates Table in database/15_create_status_updates_table.sql
