@@ -1,0 +1,18 @@
+# Epic Title: Interaction History and Documentation Upload
+
+{% extends "base.html" %}
+
+{% block title %}Interaction History{% endblock %}
+
+{% block content %}
+<h2>Interaction History</h2>
+<p>Below is a detailed record of your interactions:</p>
+<ul>
+    {% for interaction in interactions %}
+    <li>{{ interaction.timestamp }} - {{ interaction.action }}: {{ interaction.description }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+# File 7: Update Main App to Register Interaction Controller in app.py
