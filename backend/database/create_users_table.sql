@@ -1,11 +1,14 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Implement Secure Login Mechanism
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(150) UNIQUE NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    mfa_secret VARCHAR(255)
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    mfa_secret VARCHAR(32) NOT NULL
 );
 
-# File 7: Update requirements.txt with Required Dependency
+
+# File 7: requirements.txt
