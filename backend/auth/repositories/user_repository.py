@@ -2,6 +2,7 @@
 
 from backend.models.authentication.user_model import User
 from backend.app import db
+from datetime import datetime, timedelta
 
 class UserRepository:
     @staticmethod
@@ -17,5 +18,14 @@ class UserRepository:
     def find_by_username(username: str) -> User:
         return User.query.filter_by(username=username).first()
 
+    @staticmethod
+    def update_last_activity(user: User) -> None:
+        user.last_activity = datetime.utcnow()
+        db.session.commit()
 
-# File 3: Authentication Service to Handle MFA in auth/services/authentication_service.py
+    @staticmethod
+    def is_session_expired(user: User, timeout: int) -> bool:
+        return datetime.utcnow() - user.last_activity > timedelta(minutes=timeout)
+
+
+# File 3: Modify Authentication Service to Handle Password Verification in auth/services/authentication_service.py
