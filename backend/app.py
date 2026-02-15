@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -71,4 +71,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt (Updated)
+# File 6: requirements.txt (Updated)
