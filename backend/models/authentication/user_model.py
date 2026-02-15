@@ -17,7 +17,6 @@ class User(db.Model):
     accounts = relationship('Account', back_populates='user')
     widgets = relationship('Widget', back_populates='user')
     service_modifications = relationship('ServiceModification', back_populates='user')
-    approvals = relationship('RequestApproval', back_populates='approver')
 
     def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
@@ -33,4 +32,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Approval Workflow Repository for CRUD Operations in repositories/approval_workflow/approval_repository.py
+# File 4: Service Modification Repository for CRUD Operations in repositories/account/service_modification_repository.py
