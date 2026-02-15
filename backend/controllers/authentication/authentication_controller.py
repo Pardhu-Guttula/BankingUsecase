@@ -1,12 +1,28 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from flask import Blueprint, request, jsonify, session
-from flask_login import login_user, current_user, logout_user
-from backend.services.authentication.mfa_service import MFAService
+from flask_login import login_user, logout_user
 from backend.repositories.authentication.user_repository import UserRepository
 from backend.models.authentication.user_model import User
+from backend.services.authentication.mfa_service import MFAService
 
 authentication_controller = Blueprint('authentication_controller', __name__)
+
+@authentication_controller.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+
+    if UserRepository.find_by_username(username):
+        return jsonify({'message': 'Username already taken'}), 400
+    if UserRepository.find_by_email(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    user = User(username=username, email=email, password=password)
+    UserRepository.save(user)
+    return jsonify({'message': 'User registered successfully'}), 201
 
 @authentication_controller.route('/login', methods=['POST'])
 def login():
@@ -17,7 +33,6 @@ def login():
     user = UserRepository.find_by_username(username)
     if user and user.check_password(password):
         session['pre_mfa_user_id'] = user.id
-        session.permanent = True
         return jsonify({'message': 'Password correct, enter MFA token'}), 200
 
     return jsonify({'message': 'Invalid username or password'}), 401
@@ -37,7 +52,6 @@ def mfa():
 
     if MFAService.verify_otp(user.mfa_secret, otp):
         login_user(user)
-        session['last_activity'] = int(datetime.utcnow().timestamp())
         return jsonify({'message': 'Login successful'}), 200
 
     return jsonify({'message': 'Invalid MFA token'}), 401
@@ -49,4 +63,4 @@ def logout():
     return jsonify({'message': 'Logged out successfully'}), 200
 
 
-# File 3: Update app.py to Apply Session Middleware
+# File 5: Update app.py for Environment Variables
