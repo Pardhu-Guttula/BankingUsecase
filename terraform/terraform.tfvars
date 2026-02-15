@@ -1,3 +1,2 @@
-sql_admin_login = "sqladmin"
-sql_admin_password = "StrongPassword!"
-log_analytics_workspace_id = "<LOG_ANALYTICS_WORKSPACE_ID>"
+sql_admin_username = "admin_user"
+sql_admin_password = "P@ssw0rd!"
