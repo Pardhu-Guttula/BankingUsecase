@@ -1,4 +1,4 @@
-# Epic Title: Account Opening and Service Modifications
+# Epic Title: Personalized Dashboard
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -14,12 +14,10 @@ class Account(db.Model):
     balance = Column(Integer, nullable=False)
 
     user = relationship('User', back_populates='accounts')
+    transactions = relationship('Transaction', back_populates='account')
 
     def __init__(self, user_id: int, account_number: str, account_type: str, balance: int):
         self.user_id = user_id
         self.account_number = account_number
         self.account_type = account_type
         self.balance = balance
-
-
-# File 3: Account Repository for CRUD Operations in repositories/accounts/account_repository.py
