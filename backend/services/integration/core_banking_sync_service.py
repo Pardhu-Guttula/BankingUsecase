@@ -1,61 +1,37 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Data Synchronization Mechanisms
 
-from backend.repositories.core_banking.transaction_repository import TransactionRepository
-from backend.repositories.core_banking.request_repository import RequestRepository
-from backend.models.core_banking.transaction_model import Transaction
-from backend.models.core_banking.request_model import Request
+from backend.repositories.integration.core_banking_sync_repository import CoreBankingSyncRepository
+from backend.models.integration.core_banking_sync_model import CoreBankingSync
+from datetime import datetime
+import requests
 
 class CoreBankingSyncService:
     @staticmethod
-    def sync_transactions(external_transactions: list[dict]) -> None:
-        for ext_trans in external_transactions:
-            existing_trans = TransactionRepository.get_by_external_id(ext_trans['external_id'])
-            if existing_trans:
-                CoreBankingSyncService.update_transaction(existing_trans, ext_trans)
-            else:
-                CoreBankingSyncService.create_transaction(ext_trans)
+    def sync_entity(entity: str) -> None:
+        sync_record = CoreBankingSyncRepository.find_by_entity(entity)
+        if not sync_record:
+            sync_record = CoreBankingSync(entity=entity)
+            CoreBankingSyncRepository.save(sync_record)
+
+        # Example logic to synchronize data with core banking system
+        response = requests.get(f'https://core-banking-system/api/{entity}/sync', headers={
+            'Authorization': 'Bearer your_api_token'
+        })
+        if response.status_code == 200:
+            data = response.json()
+            # Process and update the portal database with the data
+            sync_record.last_synced = datetime.utcnow()
+            CoreBankingSyncRepository.update(sync_record)
+        else:
+            raise Exception('Error synchronizing data with core banking system')
 
     @staticmethod
-    def sync_requests(external_requests: list[dict]) -> None:
-        for ext_req in external_requests:
-            existing_req = RequestRepository.get_by_external_id(ext_req['external_id'])
-            if existing_req:
-                CoreBankingSyncService.update_request(existing_req, ext_req)
-            else:
-                CoreBankingSyncService.create_request(ext_req)
+    def get_sync_status(entity: str) -> CoreBankingSync:
+        return CoreBankingSyncRepository.find_by_entity(entity)
 
     @staticmethod
-    def create_transaction(data: dict) -> Transaction:
-        transaction = Transaction(
-            user_id=data['user_id'],
-            amount=data['amount'],
-            status=data['status'],
-            external_id=data['external_id']
-        )
-        TransactionRepository.save(transaction)
-        return transaction
+    def get_all_sync_statuses() -> list[CoreBankingSync]:
+        return CoreBankingSyncRepository.find_all()
 
-    @staticmethod
-    def update_transaction(transaction: Transaction, data: dict) -> None:
-        transaction.amount = data['amount']
-        transaction.status = data['status']
-        TransactionRepository.save(transaction)
 
-    @staticmethod
-    def create_request(data: dict) -> Request:
-        request = Request(
-            user_id=data['user_id'],
-            type=data['type'],
-            status=data['status'],
-            external_id=data['external_id']
-        )
-        RequestRepository.save(request)
-        return request
-
-    @staticmethod
-    def update_request(request: Request, data: dict) -> None:
-        request.type = data['type']
-        request.status = data['status']
-        RequestRepository.save(request)
-
-# File 2: Sync Controller in controllers/integration/core_banking_sync_controller.py
+# File 4: Core Banking Data Sync Controller in `controllers/integration/core_banking_sync_controller.py`
