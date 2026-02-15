@@ -1,9 +1,8 @@
 # Epic Title: Interaction History and Documentation Upload
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
 from backend.app import db
-import datetime
+from datetime import datetime
 
 class InteractionHistory(db.Model):
     __tablename__ = 'interaction_histories'
@@ -11,13 +10,11 @@ class InteractionHistory(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     action = Column(String(255), nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    timestamp = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    user = relationship('User', back_populates='interactions')
-
-    def __init__(self, user_id: int, action: str):
+    def __init__(self, user_id: int, action: str, timestamp: datetime = datetime.utcnow()):
         self.user_id = user_id
         self.action = action
+        self.timestamp = timestamp
 
-
-# File 2: Update User Model to Include Relationship with Interaction History in models/authentication/user_model.py
+# File 2: Interaction History Repository in repositories/interactions/interaction_history_repository.py
