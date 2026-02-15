@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Interaction History and Documentation Upload
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -47,6 +47,7 @@ def create_app():
     from backend.history.controllers.interaction_history_controller import interaction_history_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
+    from backend.documents.controllers.document_upload_controller import document_upload_controller
     from backend.account.controllers.incomplete_application_controller import incomplete_application_controller
     from backend.account.controllers.application_controller import application_controller
     from backend.integration.controllers.api_controller import api_controller
@@ -71,6 +72,7 @@ def create_app():
     app.register_blueprint(interaction_history_controller, url_prefix='/history')
     app.register_blueprint(interaction_controller, url_prefix='/history')
     app.register_blueprint(document_controller, url_prefix='/documents')
+    app.register_blueprint(document_upload_controller, url_prefix='/documents')
     app.register_blueprint(incomplete_application_controller, url_prefix='/applications')
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
@@ -111,4 +113,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Schema for In-App Notifications Table in database/create_in_app_notifications_table.sql
+# File 6: Schema for Incomplete Applications Table in database/create_incomplete_applications_table.sql
