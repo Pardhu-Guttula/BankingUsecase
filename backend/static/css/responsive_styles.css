@@ -1,0 +1,115 @@
+# Epic Title: Consistency Across Devices
+
+/* Basic reset for responsive design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Default body styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+/* Responsive layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Adaptive columns */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+}
+
+.col {
+    flex: 1;
+    padding: 15px;
+    min-width: 300px;
+}
+
+/* Header styling */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.header-logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Footer styling */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Navigation responsive styling */
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #444;
+    padding: 10px;
+}
+
+.nav a {
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.nav a:hover {
+    background: #555;
+}
+
+/* Consistent table design */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .nav a {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logo {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+
+# File 2: Update Templates Base for Consistent Experience in templates/base.html
