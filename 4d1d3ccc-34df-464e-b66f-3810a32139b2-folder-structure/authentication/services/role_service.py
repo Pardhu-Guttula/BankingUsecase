@@ -2,6 +2,8 @@
 
 from authentication.repositories.role_repository import RoleRepository
 from authentication.models.role_model import Role
+from authentication.models.permission_model import Permission
+from backend.app import db
 
 class RoleService:
     @staticmethod
@@ -20,5 +22,12 @@ class RoleService:
     def get_all_roles() -> list[Role]:
         return RoleRepository.get_all()
 
+    @staticmethod
+    def assign_permission_to_role(role_id: int, permission_id: int) -> None:
+        role = Role.query.get(role_id)
+        permission = Permission.query.get(permission_id)
+        role.permissions.append(permission)
+        db.session.commit()
 
-# File 5: Role Controller for Handling Requests in authentication/controllers/role_controller.py
+
+# File 7: Permission Service for Business Logic in authentication/services/permission_service.py
