@@ -21,7 +21,8 @@ def create_app():
         MAIL_USERNAME='your-email@example.com',
         MAIL_PASSWORD='your-email-password',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
-        STATIC_FOLDER='static'
+        STATIC_FOLDER='static',
+        UPLOAD_FOLDER='uploads'
     )
 
     db.init_app(app)
@@ -36,14 +37,12 @@ def create_app():
     from backend.status.controllers.status_controller import status_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
-    from backend.account.controllers.application_controller import application_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
     app.register_blueprint(status_controller, url_prefix='/status')
     app.register_blueprint(interaction_controller, url_prefix='/history')
     app.register_blueprint(document_controller, url_prefix='/documents')
-    app.register_blueprint(application_controller, url_prefix='/applications')
 
     @app.route('/')
     def home():
