@@ -1,4 +1,4 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Implement Secure Login Mechanism
 
 from backend.models.authentication.user_model import User
 from backend.app import db
@@ -10,15 +10,12 @@ class UserRepository:
         db.session.commit()
 
     @staticmethod
-    def get_by_username(username: str) -> User:
+    def find_by_username(username: str) -> User | None:
         return User.query.filter_by(username=username).first()
 
     @staticmethod
-    def get_by_email(email: str) -> User:
+    def find_by_email(email: str) -> User | None:
         return User.query.filter_by(email=email).first()
 
-    @staticmethod
-    def get_by_id(user_id: int) -> User:
-        return User.query.filter_by(id=user_id).first()
 
-# File 3: User Service in services/authentication/user_service.py
+# File 3: Multi-Factor Authentication Service in services/authentication/mfa_service.py
