@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -30,10 +30,14 @@ def create_app():
 
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
+    from backend.account.controllers.account_controller import account_controller
+    from backend.controllers.approval_workflow.approval_controller import approval_controller
     from backend.middleware.session_middleware import session_expiry_middleware
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
+    app.register_blueprint(account_controller, url_prefix='/account')
+    app.register_blueprint(approval_controller, url_prefix='/approval')
 
     session_expiry_middleware(app)
 
@@ -57,4 +61,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: requirements.txt Update
+# File 4: requirements.txt Update
