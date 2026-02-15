@@ -1,4 +1,4 @@
-# Epic Title: Data Synchronization Mechanisms
+# Epic Title: Develop Secure APIs
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
@@ -48,4 +48,4 @@ if __name__ == '__main__':
     socketio.run(app, debug=True)
 
 
-# File 6: Schema Definition for SyncLog Table in database/04_create_sync_logs_table.sql
+# File 5: requirements.txt Update
