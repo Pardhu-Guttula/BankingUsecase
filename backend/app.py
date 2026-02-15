@@ -68,7 +68,7 @@ def create_app():
     from backend.controllers.account.opening_requests.account_opening_request_controller import account_opening_request_controller
     from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
     from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
-    from backend.routes.consistent_routes import consistent_routes
+    from backend.routes.main_routes import main_routes
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -102,7 +102,7 @@ def create_app():
     app.register_blueprint(account_opening_request_controller, url_prefix='/account')
     app.register_blueprint(service_modification_request_controller, url_prefix='/account')
     app.register_blueprint(approval_workflow_controller, url_prefix='/approval-workflow')
-    app.register_blueprint(consistent_routes, url_prefix='/')
+    app.register_blueprint(main_routes)
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
