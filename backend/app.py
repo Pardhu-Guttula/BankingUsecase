@@ -1,4 +1,4 @@
-# Epic Title: Data Synchronization Mechanisms
+# Epic Title: Develop Secure APIs
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -40,13 +40,13 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.routes.dashboard import dashboard_bp
-    from backend.controllers.integration.core_banking_sync_controller import core_banking_sync_controller
+    from backend.controllers.integration.core_banking_controller import core_banking_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
-    app.register_blueprint(core_banking_sync_controller, url_prefix='/integration')
+    app.register_blueprint(core_banking_controller, url_prefix='/integration')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
