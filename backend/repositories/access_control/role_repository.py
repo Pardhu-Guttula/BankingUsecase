@@ -5,21 +5,26 @@ from backend.app import db
 
 class RoleRepository:
     @staticmethod
+    def get_all_roles() -> list[Role]:
+        return Role.query.all()
+
+    @staticmethod
+    def get_role_by_id(role_id: int) -> Role:
+        return Role.query.get(role_id)
+
+    @staticmethod
     def save(role: Role) -> None:
         db.session.add(role)
         db.session.commit()
 
     @staticmethod
-    def find_by_id(role_id: int) -> Role:
-        return Role.query.get(role_id)
+    def update(role: Role) -> None:
+        db.session.commit()
 
     @staticmethod
-    def find_by_name(name: str) -> Role:
-        return Role.query.filter_by(name=name).first()
-
-    @staticmethod
-    def find_all() -> list[Role]:
-        return Role.query.all()
+    def delete(role: Role) -> None:
+        db.session.delete(role)
+        db.session.commit()
 
 
-# File 4: User Repository to Manage User Role Assignments in repositories/authentication/user_repository.py
+# File 4: Role Service Layer in services/access_control/role_service.py
