@@ -1,10 +1,11 @@
 # Epic Title: Personalized Dashboard
 
 from backend.models.dashboard.widget_model import Widget
+from backend.app import db
 
 class WidgetRepository:
     @staticmethod
-    def find_by_user_id(user_id: int) -> list[Widget]:
+    def get_widgets_by_user(user_id: int) -> list[Widget]:
         return Widget.query.filter_by(user_id=user_id).all()
 
     @staticmethod
@@ -18,4 +19,4 @@ class WidgetRepository:
         db.session.commit()
 
 
-# File 4: Widget Service to Handle Business Logic in services/dashboard/widget_service.py
+# File 3: Service Layer for Widgets Operations in services/dashboard/widget_service.py
