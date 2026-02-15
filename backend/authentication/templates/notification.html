@@ -1,0 +1,43 @@
+# Epic Title: In-app Notifications
+
+<div id="notification-container">
+    <div id="notification" class="hidden">
+        <p id="notification-message"></p>
+        <button onclick="closeNotification()">Close</button>
+    </div>
+</div>
+
+<script>
+    function closeNotification() {
+        document.getElementById('notification').classList.add('hidden');
+    }
+
+    function showNotification(message) {
+        document.getElementById('notification-message').innerText = message;
+        document.getElementById('notification').classList.remove('hidden');
+    }
+</script>
+
+<style>
+    #notification-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+    }
+
+    #notification {
+        background-color: #333;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+
+# File 4: Base HTML Template Extended to Include Notification Script in authentication/templates/base.html
