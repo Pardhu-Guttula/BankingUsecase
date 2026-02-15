@@ -1,32 +1,34 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Manage Secure Storage of Credentials
 
-from werkzeug.security import generate_password_hash, check_password_hash
-from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.backends import default_backend
+import os
+import base64
 
 class EncryptionService:
-    @staticmethod
-    def generate_key() -> bytes:
-        return Fernet.generate_key()
+    def __init__(self, key: bytes):
+        self.key = key
+        self.backend = default_backend()
 
-    @staticmethod
-    def encrypt_password(password: str) -> str:
-        return generate_password_hash(password)
+    def encrypt(self, plaintext: str) -> str:
+        iv = os.urandom(16)
+        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv), backend=self.backend)
+        encryptor = cipher.encryptor()
+        padder = padding.PKCS7(algorithms.AES.block_size).padder()
+        padded_data = padder.update(plaintext.encode()) + padder.finalize()
+        encrypted = encryptor.update(padded_data) + encryptor.finalize()
+        return base64.b64encode(iv + encrypted).decode('utf-8')
 
-    @staticmethod
-    def verify_password(stored_password: str, provided_password: str) -> bool:
-        return check_password_hash(stored_password, provided_password)
-
-    @staticmethod
-    def encrypt_data(key: bytes, data: str) -> bytes:
-        fernet = Fernet(key)
-        encrypted_data = fernet.encrypt(data.encode())
-        return encrypted_data
-
-    @staticmethod
-    def decrypt_data(key: bytes, encrypted_data: bytes) -> str:
-        fernet = Fernet(key)
-        decrypted_data = fernet.decrypt(encrypted_data).decode()
-        return decrypted_data
+    def decrypt(self, ciphertext: str) -> str:
+        data = base64.b64decode(ciphertext.encode('utf-8'))
+        iv = data[:16]
+        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv), backend=self.backend)
+        decryptor = cipher.decryptor()
+        padded_data = decryptor.update(data[16:]) + decryptor.finalize()
+        unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
+        plaintext = unpadder.update(padded_data) + unpadder.finalize()
+        return plaintext.decode('utf-8')
 
 
-# File 2: Update User Model to Include Session Key Encryption in models/authentication/user_model.py
+# File 3: User Repository with Encryption and Decryption in repositories/authentication/user_repository.py
