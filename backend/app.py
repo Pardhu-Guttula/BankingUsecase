@@ -50,6 +50,7 @@ def create_app():
     from backend.account.controllers.application_controller import application_controller
     from backend.integration.controllers.api_controller import api_controller
     from backend.integration.controllers.sync_controller import sync_controller
+    from backend.integration.controllers.core_banking_sync_controller import core_banking_sync_controller
     from backend.integration.controllers.integration_controller import integration_controller
     from backend.access.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
@@ -71,6 +72,7 @@ def create_app():
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
     app.register_blueprint(sync_controller, url_prefix='/sync')
+    app.register_blueprint(core_banking_sync_controller, url_prefix='/sync')
     app.register_blueprint(integration_controller, url_prefix='/integration')
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(permission_controller, url_prefix='/permissions')
@@ -105,4 +107,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Schema for Widget Table in database/create_widgets_table.sql
+# File 8: Schema for Account Table in database/create_accounts_table.sql (Existing File, Re-emitting for Context)
