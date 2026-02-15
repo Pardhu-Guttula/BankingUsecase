@@ -130,4 +130,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 7: Schema for In-App Notifications Table in database/create_in_app_notifications_table.sql
+# File 6: Schema for Request Statuses Table in database/create_request_statuses_table.sql
