@@ -1,14 +1,14 @@
-# Epic Title: Implement Adaptive Layouts
+# Epic Title: Cross-Browser Compatibility
 
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 
-dashboard = Blueprint('dashboard', __name__)
+dashboard_bp = Blueprint('dashboard_bp', __name__)
 
-@dashboard.route('/dashboard')
+@dashboard_bp.route('/dashboard', methods=['GET'])
 @login_required
-def get_dashboard():
+def dashboard():
     return render_template('dashboard.html')
 
 
-# File 5: Update app.py to Register Dashboard Route
+# File 5: Update app.py to Register Dashboard Blueprint for Cross-Browser Compatibility
