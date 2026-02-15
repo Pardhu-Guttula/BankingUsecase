@@ -1,4 +1,4 @@
-# Epic Title: Document Upload Capability
+# Epic Title: Define User Roles
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -40,13 +40,11 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.routes.dashboard import dashboard_bp
-    from backend.controllers.documents.document_upload_controller import document_upload_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
-    app.register_blueprint(document_upload_controller, url_prefix='/documents')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
