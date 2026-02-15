@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: User Authentication and Security
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -25,28 +25,19 @@ def create_app():
     db.init_app(app)
 
     login_manager = LoginManager(app)
-    login_manager.login_view = "authentication_controller.login"
+    login_manager.login_view = "auth_controller.login"
     login_manager.session_protection = "strong"
 
+    from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.dashboard.interaction_controller import interaction_controller
-    from backend.controllers.dashboard.document_controller import document_controller
-    from backend.controllers.dashboard.application_controller import application_controller
-    from backend.controllers.dashboard.secure_api_controller import secure_api_controller
-    from backend.controllers.dashboard.sync_log_controller import sync_log_controller
-    from backend.controllers.dashboard.role_controller import role_controller
-    from backend.controllers.dashboard.permission_controller import permission_controller
+    from backend.middleware.session_middleware import session_expiry_middleware
 
+    app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/api')
-    app.register_blueprint(interaction_controller, url_prefix='/api')
-    app.register_blueprint(document_controller, url_prefix='/api')
-    app.register_blueprint(application_controller, url_prefix='/api')
-    app.register_blueprint(secure_api_controller, url_prefix='/api')
-    app.register_blueprint(sync_log_controller, url_prefix='/api')
-    app.register_blueprint(role_controller, url_prefix='/api')
-    app.register_blueprint(permission_controller, url_prefix='/api')
+
+    session_expiry_middleware(app)
 
     @app.route('/')
     def home():
@@ -56,7 +47,6 @@ def create_app():
     def static_files(filename):
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
-    from backend.services.core_banking.data_sync_scheduler import SyncScheduler
     with app.app_context():
         db.create_all()
 
@@ -69,4 +59,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 14: requirements.txt Update
+# File 5: requirements.txt Update
