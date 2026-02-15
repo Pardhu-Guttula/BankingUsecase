@@ -1,0 +1,29 @@
+# Epic Title: Responsive Design
+
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Contact Us</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label }}<br>
+            {{ form.name(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}<br>
+            {{ form.email(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.message.label }}<br>
+            {{ form.message(class_="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+</div>
+{% endblock %}
+
+# File 5: Update Main App to Serve Updated Templates in app.py
