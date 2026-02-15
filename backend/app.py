@@ -3,6 +3,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from datetime import timedelta
 
 db = SQLAlchemy()
 
@@ -16,12 +17,14 @@ def create_app():
         MAIL_USE_TLS=True,
         MAIL_USERNAME='your-email@example.com',
         MAIL_PASSWORD='your-email-password',
+        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15)
     )
 
     db.init_app(app)
 
     login_manager = LoginManager(app)
     login_manager.login_view = "authentication_controller.login"
+    login_manager.session_protection = "strong"
 
     from backend.controllers.authentication.authentication_controller import authentication_controller
 
@@ -36,4 +39,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: requirements.txt Update
+# File 2: requirements.txt Update
