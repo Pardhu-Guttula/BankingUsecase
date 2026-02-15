@@ -1,1 +1,1 @@
-sql_password = "YourStrong(!)Password"
+aws_region = "us-west-2"
