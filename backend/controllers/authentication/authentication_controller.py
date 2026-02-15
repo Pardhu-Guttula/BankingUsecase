@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from flask import Blueprint, request, jsonify, session
 from flask_login import login_user, logout_user
@@ -33,7 +33,6 @@ def login():
     user = UserRepository.find_by_username(username)
     if user and user.check_password(password):
         session['pre_mfa_user_id'] = user.id
-        session.permanent = True
         return jsonify({'message': 'Password correct, enter MFA token'}), 200
 
     return jsonify({'message': 'Invalid username or password'}), 401
@@ -53,7 +52,7 @@ def mfa():
 
     if MFAService.verify_otp(user.mfa_secret, otp):
         login_user(user)
-        session['last_activity'] = int(datetime.utcnow().timestamp())
+        session['user_id'] = user.id
         return jsonify({'message': 'Login successful'}), 200
 
     return jsonify({'message': 'Invalid MFA token'}), 401
@@ -65,4 +64,4 @@ def logout():
     return jsonify({'message': 'Logged out successfully'}), 200
 
 
-# File 3: Update app.py to Apply Session Middleware
+# File 5: Update app.py for Environment Variables
