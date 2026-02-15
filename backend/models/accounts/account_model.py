@@ -1,8 +1,7 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Account Opening and Service Modifications
 
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Numeric
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from datetime import datetime
 from backend.app import db
 
 class Account(db.Model):
@@ -11,18 +10,16 @@ class Account(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     account_number = Column(String(20), unique=True, nullable=False)
-    account_type = Column(String(20), nullable=False)
-    balance = Column(Numeric(12, 2), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    
-    user = relationship("User", back_populates="accounts")
-    transactions = relationship("Transaction", back_populates="account")
+    account_type = Column(String(50), nullable=False)
+    balance = Column(Integer, nullable=False)
 
-    def __init__(self, user_id: int, account_number: str, account_type: str, balance: float):
+    user = relationship('User', back_populates='accounts')
+
+    def __init__(self, user_id: int, account_number: str, account_type: str, balance: int):
         self.user_id = user_id
         self.account_number = account_number
         self.account_type = account_type
         self.balance = balance
 
 
-# File 2: Transaction Model to Define Account Transactions in models/accounts/transaction_model.py
+# File 3: Account Repository for CRUD Operations in repositories/accounts/account_repository.py
