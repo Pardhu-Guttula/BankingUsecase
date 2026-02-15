@@ -2,9 +2,10 @@
 
 from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
-from backend.app import db
+from backend.app import core_banking_db as db
 
 class CoreBankingIntegration(db.Model):
+    __bind_key__ = 'core_banking'
     __tablename__ = 'core_banking_integrations'
 
     id = Column(Integer, primary_key=True)
@@ -17,6 +18,3 @@ class CoreBankingIntegration(db.Model):
         self.service_name = service_name
         self.endpoint = endpoint
         self.request_type = request_type
-
-
-# File 2: Core Banking Repository to Manage Integrations in repositories/core_banking/integration_repository.py
