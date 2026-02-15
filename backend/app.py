@@ -1,4 +1,4 @@
-# Epic Title: Responsive Design
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -111,4 +111,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: Update requirements.txt with Only Necessary Dependencies
+# File 7: Schema for Email Notifications Table in database/create_email_notifications_table.sql
