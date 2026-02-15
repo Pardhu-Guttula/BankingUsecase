@@ -1,0 +1,22 @@
+# Epic Title: Interaction History and Documentation Upload
+
+{% extends "base.html" %}
+
+{% block title %}Edit Application{% endblock %}
+
+{% block content %}
+<h2>Edit Application</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.data.label }}<br>
+        {{ form.data(rows=10) }}
+    </div>
+    <div>
+        <button type="submit">Save Application</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 10: Update Main App to Register Application Controller in app.py
