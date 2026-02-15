@@ -1,6 +1,6 @@
 # Epic Title: Real-time Status Updates
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 from backend.app import db
 from datetime import datetime
@@ -21,4 +21,4 @@ class RequestStatus(db.Model):
         self.request_type = request_type
 
 
-# File 2: Status Update Repository in repositories/status/request_status_repository.py
+# File 2: Real-time Status Update Repository in `repositories/status/request_status_repository.py`
