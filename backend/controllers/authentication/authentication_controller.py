@@ -1,9 +1,10 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Implement Secure Login Mechanism
 
-from flask import Blueprint, request, jsonify
-from flask_login import login_user, logout_user, login_required
-from backend.models.user_model import User
-from backend.services.authentication.authentication_service import AuthenticationService
+from flask import Blueprint, request, jsonify, session
+from flask_login import login_user, current_user, logout_user
+from backend.services.authentication.mfa_service import MFAService
+from backend.repositories.authentication.user_repository import UserRepository
+from backend.models.authentication.user_model import User
 
 authentication_controller = Blueprint('authentication_controller', __name__)
 
@@ -12,26 +13,37 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    token = data.get('token')
 
-    user = User.query.filter_by(username=username).first()
+    user = UserRepository.find_by_username(username)
+    if user and user.check_password(password):
+        session['pre_mfa_user_id'] = user.id
+        return jsonify({'message': 'Password correct, enter MFA token'}), 200
 
-    if user and AuthenticationService.authenticate_user(user.id, password, token):
+    return jsonify({'message': 'Invalid username or password'}), 401
+
+@authentication_controller.route('/mfa', methods=['POST'])
+def mfa():
+    data = request.get_json()
+    otp = data.get('mfa_token')
+
+    user_id = session.get('pre_mfa_user_id')
+    if not user_id:
+        return jsonify({'message': 'MFA session invalid'}), 401
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    if MFAService.verify_otp(user.mfa_secret, otp):
         login_user(user)
         return jsonify({'message': 'Login successful'}), 200
 
-    return jsonify({'message': 'Invalid credentials or token'}), 401
+    return jsonify({'message': 'Invalid MFA token'}), 401
 
 @authentication_controller.route('/logout', methods=['POST'])
-@login_required
 def logout():
     logout_user()
-    return jsonify({'message': 'Logout successful'}), 200
+    return jsonify({'message': 'Logged out successfully'}), 200
 
-@authentication_controller.route('/register/mfa', methods=['POST'])
-@login_required
-def register_mfa():
-    mfa_secret = AuthenticationService.register_mfa(current_user.id)
-    return jsonify({'mfa_secret': mfa_secret}), 200
 
-# File 5: Register Authentication Controller Blueprint in app.py (Already Exists, Modified)
+# File 5: Update app.py to Register Authentication Controller Blueprint
