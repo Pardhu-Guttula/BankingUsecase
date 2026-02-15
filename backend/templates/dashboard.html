@@ -1,30 +1,36 @@
-# Epic Title: Responsive Design
+# Epic Title: Personalized Dashboard
 
 {% extends "base.html" %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2>Hello, {{ current_user.username }}!</h2>
-<div class="container">
-    <h3>Your Accounts</h3>
-    <div class="row">
-        {% for account in data.accounts %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <h3>{{ account.account_type }} - {{ account.account_number }}</h3>
-                <p>Balance: ${{ account.balance }}</p>
-                <h5>Recent Transactions</h5>
-                <ul>
-                    {% for transaction in account.transactions %}
-                    <li>{{ transaction.type }}: ${{ transaction.amount }} on {{ transaction.date }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        {% endfor %}
+<h2>Personalized Dashboard</h2>
+<h3>Widgets</h3>
+<ul>
+    {% for widget in widgets %}
+    <li>{{ widget.name }} - {{ widget.config }}
+        <form method="POST" action="{{ url_for('dashboard_controller.remove_widget', widget_id=widget.id) }}" style="display:inline">
+            <button type="submit">Remove</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+<h3>Add New Widget</h3>
+<form method="POST" action="{{ url_for('dashboard_controller.add_widget') }}">
+    <div>
+        <label for="name">Widget Name:</label>
+        <input type="text" id="name" name="name" required>
     </div>
-</div>
+    <div>
+        <label for="config">Widget Config:</label>
+        <input type="text" id="config" name="config" required>
+    </div>
+    <div>
+        <button type="submit">Add Widget</button>
+    </div>
+</form>
 {% endblock %}
 
-# File 3: Form HTML Template with Consistent Layout in templates/form.html
+
+# File 7: Update Main App to Register Dashboard Controller in app.py
