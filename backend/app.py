@@ -1,4 +1,4 @@
-# Epic Title: Responsive Design
+# Epic Title: Account Opening and Service Modifications
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -47,7 +47,6 @@ def create_app():
     from backend.access.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
     from backend.access_control.controllers.policy_controller import policy_controller
-    from backend.controllers.home_controller import home_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -65,7 +64,10 @@ def create_app():
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(permission_controller, url_prefix='/permissions')
     app.register_blueprint(policy_controller, url_prefix='/policies')
-    app.register_blueprint(home_controller, url_prefix='/')
+
+    @app.route('/')
+    def home():
+        return render_template('home.html')
 
     @app.route('/static/<path:filename>')
     def static_files(filename):
@@ -91,4 +93,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: Update requirements.txt with Only Necessary Dependencies
+# File 9: Create Schema for Approval Workflow in database/
