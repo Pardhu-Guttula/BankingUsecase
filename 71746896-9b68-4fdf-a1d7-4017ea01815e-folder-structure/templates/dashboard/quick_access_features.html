@@ -1,0 +1,40 @@
+<!-- Epic Title: Quick Access to Features -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Access Features Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/quick_access_dashboard.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Quick Access Features Dashboard</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Welcome, {{ user.username }}</h2>
+            <h3>Quick Access to Essential Features</h3>
+            <ul>
+                {% for feature in key_features %}
+                    <li>
+                        <a href="{{ feature.url }}">{{ feature.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Bank</p>
+    </footer>
+</body>
+</html>
