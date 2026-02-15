@@ -1,23 +1,37 @@
 # Epic Title: Implement Multi-Factor Authentication
 
-from django.http import JsonResponse, HttpRequest
-from django.contrib.auth import authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 from backend.services.authentication.mfa_service import MFAService
 
-def prompt_for_second_factor(request: HttpRequest) -> JsonResponse:
+def login_view(request):
     # Epic Title: Implement Multi-Factor Authentication
-    user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-    if user is not None:
-        if MFAService.has_second_factor(user):
-            MFAService.send_second_factor_code(user)
-            return JsonResponse({"message": "Second factor required"}, status=200)
-        else:
-            return JsonResponse({"message": "Second factor not registered"}, status=400)
-    return JsonResponse({"message": "Invalid credentials"}, status=401)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            request.session['pre_auth_user_id'] = user.id
+            return redirect('mfa_prompt')
+    
+    return render(request, 'authentication/login.html')
 
-def verify_second_factor(request: HttpRequest) -> JsonResponse:
+@login_required
+def mfa_prompt_view(request):
     # Epic Title: Implement Multi-Factor Authentication
-    user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-    if user is not None and MFAService.check_code(user, request.POST['code']):
-        return JsonResponse({"message": "Authentication successful"}, status=200)
-    return JsonResponse({"message": "Invalid second factor"}, status=401)
+    if request.method == "POST":
+        code = request.POST.get('code')
+        user_id = request.session.get('pre_auth_user_id')
+        if not user_id:
+            return HttpResponse("Session expired", status=403)
+        
+        if MFAService.verify_code(user_id, code):
+            user = authenticate(user_id=user_id)
+            login(request, user)
+            return redirect('dashboard')
+
+        return HttpResponse("Invalid code", status=403)
+
+    return render(request, 'authentication/mfa_prompt.html')
