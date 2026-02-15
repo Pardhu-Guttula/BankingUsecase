@@ -7,36 +7,13 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Desktop layout */
+/* Universal container */
 .container {
-    width: 80%;
+    width: 100%;
     margin: auto;
+    max-width: 1200px;
     overflow: hidden;
-}
-
-/* Tablet layout */
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-        margin: auto;
-        overflow: hidden;
-    }
-}
-
-/* Mobile layout */
-@media (max-width: 480px) {
-    .container {
-        width: 100%;
-        margin: auto;
-        overflow: hidden;
-        padding: 10px;
-    }
-    nav ul {
-        display: none;
-    }
-    .menu-btn {
-        display: block;
-    }
+    padding: 10px;
 }
 
 .header {
@@ -86,5 +63,40 @@ body {
     text-align: center;
 }
 
+/* Desktop layout */
+@media (min-width: 769px) {
+    .container {
+        width: 80%;
+    }
+}
 
-# File 3: Base HTML Template with Responsive Meta Tags in backend/templates/base.html
+/* Tablet layout */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+    .header nav ul li {
+        display: block;
+        margin-left: 0;
+    }
+    .menu-btn {
+        display: none;
+    }
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .header nav ul {
+        display: none;
+    }
+    .menu-btn {
+        display: block;
+    }
+}
+
+
+# File 2: Base HTML Template with Consistent Layout in backend/templates/base.html
