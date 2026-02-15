@@ -1,6 +1,7 @@
 flask==2.0.3
 sqlalchemy==1.4.32
 pymysql==1.0.2
+smtplib==0.4.0
 werkzeug==2.0.3
 flask-login==0.5.0
 cryptography==36.0.2
