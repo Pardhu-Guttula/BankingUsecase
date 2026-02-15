@@ -1,0 +1,39 @@
+# Epic Title: Interaction History and Documentation Upload
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+        </div>
+        <div>
+            <a href="/documents/upload">Upload Document</a>
+            <a href="/account/open">Open Account</a>
+            <a href="/account/modification">Modify Service</a>
+            <a href="/approval">Approvals</a>
+            <a href="/auth/logout">Logout</a>
+        </div>
+    </nav>
+    <div id="content">
+        <h1>Upload Document</h1>
+        <form action="/documents/upload" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="request_id" value="1"> <!-- Example request id, should be dynamically set -->
+            <div>
+                <label for="file">Choose file to upload</label>
+                <input type="file" id="file" name="file" required>
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+# File 8: Update requirements.txt with Only Necessary Dependencies
