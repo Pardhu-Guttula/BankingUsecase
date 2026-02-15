@@ -12,8 +12,8 @@ def create_status():
     data = request.get_json()
     request_id = data.get('request_id')
     status = data.get('status')
-    user_email = current_user.email
-    if StatusService.create_status(request_id, status, user_email):
+    user_id = current_user.id
+    if StatusService.create_status(request_id, status, user_id):
         return jsonify({"message": "Status created successfully."}), 201
     return jsonify({"message": "Failed to create status."}), 500
 
@@ -22,10 +22,10 @@ def create_status():
 def update_status(status_id):
     data = request.get_json()
     new_status = data.get('status')
-    user_email = current_user.email
-    if StatusService.update_status(status_id, new_status, user_email):
+    user_id = current_user.id
+    if StatusService.update_status(status_id, new_status, user_id):
         return jsonify({"message": "Status updated successfully."}), 200
     return jsonify({"message": "Failed to update status."}), 500
 
 
-# File 5: requirements.txt Update
+# File 7: Update Main App to Register Notification Controller in app.py
