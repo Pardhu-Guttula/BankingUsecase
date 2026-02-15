@@ -1,0 +1,122 @@
+# Epic Title: Responsive Design
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        max-width: 768px;
+        padding: 15px;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+}
+
+.header {
+    padding: 20px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    background: #444;
+}
+
+.navbar a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Tablet and Mobile Navbar */
+@media (max-width: 1023px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar a {
+        padding: 10px;
+    }
+}
+
+.main-content {
+    padding: 20px;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 0;
+    color: #333;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #ddd;
+}
+
+/* Main and Sidebar Layout */
+.main-layout {
+    display: flex;
+}
+
+.main-layout .main-content {
+    flex: 1;
+}
+
+/* Tablet and Mobile Sidebar */
+@media (max-width: 1023px) {
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.footer {
+    padding: 20px;
+    background: #eee;
+    text-align: center;
+}
+
+# File 2: Base Template in templates/base.html
