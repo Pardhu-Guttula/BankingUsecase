@@ -1,10 +1,10 @@
-# Epic Title: Display Tailored Products
+# Epic Title: Adaptive Screen Resolutions
 
 import logging
 from flask import Flask
 from flask_login import LoginManager
 from backend.authentication.models.user_model import db, User
-from backend.user_dashboard.controllers.product_dashboard_controller import product_dashboard_bp
+from backend.user_dashboard.controllers.adaptive_dashboard_controller import adaptive_dashboard_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/dbname'
@@ -16,15 +16,15 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Epic Title: Display Tailored Products
+    # Epic Title: Adaptive Screen Resolutions
     return User.query.get(int(user_id))
 
 @app.before_first_request
 def create_tables():
-    # Epic Title: Display Tailored Products
+    # Epic Title: Adaptive Screen Resolutions
     db.create_all()
 
-app.register_blueprint(product_dashboard_bp, url_prefix='/dashboard')
+app.register_blueprint(adaptive_dashboard_bp, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
