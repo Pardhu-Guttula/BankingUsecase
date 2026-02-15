@@ -1,24 +1,32 @@
 # Epic Title: Account Opening and Service Modifications
 
-from backend.models.approval_workflow.approval_model import ApprovalWorkflow
+from backend.models.approval_workflow.approval_workflow_model import ApprovalWorkflow
 from backend.repositories.approval_workflow.approval_workflow_repository import ApprovalWorkflowRepository
+from datetime import datetime
 
 class ApprovalWorkflowService:
     @staticmethod
-    def submit_for_approval(request_id: int, request_type: str) -> ApprovalWorkflow:
-        approval_workflow = ApprovalWorkflow(request_id=request_id, request_type=request_type)
-        ApprovalWorkflowRepository.save(approval_workflow)
-        return approval_workflow
+    def submit_request(request_id: int, request_type: str) -> ApprovalWorkflow:
+        workflow = ApprovalWorkflow(request_id=request_id, request_type=request_type, submitted_date=datetime.utcnow())
+        ApprovalWorkflowRepository.save(workflow)
+        return workflow
 
     @staticmethod
-    def get_approval_status(request_id: int, request_type: str) -> ApprovalWorkflow:
-        return ApprovalWorkflowRepository.get_approval_by_request_id(request_id, request_type)
+    def approve_request(request_id: int, approved_by: int) -> None:
+        workflow = ApprovalWorkflowRepository.get_by_request_id(request_id)
+        if workflow and workflow.approval_status == 'pending':
+            workflow.approval_status = 'approved'
+            workflow.approved_by = approved_by
+            workflow.processed_date = datetime.utcnow()
+            ApprovalWorkflowRepository.save(workflow)
 
     @staticmethod
-    def update_approval_status(request_id: int, request_type: str, status: str) -> None:
-        approval_workflow = ApprovalWorkflowRepository.get_approval_by_request_id(request_id, request_type)
-        if approval_workflow:
-            approval_workflow.status = status
-            ApprovalWorkflowRepository.update(approval_workflow)
+    def reject_request(request_id: int, approved_by: int) -> None:
+        workflow = ApprovalWorkflowRepository.get_by_request_id(request_id)
+        if workflow and workflow.approval_status == 'pending':
+            workflow.approval_status = 'rejected'
+            workflow.approved_by = approved_by
+            workflow.processed_date = datetime.utcnow()
+            ApprovalWorkflowRepository.save(workflow)
 
-# File 4: Approval Workflow Controller to Handle Approvals in approval_workflow/controllers/approval_controller.py
+# File 4: Approval Workflow Controller in controllers/approval_workflow/approval_workflow_controller.py
