@@ -1,9 +1,9 @@
 # Epic Title: Role-based Access Control
 
 from backend.repositories.access_control.role_repository import RoleRepository
+from backend.repositories.access_control.permission_repository import PermissionRepository
 from backend.models.access_control.role_model import Role
-from backend.models.authentication.user_model import User
-from backend.repositories.authentication.user_repository import UserRepository
+from backend.models.access_control.permission_model import Permission
 
 class RoleService:
     @staticmethod
@@ -13,16 +13,20 @@ class RoleService:
         return role
 
     @staticmethod
-    def assign_role_to_user(user_id: int, role_id: int) -> None:
-        user = UserRepository.find_by_id(user_id)
+    def assign_permission_to_role(role_id: int, permission_id: int) -> None:
         role = RoleRepository.find_by_id(role_id)
-        if user and role:
-            user.roles.append(role)
-            UserRepository.save(user)
+        permission = PermissionRepository.find_by_id(permission_id)
+        if role and permission:
+            role.permissions.append(permission)
+            RoleRepository.save(role)
 
     @staticmethod
     def get_all_roles() -> list[Role]:
         return RoleRepository.find_all()
 
+    @staticmethod
+    def get_all_permissions() -> list[Permission]:
+        return PermissionRepository.find_all()
 
-# File 6: Role Form to Capture Role Data in forms/role_form.py
+
+# File 7: Permission Form to Capture Permission Data in forms/permission_form.py
