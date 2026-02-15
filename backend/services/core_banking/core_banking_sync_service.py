@@ -19,13 +19,17 @@ class CoreBankingSyncService:
         accounts_data = response.json()
 
         for account_data in accounts_data:
-            account = AccountRepository.get_account_by_id(account_data['id'])
+            account = AccountRepository.get_account_by_number(account_data['account_number'])
             if account:
                 account.balance = account_data['balance']
                 account.last_synced = datetime.utcnow()
                 AccountRepository.update(account)
             else:
-                AccountRepository.save(account_data)
+                new_account = CoreBankingAccount(
+                    account_number=account_data['account_number'],
+                    balance=account_data['balance']
+                )
+                AccountRepository.save(new_account)
     
     @staticmethod
     def sync_transactions(account_id: str):
@@ -41,7 +45,11 @@ class CoreBankingSyncService:
         for transaction_data in transactions_data:
             transaction = TransactionRepository.get_transaction_by_id(transaction_data['id'])
             if not transaction:
-                TransactionRepository.save(transaction_data)
+                new_transaction = CoreBankingTransaction(
+                    account_id=account_id,
+                    amount=transaction_data['amount']
+                )
+                TransactionRepository.save(new_transaction)
 
 
-# File 2: Core Banking Sync Controller in integration/controllers/core_banking_sync_controller.py
+# File 6: Core Banking Sync Controller in integration/controllers/core_banking_sync_controller.py
