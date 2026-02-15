@@ -5,6 +5,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 /* Navigation styles */
@@ -13,6 +15,9 @@ nav {
     color: #fff;
     padding: 1em;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav a {
@@ -21,12 +26,30 @@ nav a {
     text-decoration: none;
 }
 
+nav a:hover {
+    text-decoration: underline;
+}
+
 /* Container styles */
 #content {
     padding: 1em;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Responsive styles */
+/* Widget container styles */
+#widgets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Summary container styles */
+#summary ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
@@ -36,7 +59,7 @@ nav a {
         margin: 1em 0;
     }
 
-    #widgets, #summary {
+    #widgets {
         flex-direction: column;
     }
 }
@@ -47,7 +70,7 @@ nav a {
     }
 
     .widget {
-        width: calc(50% - 20px);
+        width: calc(50% - 10px);
     }
 }
 
@@ -57,7 +80,7 @@ nav a {
     }
 
     .widget {
-        width: calc(33.333% - 20px);
+        width: calc(33.333% - 10px);
     }
 }
 
@@ -66,7 +89,22 @@ nav a {
     padding: 10px;
     margin: 10px;
     box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
 }
 
 
-# File 2: Update Dashboard HTML Template to Include Responsive CSS in templates/dashboard.html (Already Exists, Modified)
+# File 2: Update Dashboard HTML Template to Enhance Consistency in templates/dashboard.html (Already Exists, Modified)
