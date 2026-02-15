@@ -1,12 +1,13 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Document Upload Capability
 
 CREATE TABLE IF NOT EXISTS documents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     filename VARCHAR(255) NOT NULL,
-    file_path VARCHAR(255) NOT NULL,
+    filepath VARCHAR(500) NOT NULL,
     uploaded_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-# File 7: Update requirements.txt with Required Dependency
+
+# File 6: Update `app.py` to Register Document Upload Blueprint
