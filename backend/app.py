@@ -30,9 +30,12 @@ def create_app():
 
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
+    from backend.middleware.session_middleware import session_expiry_middleware
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/api')
+
+    session_expiry_middleware(app)
 
     @app.route('/')
     def home():
@@ -54,4 +57,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: requirements.txt Update
+# File 6: requirements.txt Update
