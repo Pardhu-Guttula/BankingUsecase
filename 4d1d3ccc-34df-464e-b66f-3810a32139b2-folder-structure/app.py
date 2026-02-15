@@ -1,4 +1,4 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Interaction History and Documentation Upload
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
@@ -12,7 +12,6 @@ from dashboard.controllers.notification_controller import notification_controlle
 from dashboard.controllers.interaction_history_controller import interaction_history_controller
 from dashboard.controllers.document_upload_controller import document_upload_controller
 from dashboard.controllers.incomplete_application_controller import incomplete_application_controller
-from dashboard.controllers.api_controller import api_controller
 from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -41,7 +40,7 @@ Path("dashboard/services").mkdir(parents=True, exist.ok=True)
 Path("dashboard/controllers").mkdir(parents=True, exist.ok=True)
 Path("dashboard/static/css").mkdir(parents=True, exist.ok=True)
 Path("dashboard/templates").mkdir(parents.True, exist.ok=True)
-Path("database").mkdir(parents.True, exist.ok=True)
+Path("database").mkdir(parents=True, exist.ok=True)
 
 db.init_app(app)
 
@@ -67,7 +66,6 @@ app.register_blueprint(notification_controller, url_prefix='/dashboard')
 app.register_blueprint(interaction_history_controller, url_prefix='/dashboard')
 app.register_blueprint(document_upload_controller, url_prefix='/dashboard')
 app.register_blueprint(incomplete_application_controller, url_prefix='/dashboard')
-app.register_blueprint(api_controller, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -75,4 +73,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt Update
+# File 6: Schema Definition for Incomplete Applications Table in database/19_create_incomplete_applications_table.sql
