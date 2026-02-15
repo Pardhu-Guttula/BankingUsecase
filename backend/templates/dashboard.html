@@ -5,18 +5,22 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2>Personalized Dashboard</h2>
-{% for account_data in accounts %}
-    <h3>{{ account_data.account.account_type }} - {{ account_data.account.account_number }}</h3>
-    <p>Balance: ${{ account_data.account.balance }}</p>
-    <h4>Transactions:</h4>
-    <ul>
-        {% for transaction in account_data.transactions %}
-        <li>{{ transaction.transaction_type }}: ${{ transaction.amount }} on {{ transaction.transaction_date }}</li>
-        {% endfor %}
-    </ul>
-{% endfor %}
+<h2>Financial Summary</h2>
+<h3>Accounts Overview</h3>
+<ul>
+    {% for account in summary.accounts %}
+    <li>{{ account.account_type }} - {{ account.account_number }}: ${{ account.balance }}</li>
+    {% endfor %}
+</ul>
+<p>Total Balance: ${{ summary.total_balance }}</p>
+
+<h3>Recent Transactions</h3>
+<ul>
+    {% for transaction in summary.transactions %}
+    <li>{{ transaction.transaction_type }}: ${{ transaction.amount }} on {{ transaction.transaction_date }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
 
 
-# File 9: Update Main App to Register Dashboard Controller in app.py
+# File 4: Update Main App to Register Dashboard Controller in app.py
