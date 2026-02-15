@@ -1,1 +1,1 @@
-# File 1: Main HTML Template with Cross-Browser Compatibility in templates/base.html
+# File 1: Middleware for Session Management in middleware/session_middleware.py
