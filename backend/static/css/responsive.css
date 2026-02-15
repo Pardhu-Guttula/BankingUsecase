@@ -106,5 +106,31 @@ button:hover {
     background-color: #555;
 }
 
+/* Ensure Cross-Browser Compatibility */
+* {
+    box-sizing: border-box;
+}
 
-# File 2: Update Dashboard HTML Template to Enhance Consistency in templates/dashboard.html (Already Exists, Modified)
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+button,
+input {
+    font-family: inherit;
+    -webkit-appearance: none;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+::placeholder {
+    color: #888; /* Placeholder color for compatibility */
+}
+
+# File 2: Update Dashboard HTML Template to Ensure Cross-Browser Compatibility in templates/dashboard.html (Already Exists, Modified)
