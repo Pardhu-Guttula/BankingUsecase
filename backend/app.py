@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -39,6 +39,7 @@ def create_app():
     from backend.authentication.controllers.authentication_controller import authentication_controller
     from backend.dashboard.controllers.dashboard_controller import dashboard_controller
     from backend.dashboard.controllers.widget_controller import widget_controller
+    from backend.dashboard.controllers.financial_summary_controller import financial_summary_controller
     from backend.dashboard.routes.dashboard_route import dashboard_route
     from backend.account.controllers.opening.account_opening_controller import account_opening_controller
     from backend.account.controllers.modifications.service_modification_controller import service_modification_controller
@@ -65,6 +66,7 @@ def create_app():
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
     app.register_blueprint(widget_controller, url_prefix='/dashboard/widgets')
+    app.register_blueprint(financial_summary_controller, url_prefix='/dashboard')
     app.register_blueprint(dashboard_route, url_prefix='/dashboard')
     app.register_blueprint(account_opening_controller, url_prefix='/account')
     app.register_blueprint(service_modification_controller, url_prefix='/account')
@@ -114,5 +116,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-
-# File 6: Schema for Widgets Table in database/create_widgets_table.sql
+# File 6: Update requirements.txt with Only Necessary Dependencies
