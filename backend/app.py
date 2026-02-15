@@ -1,4 +1,4 @@
-# Epic Title: Responsive Design
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -44,7 +44,7 @@ def create_app():
     from backend.account.controllers.opening.account_opening_controller import account_opening_controller
     from backend.account.controllers.modifications.service_modification_controller import service_modification_controller
     from backend.approval_workflow.controllers.approval_controller import approval_controller
-    from backend.status.controllers.request_status_controller import request_status_controller
+    from backend.status.controllers.status_controller import status_controller
     from backend.history.controllers.interaction_history_controller import interaction_history_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
@@ -71,7 +71,7 @@ def create_app():
     app.register_blueprint(account_opening_controller, url_prefix='/account')
     app.register_blueprint(service_modification_controller, url_prefix='/account')
     app.register_blueprint(approval_controller, url_prefix='/approval')
-    app.register_blueprint(request_status_controller, url_prefix='/status')
+    app.register_blueprint(status_controller, url_prefix='/status')
     app.register_blueprint(interaction_history_controller, url_prefix='/history')
     app.register_blueprint(interaction_controller, url_prefix='/history')
     app.register_blueprint(document_controller, url_prefix='/documents')
@@ -116,4 +116,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Update requirements.txt with Only Necessary Dependencies
+# File 5: Schema for Notifications Table in database/create_notifications_table.sql (Already Exists)
