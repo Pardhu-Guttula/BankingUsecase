@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: User Authentication and Security
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -62,6 +62,8 @@ def create_app():
     from backend.notifications.controllers.in_app_notification_controller import in_app_notification_controller
     from backend.controllers.home_controller import home_controller
     from backend.authentication.controllers.user_controller import user_controller
+    from backend.integration.controllers.core_banking_api_controller import core_banking_api_controller
+    from backend.integration.controllers.core_banking_data_sync_controller import core_banking_data_sync_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -89,13 +91,15 @@ def create_app():
     app.register_blueprint(in_app_notification_controller, url_prefix='/')
     app.register_blueprint(home_controller, url_prefix='/')
     app.register_blueprint(user_controller, url_prefix='/user')
+    app.register_blueprint(core_banking_api_controller, url_prefix='/integration')
+    app.register_blueprint(core_banking_data_sync_controller, url_prefix='/integration')
+
+    app.before_request(SessionMiddleware.before_request)
+    app.after_request(SessionMiddleware.after_request)
 
     @app.route('/static/<path:filename>')
     def static_files(filename):
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
-
-    app.before_request(SessionMiddleware.before_request)
-    app.after_request(SessionMiddleware.after_request)
 
     @app.before_request
     def before_request():
@@ -116,4 +120,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Incomplete Applications Table in database/create_incomplete_applications_table.sql
+# File 6: Update requirements.txt with Required Dependencies
