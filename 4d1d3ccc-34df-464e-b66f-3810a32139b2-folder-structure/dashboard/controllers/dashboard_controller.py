@@ -1,23 +1,14 @@
-# Epic Title: Develop a User-Friendly Dashboard
+# Epic Title: Consistency Across Devices
 
-from flask import Blueprint, jsonify
-from flask_login import login_required, current_user
-from dashboard.services.dashboard_service import DashboardService
+from flask import Blueprint, render_template
+from flask_login import login_required
 
 dashboard_controller = Blueprint('dashboard_controller', __name__)
 
-@dashboard_controller.route('/accounts', methods=['GET'])
+@dashboard_controller.route('/')
 @login_required
-def get_user_accounts():
-    user_id = current_user.id
-    accounts = DashboardService.get_user_accounts(user_id)
-    return jsonify(accounts), 200
-
-@dashboard_controller.route('/accounts/<int:account_id>/transactions', methods=['GET'])
-@login_required
-def get_account_transactions(account_id: int):
-    transactions = DashboardService.get_account_transactions(account_id)
-    return jsonify(transactions), 200
+def index():
+    return render_template('home.html')
 
 
-# File 7: App Update to Register Dashboard Controller in app.py
+# File 4: App Update to Register Dashboard Home Route in app.py
