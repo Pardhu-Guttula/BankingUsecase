@@ -1,98 +1,12 @@
 # Epic Title: Responsive Design
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="/static/css/responsive.css">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Ensure compatibility with IE -->
-    <script>
-        async function loadWidgets() {
-            const response = await fetch('/dashboard/widgets');
-            const widgets = await response.json();
-            const widgetContainer = document.getElementById('widgets');
-            widgetContainer.innerHTML = '';
-            widgets.forEach(widget => {
-                const widgetDiv = document.createElement('div');
-                widgetDiv.className = 'widget';
-                widgetDiv.innerHTML = `
-                    <h2>${widget.widget_type}</h2>
-                    <p>Data Source: ${widget.data_source}</p>
-                    <p>Position: ${widget.position}</p>
-                    <button onclick="removeWidget(${widget.id})">Remove</button>
-                `;
-                widgetContainer.appendChild(widgetDiv);
-            });
-        }
+{% extends 'base.html' %}
 
-        async function loadSummary() {
-            const response = await fetch('/dashboard/summary');
-            const summary = await response.json();
-            const summaryContainer = document.getElementById('summary');
-            summaryContainer.innerHTML = '';
-            summaryContainer.innerHTML = `
-                <h2>Account Summary</h2>
-                <ul>
-                    ${summary.accounts.map(acc => `<li>${acc.account_name}: ${acc.balance}</li>`).join('')}
-                </ul>
-                <h2>Recent Transactions</h2>
-                <ul>
-                    ${summary.transactions.map(txn => `<li>${txn.amount} (${txn.transaction_type}) at ${txn.timestamp}</li>`).join('')}
-                </ul>
-            `;
-        }
+{% block content %}
+<div class="dashboard-content">
+    <h2>Dashboard</h2>
+    <p>View your financial summary and other widgets here. The dashboard adapts to various screen sizes for a consistent experience.</p>
+</div>
+{% endblock %}
 
-        async function addWidget() {
-            const widgetType = prompt('Enter widget type:');
-            const dataSource = prompt('Enter data source:');
-            const position = parseInt(prompt('Enter position:'));
-            const response = await fetch('/widgets', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ widget_type: widgetType, data_source: dataSource, position: position })
-            });
-            const result = await response.json();
-            alert(result.message);
-            loadWidgets();
-        }
-
-        async function removeWidget(widgetId) {
-            const response = await fetch(`/widgets/${widgetId}`, {
-                method: 'DELETE'
-            });
-            const result = await response.json();
-            alert(result.message);
-            loadWidgets();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadWidgets();
-            loadSummary();
-        });
-    </script>
-</head>
-<body>
-    <nav>
-        <div>
-            <a href="/dashboard">Dashboard</a>
-        </div>
-        <div>
-            <a href="/account/open">Open Account</a>
-            <a href="/account/modification">Modify Service</a>
-            <a href="/approval">Approvals</a>
-            <a href="/auth/logout">Logout</a>
-        </div>
-    </nav>
-    <div id="content">
-        <h1>Your Dashboard</h1>
-        <div id="summary"></div>
-        <button onclick="addWidget()">Add Widget</button>
-        <div id="widgets"></div>
-    </div>
-</body>
-</html>
-
-
-# File 3: Update App to Serve Static Files in app.py (Already Exists, Re-emitting for Context)
+# File 6: Flask Routes in routes/main_routes.py
