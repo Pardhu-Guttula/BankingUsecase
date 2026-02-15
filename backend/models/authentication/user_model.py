@@ -55,4 +55,4 @@ class User(db.Model):
         return f.decrypt(self.encrypted_credentials.encode()).decode()
 
 
-# File 2: Authentication Service with Multi-Factor Authentication Logic in services/authentication/authentication_service.py
+# File 3: Update Main App to Include Session Middleware in app.py
