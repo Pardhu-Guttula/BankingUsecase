@@ -1,12 +1,14 @@
-# Epic Title: Responsive Design
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_mail import Mail
 from datetime import timedelta
 import os
 
 db = SQLAlchemy()
+mail = Mail()
 
 def create_app():
     app = Flask(__name__)
@@ -23,6 +25,7 @@ def create_app():
     )
 
     db.init_app(app)
+    mail.init_app(app)
 
     login_manager = LoginManager(app)
     login_manager.login_view = "auth_controller.login"
@@ -30,28 +33,15 @@ def create_app():
 
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.account.controllers.account_controller import account_controller
-    from backend.controllers.approval_workflow.approval_controller import approval_controller
-    from backend.middleware.session_middleware import session_expiry_middleware
+    from backend.status.controllers.status_controller import status_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(account_controller, url_prefix='/account')
-    app.register_blueprint(approval_controller, url_prefix='/approval')
-
-    session_expiry_middleware(app)
+    app.register_blueprint(status_controller, url_prefix='/status')
 
     @app.route('/')
     def home():
         return render_template('home.html')
-
-    @app.route('/form')
-    def form():
-        return render_template('form.html')
-
-    @app.route('/contact')
-    def contact():
-        return render_template('contact.html')
 
     @app.route('/static/<path:filename>')
     def static_files(filename):
@@ -69,4 +59,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: requirements.txt Update
+# File 3: Status Update Notification Handling in status/services/status_service.py
