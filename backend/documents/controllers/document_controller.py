@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from backend.documents.services.document_service import DocumentService
+from backend.services.documents.document_service import DocumentService
 
 document_controller = Blueprint('document_controller', __name__)
 
@@ -10,13 +10,14 @@ document_controller = Blueprint('document_controller', __name__)
 @login_required
 def upload_document():
     if 'file' not in request.files:
-        return jsonify({"message": "No file part."}), 400
+        return jsonify({"message": "No file part"}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({"message": "No selected file."}), 400
-    if DocumentService.save_document(file, current_user.id):
-        return jsonify({"message": "Document uploaded successfully."}), 201
-    return jsonify({"message": "Failed to upload document."}), 500
+        return jsonify({"message": "No selected file"}), 400
+    if file and DocumentService.allowed_file(file.filename):
+        document = DocumentService.upload_document(file, current_user.id)
+        return jsonify({"message": "File uploaded successfully", "document_id": document.id}), 201
+    return jsonify({"message": "File type not allowed"}), 400
 
 
-# File 5: Update Main App to Register Document Controller and Configure Upload Folder in app.py
+# File 6: Update Main App to Register Document Controller and Set Upload Folder in app.py
