@@ -1,0 +1,34 @@
+# Epic Title: Account Opening and Service Modifications
+
+{% extends "base.html" %}
+
+{% block title %}Open Account{% endblock %}
+
+{% block content %}
+<h2>Open a New Account</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.full_name.label }}<br>
+        {{ form.full_name(size=32) }}
+    </div>
+    <div>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}
+    </div>
+    <div>
+        {{ form.initial_deposit.label }}<br>
+        {{ form.initial_deposit(size=32) }}
+    </div>
+    <div>
+        {{ form.account_type.label }}<br>
+        {{ form.account_type() }}
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
+
+# File 6: Update Main App to Register Account Controller in app.py
