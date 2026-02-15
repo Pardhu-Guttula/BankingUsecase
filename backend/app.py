@@ -38,7 +38,6 @@ def create_app():
     from backend.documents.controllers.document_controller import document_controller
     from backend.account.controllers.application_controller import application_controller
     from backend.integration.controllers.api_controller import api_controller
-    from backend.integration.controllers.sync_controller import sync_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -47,7 +46,6 @@ def create_app():
     app.register_blueprint(document_controller, url_prefix='/documents')
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
-    app.register_blueprint(sync_controller, url_prefix='/sync')
 
     @app.route('/')
     def home():
