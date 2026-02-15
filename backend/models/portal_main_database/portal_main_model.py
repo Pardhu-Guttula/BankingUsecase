@@ -1,17 +1,21 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Maintain Separate Database
 
 from sqlalchemy import Column, Integer, String, DateTime
 from backend.app import db
 from datetime import datetime
 
-class PortalMainModel(db.Model):
-    __tablename__ = 'portal_main'
+class PortalMainData(db.Model):
+    __tablename__ = 'portal_main_data'
 
     id = Column(Integer, primary_key=True)
-    data = Column(String(255), nullable=False)
+    data_key = Column(String(255), nullable=False)
+    data_value = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    def __init__(self, data: str):
-        self.data = data
+    def __init__(self, data_key: str, data_value: str):
+        self.data_key = data_key
+        self.data_value = data_value
+        self.created_at = datetime.utcnow()
 
-# File 2: Portal Database Repository in repositories/portal_main_database/portal_main_repository.py
+
+# File 2: Portal Main Database Repository in `repositories/portal_main_database/portal_main_repository.py`
