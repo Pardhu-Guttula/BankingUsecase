@@ -1,1 +1,1 @@
-# File 1: Update Account and Transaction Models to Include Summaries in models/accounts/account_model.py
+# File 1: Widget Model to Enable Add and Remove Widgets in models/dashboard/widget_model.py
