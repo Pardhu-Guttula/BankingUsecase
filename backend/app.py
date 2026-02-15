@@ -1,4 +1,4 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Personalized Dashboard
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -37,7 +37,7 @@ def create_app():
     login_manager.session_protection = "strong"
 
     from backend.authentication.controllers.authentication_controller import authentication_controller
-    from backend.controllers.dashboard.dashboard_controller import dashboard_controller
+    from backend.dashboard.controllers.dashboard_controller import dashboard_controller
     from backend.dashboard.controllers.widget_controller import widget_controller
     from backend.dashboard.routes.dashboard_route import dashboard_route
     from backend.account.controllers.opening.account_opening_controller import account_opening_controller
@@ -115,4 +115,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 3: Update requirements.txt with Only Necessary Dependencies
+# File 6: Schema for Widgets Table in database/create_widgets_table.sql
