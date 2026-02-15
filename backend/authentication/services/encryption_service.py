@@ -1,4 +1,4 @@
-# Epic Title: Secure User Data
+# Epic Title: User Authentication and Authorization
 
 from cryptography.fernet import Fernet
 import base64
