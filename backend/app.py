@@ -1,11 +1,12 @@
-# Epic Title: Cross-Browser Compatibility
+# Epic Title: Real-time Status Updates
 
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
+from backend.middleware.session_middleware import SessionMiddleware
 
 db = SQLAlchemy()
 mail = Mail()
@@ -40,11 +41,20 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.routes.dashboard import dashboard_bp
+    from backend.controllers.status.request_status_controller import request_status_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
+    app.register_blueprint(request_status_controller, url_prefix='/status')
+
+    app.before_request(SessionMiddleware.before_request)
+    app.after_request(SessionMiddleware.after_request)
+
+    @app.route('/static/<path:filename>')
+    def static_files(filename):
+        return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
     @app.before_request
     def before_request():
@@ -52,14 +62,6 @@ def create_app():
         session.modified = True
         if current_user.is_authenticated and not current_user.is_active:
             logout_user()
-
-    @app.route('/static/<path:filename>')
-    def static_files(filename):
-        return send_from_directory(app.config['STATIC_FOLDER'], filename)
-
-    @app.route('/')
-    def home():
-        return render_template('base.html')
 
     with app.app_context():
         db.create_all()
@@ -73,4 +75,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: requirements.txt
+# File 7: requirements.txt
