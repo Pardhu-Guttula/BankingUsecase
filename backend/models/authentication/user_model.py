@@ -14,7 +14,6 @@ class User(db.Model):
     email = Column(String(100), unique=True, nullable=False)
     is_2fa_enabled = Column(Boolean, default=False)
 
-    documents = relationship('Document', back_populates='user')
     accounts = relationship('Account', back_populates='user')
     widgets = relationship('Widget', back_populates='user')
     service_modifications = relationship('ServiceModification', back_populates='user')
@@ -38,4 +37,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Document Repository for CRUD Operations in repositories/documents/document_repository.py
+# File 3: Interaction History Repository for CRUD Operations in repositories/interactions/interaction_history_repository.py
