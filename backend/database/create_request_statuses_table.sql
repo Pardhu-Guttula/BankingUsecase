@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS request_statuses (
 );
 
 
-# File 6: Update app.py to Register Status Update Blueprint
+# File 6: Update `app.py` to Register Real-time Status Updates Blueprint
