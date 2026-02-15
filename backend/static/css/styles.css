@@ -1,106 +1,70 @@
 # Epic Title: Responsive Design
 
-/* ... previous styling */
-
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    -webkit-font-smoothing: antialiased; /* Cross-browser font rendering */
-    -moz-osx-font-smoothing: grayscale;  /* Cross-browser font rendering */
 }
 
-/* Universal container */
 .container {
     width: 100%;
-    margin: auto;
     max-width: 1200px;
-    overflow: hidden;
-    padding: 10px;
+    margin: 0 auto;
+    padding: 15px;
 }
 
-.header {
-    background: #333;
-    color: #fff;
-    padding-top: 30px;
-    min-height: 70px;
-    border-bottom: #0779e4 3px solid;
-}
-
-.header a,
-.header .menu-btn {
-    color: #fff;
-    text-decoration: none;
-}
-
-.header nav {
-    float: right;
-    margin-top: 10px;
-}
-
-.header nav ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.header nav ul li {
-    display: inline;
-    margin-left: 10px;
-}
-
-.menu-btn {
-    display: none;
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.content {
-    padding: 20px;
-}
-
-.footer {
-    padding: 20px;
-    background: #333;
-    color: #fff;
+.header, .footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
     text-align: center;
 }
 
-/* Desktop layout */
-@media (min-width: 769px) {
-    .container {
-        width: 80%;
-    }
+.menu {
+    text-align: center;
+    padding: 10px 0;
 }
 
-/* Tablet layout */
-@media (min-width: 481px) and (max-width: 768px) {
-    .container {
-        width: 90%;
-    }
-    .header nav ul li {
-        display: block;
-        margin-left: 0;
-    }
-    .menu-btn {
-        display: none;
-    }
+.menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #007bff;
 }
 
-/* Mobile layout */
-@media (max-width: 480px) {
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
     .container {
-        width: 100%;
         padding: 10px;
     }
-    .header nav ul {
-        display: none;
-    }
-    .menu-btn {
+}
+
+@media (max-width: 768px) {
+    .menu {
         display: block;
+    }
+    .menu a {
+        display: block;
+        margin: 10px 0;
     }
 }
 
+@media (max-width: 576px) {
+    .header, .footer {
+        padding: 5px 0;
+        font-size: 14px;
+    }
+    
+    .content {
+        margin-top: 10px;
+    }
+}
 
-# File 8: requirements.txt Update
+# File 2: Home HTML Template with Responsive Layout in templates/home.html
