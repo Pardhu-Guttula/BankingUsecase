@@ -6,7 +6,6 @@ from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
 from datetime import timedelta
 import os
-from backend.middleware.session_middleware import SessionMiddleware
 
 db = SQLAlchemy()
 mail = Mail()
@@ -52,6 +51,7 @@ def create_app():
     from backend.integration.controllers.api_controller import api_controller
     from backend.integration.controllers.sync_controller import sync_controller
     from backend.integration.controllers.core_banking_sync_controller import core_banking_sync_controller
+    from backend.integration.controllers.core_banking_api_controller import core_banking_api_controller
     from backend.integration.controllers.integration_controller import integration_controller
     from backend.access.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
@@ -73,6 +73,7 @@ def create_app():
     app.register_blueprint(application_controller, url_prefix='/applications')
     app.register_blueprint(api_controller, url_prefix='/api')
     app.register_blueprint(sync_controller, url_prefix='/sync')
+    app.register_blueprint(core_banking_api_controller, url_prefix='/api/v1')
     app.register_blueprint(core_banking_sync_controller, url_prefix='/sync')
     app.register_blueprint(integration_controller, url_prefix='/integration')
     app.register_blueprint(role_controller, url_prefix='/roles')
@@ -84,9 +85,6 @@ def create_app():
     @app.route('/static/<path:filename>')
     def static_files(filename):
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
-
-    app.before_request(SessionMiddleware.before_request)
-    app.after_request(SessionMiddleware.after_request)
 
     @app.before_request
     def before_request():
@@ -108,4 +106,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: Schema for Core Banking Account Table in database/create_core_banking_accounts_table.sql
+# File 4: Schema for Account Table in database/create_accounts_table.sql
