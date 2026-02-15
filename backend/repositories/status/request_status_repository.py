@@ -5,17 +5,16 @@ from backend.app import db
 
 class RequestStatusRepository:
     @staticmethod
-    def get_statuses_by_user(user_id: int) -> list[RequestStatus]:
+    def save(status: RequestStatus) -> None:
+        db.session.add(status)
+        db.session.commit()
+
+    @staticmethod
+    def get_by_request_id(request_id: int) -> RequestStatus:
+        return RequestStatus.query.filter_by(request_id=request_id).first()
+
+    @staticmethod
+    def get_by_user_id(user_id: int) -> list[RequestStatus]:
         return RequestStatus.query.filter_by(user_id=user_id).all()
 
-    @staticmethod
-    def save(request_status: RequestStatus) -> None:
-        db.session.add(request_status)
-        db.session.commit()
-
-    @staticmethod
-    def update(request_status: RequestStatus) -> None:
-        db.session.commit()
-
-
-# File 4: Status Service Layer in services/status/request_status_service.py
+# File 3: Request Status Service in services/status/request_status_service.py
