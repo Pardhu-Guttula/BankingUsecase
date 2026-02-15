@@ -1,18 +1,17 @@
 # Epic Title: Real-time Status Updates and Notifications
 
-from backend.models.notifications.in_app_notification_model import InAppNotification
-from backend.repositories.notifications.in_app_notification_repository import InAppNotificationRepository
-
+from backend.models.notifications.notification_model import Notification
+from backend.repositories.notifications.notification_repository import NotificationRepository
 
 class InAppNotificationService:
     @staticmethod
-    def create_notification(user_id: int, message: str) -> None:
-        notification = InAppNotification(user_id=user_id, message=message)
-        InAppNotificationRepository.save(notification)
+    def create_notification(user_id: int, request_id: int, message: str) -> Notification:
+        notification = Notification(user_id=user_id, request_id=request_id, message=message)
+        NotificationRepository.save(notification)
+        return notification
 
     @staticmethod
-    def get_user_notifications(user_id: int) -> list[InAppNotification]:
-        return InAppNotificationRepository.get_notifications_by_user(user_id)
+    def get_notifications(user_id: int) -> list[Notification]:
+        return NotificationRepository.get_notifications_by_user_id(user_id)
 
-
-# File 4: Update Request Status Service to Trigger In-App Notifications in services/status/request_status_service.py (Already Exists, Modified)
+# File 2: In-App Notification Controller in notifications/controllers/in_app_notification_controller.py
