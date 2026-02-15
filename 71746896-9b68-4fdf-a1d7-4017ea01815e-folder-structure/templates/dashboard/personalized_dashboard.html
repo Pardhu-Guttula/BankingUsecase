@@ -1,0 +1,41 @@
+<!-- Epic Title: Display Tailored Products -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/personalized_dashboard.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Personalized Dashboard</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Welcome, {{ user.username }}</h2>
+            <h3>Tailored Products for You</h3>
+            <ul>
+                {% for product in products %}
+                    <li>
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Bank</p>
+    </footer>
+</body>
+</html>
