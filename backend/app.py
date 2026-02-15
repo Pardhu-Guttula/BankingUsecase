@@ -1,4 +1,4 @@
-# Epic Title: Responsive Design
+# Epic Title: Role-based Access Control
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -33,18 +33,29 @@ def create_app():
 
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.account.controllers.service_modification_controller import service_modification_controller
-    from backend.account.controllers.account_opening_controller import account_opening_controller
-    from backend.approval_workflow.controllers.approval_controller import approval_controller
-    from backend.middleware.session_middleware import session_expiry_middleware
+    from backend.status.controllers.status_controller import status_controller
+    from backend.history.controllers.interaction_controller import interaction_controller
+    from backend.documents.controllers.document_controller import document_controller
+    from backend.account.controllers.application_controller import application_controller
+    from backend.integration.controllers.api_controller import api_controller
+    from backend.integration.controllers.sync_controller import sync_controller
+    from backend.integration.controllers.integration_controller import integration_controller
+    from backend.access.controllers.role_controller import role_controller
+    from backend.access_control.controllers.permission_controller import permission_controller
+    from backend.access_control.controllers.policy_controller import policy_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(service_modification_controller, url_prefix='/service_modification')
-    app.register_blueprint(account_opening_controller, url_prefix='/account_opening')
-    app.register_blueprint(approval_controller, url_prefix='/approval')
-
-    session_expiry_middleware(app)
+    app.register_blueprint(status_controller, url_prefix='/status')
+    app.register_blueprint(interaction_controller, url_prefix='/history')
+    app.register_blueprint(document_controller, url_prefix='/documents')
+    app.register_blueprint(application_controller, url_prefix='/applications')
+    app.register_blueprint(api_controller, url_prefix='/api')
+    app.register_blueprint(sync_controller, url_prefix='/sync')
+    app.register_blueprint(integration_controller, url_prefix='/integration')
+    app.register_blueprint(role_controller, url_prefix='/roles')
+    app.register_blueprint(permission_controller, url_prefix='/permissions')
+    app.register_blueprint(policy_controller, url_prefix='/policies')
 
     @app.route('/')
     def home():
@@ -66,4 +77,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 5: requirements.txt Update
+# File 9: requirements.txt Update
