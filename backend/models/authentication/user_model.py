@@ -1,10 +1,9 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, LargeBinary
-from sqlalchemy.orm import relationship
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
 from backend.app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -16,11 +15,8 @@ class User(db.Model):
     mfa_enabled = Column(Boolean, default=False)
     mfa_secret = Column(String(32), nullable=True)
     session_key = Column(LargeBinary, nullable=True)
-    last_activity = Column(DateTime, default=datetime.utcnow)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
-
-    accounts = relationship("Account", back_populates="user")
 
     def __init__(self, username: str, password: str, email: str, mfa_enabled: bool = False, mfa_secret: str = None, session_key: bytes = None):
         self.username = username
@@ -34,4 +30,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 4: Account Repository to Manage Accounts in dashboard/repositories/account_repository.py
+# File 2: User Repository to Include MFA Methods in auth/repositories/user_repository.py
