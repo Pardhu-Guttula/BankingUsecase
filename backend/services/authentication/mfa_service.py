@@ -1,9 +1,6 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Implement Secure Login Mechanism
 
 import pyotp
-from backend.repositories.authentication.mfa_repository import MFARepository
-from backend.models.authentication.mfa_model import MFA
-
 
 class MFAService:
     @staticmethod
@@ -11,27 +8,14 @@ class MFAService:
         return pyotp.random_base32()
 
     @staticmethod
-    def create_mfa(user_id: int) -> MFA:
-        secret = MFAService.generate_secret()
-        mfa = MFA(user_id=user_id, secret=secret)
-        MFARepository.save(mfa)
-        return mfa
+    def generate_otp(secret: str) -> str:
+        totp = pyotp.TOTP(secret)
+        return totp.now()
 
     @staticmethod
-    def verify_token(user_id: int, token: str) -> bool:
-        mfa = MFARepository.get_mfa_by_user_id(user_id)
-        if not mfa:
-            return False
-
-        totp = pyotp.TOTP(mfa.secret)
-        return totp.verify(token)
-
-    @staticmethod
-    def confirm_mfa(user_id: int) -> None:
-        mfa = MFARepository.get_mfa_by_user_id(user_id)
-        if mfa:
-            mfa.confirmed = True
-            MFARepository.update(mfa)
+    def verify_otp(secret: str, otp: str) -> bool:
+        totp = pyotp.TOTP(secret)
+        return totp.verify(otp)
 
 
-# File 4: Update Authentication Controller to Include MFA in authentication/controllers/authentication_controller.py
+# File 4: Authentication Controller in controllers/authentication/authentication_controller.py
