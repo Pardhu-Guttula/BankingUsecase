@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from backend.models.access_control.policy_model import Policy
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -27,6 +28,12 @@ class User(db.Model):
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
 
+    def has_policy(self, action: str) -> bool:
+        if self.role:
+            policies = Policy.query.filter_by(role_id=self.role.id).all()
+            return any(policy.action == action for policy in policies)
+        return False
+
 Role.users = relationship("User", order_by=User.id, back_populates="role")
 
-# File 6: User Repository in repositories/access_control/user_repository.py (Modified)
+# File 6: Register Policy Controller Blueprint in app.py (Already Exists, Modified)
