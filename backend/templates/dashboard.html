@@ -1,12 +1,23 @@
-# Epic Title: Responsive Design
+# Epic Title: Implement Adaptive Layouts
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="dashboard-content">
-    <h2>Dashboard</h2>
-    <p>View your financial summary and other widgets here. The dashboard adapts to various screen sizes for a consistent experience.</p>
+<h2>Welcome, {{ current_user.name }}</h2>
+
+<div class="row">
+    <div class="col">
+        <h3>Account Summary</h3>
+        <p>Details about your accounts.</p>
+    </div>
+    <div class="col">
+        <h3>Recent Transactions</h3>
+        <p>Details about your recent transactions.</p>
+    </div>
 </div>
 {% endblock %}
 
-# File 6: Flask Routes in routes/main_routes.py
+
+# File 4: Update app.py to Wire Up Templates
