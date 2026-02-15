@@ -24,4 +24,4 @@ class Transaction(db.Model):
         self.description = description
 
 
-# File 3: Financial Summary Repository for Retrieving Summary Data in repositories/dashboard/financial_summary_repository.py
+# File 3: Account Repository for CRUD Operations in repositories/accounts/
