@@ -1,4 +1,4 @@
-/* Epic Title: Consistent User Experience */
+/* Epic Title: User-Friendly Interface */
 
 body {
     font-family: Arial, sans-serif;
@@ -36,6 +36,24 @@ body {
 
 .content {
     padding: 20px;
+}
+
+.feature-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.feature-list li {
+    margin: 10px 0;
+}
+
+.feature-list li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.feature-list li a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
