@@ -1,1 +1,1 @@
-# File 1: Permission Model to Define Permissions in models/access_control/permission_model.py
+# File 1: Update User Model to Include Encrypted Credentials in models/authentication/user_model.py
