@@ -2,7 +2,6 @@
 
 from backend.models.authentication.user_model import User
 from backend.app import db
-from werkzeug.security import check_password_hash
 
 class UserRepository:
     @staticmethod
@@ -11,12 +10,18 @@ class UserRepository:
 
     @staticmethod
     def verify_password(user: User, password: str) -> bool:
-        return check_password_hash(user.password_hash, password)
+        return user.verify_password(password)
 
     @staticmethod
     def save(user: User) -> None:
         db.session.add(user)
         db.session.commit()
 
+    @staticmethod
+    def create_user(username: str, password: str, email: str) -> User:
+        new_user = User(username=username, password=password, email=email)
+        UserRepository.save(new_user)
+        return new_user
 
-# File 4: Two-Factor Authentication Repository in authentication/repositories/two_factor_repository.py
+
+# File 3: Authentication Controller to Handle Registration Endpoint in authentication/controllers/authentication_controller.py
