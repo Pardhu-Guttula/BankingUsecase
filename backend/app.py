@@ -70,7 +70,6 @@ def create_app():
     from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
     from backend.controllers.status.request_status_controller import request_status_controller
     from backend.controllers.interactions.interaction_history_controller import interaction_history_controller
-    from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -107,7 +106,7 @@ def create_app():
     app.register_blueprint(request_status_controller, url_prefix='/status')
     app.register_blueprint(document_upload_controller, url_prefix='/documents')
     app.register_blueprint(incomplete_application_controller, url_prefix='/applications')
-    app.register_blueprint(portal_main_controller, url_prefix='/portal_main')
+    app.register_blueprint(core_banking_sync_controller, url_prefix='/')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -135,4 +134,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Portal Main Table in database/create_portal_main_table.sql
+# File 8: Update Schema for Transactions Table to Add External ID in database/update_transactions_table.sql
