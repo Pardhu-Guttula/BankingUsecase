@@ -15,6 +15,7 @@ class User(db.Model):
     mfa_enabled = Column(Boolean, default=False)
     mfa_secret = Column(String(32), nullable=True)
     session_key = Column(LargeBinary, nullable=True)
+    last_activity = Column(DateTime, default=datetime.utcnow)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
 
@@ -30,4 +31,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 2: User Repository to Include MFA Methods in auth/repositories/user_repository.py
+# File 3: Modify Authentication Service to Handle Session Expiry in auth/services/authentication_service.py
