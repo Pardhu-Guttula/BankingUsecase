@@ -36,7 +36,6 @@ def create_app():
     from backend.controllers.dashboard.widget_controller import widget_controller
     from backend.account.controllers.opening.account_opening_controller import account_opening_controller
     from backend.account.controllers.modifications.service_modification_controller import service_modification_controller
-    from backend.approval_workflow.controllers.approval_controller import approval_controller
     from backend.status.controllers.status_controller import status_controller
     from backend.history.controllers.interaction_controller import interaction_controller
     from backend.documents.controllers.document_controller import document_controller
@@ -53,7 +52,6 @@ def create_app():
     app.register_blueprint(widget_controller, url_prefix='/dashboard/widgets')
     app.register_blueprint(account_opening_controller, url_prefix='/account')
     app.register_blueprint(service_modification_controller, url_prefix='/account')
-    app.register_blueprint(approval_controller, url_prefix='/approval')
     app.register_blueprint(status_controller, url_prefix='/status')
     app.register_blueprint(interaction_controller, url_prefix='/history')
     app.register_blueprint(document_controller, url_prefix='/documents')
@@ -93,4 +91,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 9: Create Schema for Approval Workflow in database/
+# File 8: Create Schema for Service Modifications in database/
