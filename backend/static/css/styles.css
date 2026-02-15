@@ -1,9 +1,14 @@
 # Epic Title: Responsive Design
 
-body {
-    font-family: Arial, sans-serif;
+/* CSS Reset for Cross-Browser Compatibility */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -99,4 +104,4 @@ body {
 }
 
 
-# File 2: Base HTML Template with Consistent Layout in backend/templates/base.html
+# File 7: Update CSS to Ensure Cross-Browser Font Rendering in backend/static/css/styles.css
