@@ -16,4 +16,4 @@ class Account(db.Model):
     transactions = relationship('Transaction', back_populates='account')
 
 
-# File 6: Transaction Model in models/account/transaction_model.py
+# File 6: Transaction Model in models/account/transaction_model.py (Existing File, Re-emitting for Context)
