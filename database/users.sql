@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 CREATE TABLE users (
     id INT(11) NOT NULL AUTO_INCREMENT,
@@ -11,4 +11,4 @@ CREATE TABLE users (
 
 
 
-# File 7: Session Table SQL in database/sessions.sql
+# File 6: Database Schema Update for Secure Storage in database/sessions.sql
