@@ -13,4 +13,4 @@ class AccountRepository:
         db.session.commit()
 
 
-# File 5: Repository for Transaction Operations in repositories/accounts/transaction_repository.py
+# File 5: Transaction Repository for Transaction Operations in repositories/accounts/transaction_repository.py
