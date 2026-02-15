@@ -1,11 +1,10 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Personalized Dashboard
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import timedelta
 import os
-from cryptography.fernet import Fernet
 
 db = SQLAlchemy()
 
@@ -24,9 +23,6 @@ def create_app():
     )
 
     db.init_app(app)
-
-    encryption_key = Fernet.generate_key()
-    app.config['ENCRYPTION_KEY'] = encryption_key
 
     login_manager = LoginManager(app)
     login_manager.login_view = "auth_controller.login"
@@ -61,4 +57,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 5: requirements.txt Update
+# File 7: requirements.txt Update
