@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Core Banking System Integration
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -135,4 +135,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 8: Schema for Roles Table in database/create_roles_table.sql
+# File 6: Schema for Portal Main Table in database/create_portal_main_table.sql
