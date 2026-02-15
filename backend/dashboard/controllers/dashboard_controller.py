@@ -1,16 +1,20 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Develop a User-Friendly Dashboard
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from backend.services.dashboard.financial_summary_service import FinancialSummaryService
+from backend.dashboard.services.dashboard_service import DashboardService
 
 dashboard_controller = Blueprint('dashboard_controller', __name__)
 
 @dashboard_controller.route('/dashboard', methods=['GET'])
 @login_required
 def get_dashboard():
-    financial_summary = FinancialSummaryService.get_financial_summary(current_user.id)
-    return jsonify(financial_summary), 200
+    accounts = DashboardService.get_user_accounts(current_user.id)
+    transactions = DashboardService.get_user_transactions(current_user.id)
+    return jsonify({
+        'accounts': accounts,
+        'transactions': transactions
+    }), 200
 
 
-# File 3: Account Repository for Fetching User Accounts in repositories/account/account_repository.py (Existing File, Re-emitting for Context)
+# File 2: Dashboard Service in services/dashboard/dashboard_service.py
