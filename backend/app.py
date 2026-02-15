@@ -122,4 +122,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Users Table in database/create_users_table.sql
+# File 6: Schema for User Authentication Table in database/create_user_authentications_table.sql
