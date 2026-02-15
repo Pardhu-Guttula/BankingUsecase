@@ -45,6 +45,14 @@ def create_app():
     def home():
         return render_template('home.html')
 
+    @app.route('/form')
+    def form():
+        return render_template('form.html')
+
+    @app.route('/contact')
+    def contact():
+        return render_template('contact.html')
+
     @app.route('/static/<path:filename>')
     def static_files(filename):
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
@@ -61,4 +69,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt Update
+# File 6: requirements.txt Update
