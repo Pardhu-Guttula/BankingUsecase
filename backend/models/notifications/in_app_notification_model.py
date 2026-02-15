@@ -1,26 +1,27 @@
 # Epic Title: Real-time Status Updates and Notifications
 
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from datetime import datetime
 from backend.app import db
-import datetime
+
 
 class InAppNotification(db.Model):
     __tablename__ = 'in_app_notifications'
 
     id = Column(Integer, primary_key=True)
-    request_id = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    message = Column(String(255), nullable=False)
-    is_read = Column(Boolean, default=False, nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    message = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     user = relationship('User', back_populates='in_app_notifications')
 
-    def __init__(self, request_id: int, user_id: int, message: str):
-        self.request_id = request_id
+    def __init__(self, user_id: int, message: str, created_at: DateTime = None):
         self.user_id = user_id
         self.message = message
+        if created_at is None:
+            created_at = datetime.utcnow()
+        self.created_at = created_at
 
 
-# File 2: Update User Model to Include Relationship with In-App Notifications in models/authentication/user_model.py
+# File 2: In-App Notification Repository for Data Access in repositories/notifications/in_app_notification_repository.py
