@@ -45,4 +45,4 @@ def get_statuses():
     return jsonify({'statuses': [status.serialize() for status in statuses]}), 200
 
 
-# File 5: Schema for Status Updates Table in database/create_request_statuses_table.sql
+# File 5: Schema for Real-time Status Updates Table in `database/create_request_statuses_table.sql`
