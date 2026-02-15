@@ -3,7 +3,6 @@
 from backend.repositories.status.request_status_repository import RequestStatusRepository
 from backend.models.status.request_status_model import RequestStatus
 from backend.services.notifications.email_notification_service import EmailNotificationService
-from backend.services.notifications.in_app_notification_service import InAppNotificationService
 from backend.models.authentication.user_model import User
 
 class RequestStatusService:
@@ -27,22 +26,23 @@ class RequestStatusService:
     def notify_user(request_status: RequestStatus) -> None:
         user = User.query.get(request_status.user_id)
         if user:
-            message = f"Your request with ID {request_status.request_id} has a new status: {request_status.status}"
-            InAppNotificationService.create_notification(
+            subject = f"Update on Request {request_status.request_id}"
+            content = f"Your request with ID {request_status.request_id} has a new status: {request_status.status}"
+            EmailNotificationService.create_notification(
                 request_id=request_status.request_id,
                 user_id=user.id,
-                message=message
+                email=user.email,
+                subject=subject,
+                content=content
             )
-            email_subject = f"Update on Request {request_status.request_id}"
-            email_content = message
             email_notification = EmailNotificationService.create_notification(
                 request_id=request_status.request_id,
                 user_id=user.id,
                 email=user.email,
-                subject=email_subject,
-                content=email_content
+                subject=subject,
+                content=content
             )
             EmailNotificationService.send_email(email_notification)
 
 
-# File 6: Controller to Handle In-App Notifications in notifications/controllers/in_app_notification_controller.py
+# File 6: Update Main App to Initialize Flask-Mail in app.py
