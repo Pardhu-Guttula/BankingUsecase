@@ -3,10 +3,10 @@
 CREATE TABLE IF NOT EXISTS incomplete_applications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    data TEXT NOT NULL,
-    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    application_data TEXT NOT NULL,
+    saved_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
-# File 8: Update requirements.txt with Only Necessary Dependencies
+# File 7: Update requirements.txt with Only Necessary Dependencies
