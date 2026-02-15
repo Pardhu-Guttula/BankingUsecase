@@ -1,7 +1,7 @@
 # Epic Title: Core Banking System Integration
 
 from backend.models.core_banking.integration_model import CoreBankingIntegration
-from backend.app import db
+from backend.app import core_banking_db as db
 
 class IntegrationRepository:
     @staticmethod
@@ -18,4 +18,4 @@ class IntegrationRepository:
         return CoreBankingIntegration.query.all()
 
 
-# File 3: Integration Service to Handle API Calls in services/core_banking/integration_service.py
+# File 4: Sync Log Model and Repository with Portal DB Bind in models/core_banking/sync_log_model.py and repositories/core_banking/sync_log_repository.py
