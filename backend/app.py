@@ -1,4 +1,4 @@
-# Epic Title: Assign Permissions to Roles
+# Epic Title: Maintain Separate Database
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -39,13 +39,11 @@ def create_app():
     from backend.controllers.access_control.role_controller import role_controller
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
-    from backend.controllers.access_control.permission_controller import permission_controller
     from backend.routes.dashboard import dashboard_bp
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
-    app.register_blueprint(permission_controller, url_prefix='/permissions')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 
     app.before_request(SessionMiddleware.before_request)
@@ -75,4 +73,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 9: requirements.txt
+# File 7: requirements.txt
