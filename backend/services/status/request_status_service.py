@@ -2,12 +2,16 @@
 
 from backend.repositories.status.request_status_repository import RequestStatusRepository
 from backend.models.status.request_status_model import RequestStatus
+from backend.services.notifications.email_notification_service import EmailNotificationService
+from backend.services.notifications.in_app_notification_service import InAppNotificationService
+from backend.models.authentication.user_model import User
 
 class RequestStatusService:
     @staticmethod
     def create_status(request_id: int, status: str, user_id: int) -> RequestStatus:
         request_status = RequestStatus(request_id=request_id, status=status, user_id=user_id)
         RequestStatusRepository.save(request_status)
+        RequestStatusService.notify_user(request_status)
         return request_status
 
     @staticmethod
@@ -16,7 +20,29 @@ class RequestStatusService:
         if request_status:
             request_status.status = status
             RequestStatusRepository.update(request_status)
+            RequestStatusService.notify_user(request_status)
         return request_status
 
+    @staticmethod
+    def notify_user(request_status: RequestStatus) -> None:
+        user = User.query.get(request_status.user_id)
+        if user:
+            message = f"Your request with ID {request_status.request_id} has a new status: {request_status.status}"
+            InAppNotificationService.create_notification(
+                request_id=request_status.request_id,
+                user_id=user.id,
+                message=message
+            )
+            email_subject = f"Update on Request {request_status.request_id}"
+            email_content = message
+            email_notification = EmailNotificationService.create_notification(
+                request_id=request_status.request_id,
+                user_id=user.id,
+                email=user.email,
+                subject=email_subject,
+                content=email_content
+            )
+            EmailNotificationService.send_email(email_notification)
 
-# File 5: Controller to Handle Real-Time Status Updates in status/controllers/request_status_controller.py
+
+# File 6: Controller to Handle In-App Notifications in notifications/controllers/in_app_notification_controller.py
