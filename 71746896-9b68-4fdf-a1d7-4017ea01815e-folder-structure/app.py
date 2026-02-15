@@ -1,8 +1,10 @@
-# Epic Title: Role-Based Access Control
+# Epic Title: Responsive User Interface
 
 import logging
 import os
 from django.core.wsgi import get_wsgi_application
+from django.urls import path
+from backend.controllers.dashboard.responsive_dashboard_controller import responsive_dashboard_view
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -11,7 +13,7 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Role-Based Access Control
+    # Epic Title: Responsive User Interface
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
@@ -22,3 +24,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+urlpatterns = [
+    path('responsive_dashboard/', responsive_dashboard_view, name='responsive_dashboard'),
+]
