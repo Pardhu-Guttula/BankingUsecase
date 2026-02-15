@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Real-time Status Updates and Notifications
 
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
@@ -21,7 +21,6 @@ class User(db.Model):
     approvals = relationship('RequestApproval', back_populates='approver')
     email_notifications = relationship('EmailNotification', back_populates='user')
     in_app_notifications = relationship('InAppNotification', back_populates='user')
-    interactions = relationship('InteractionHistory', back_populates='user')
 
     def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
@@ -37,4 +36,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Interaction History Repository for CRUD Operations in repositories/interactions/interaction_history_repository.py
+# File 3: In-App Notification Repository for CRUD Operations in repositories/notifications/in_app_notification_repository.py
