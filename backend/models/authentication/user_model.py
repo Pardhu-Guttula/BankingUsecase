@@ -1,6 +1,6 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Role-based Access Control
 
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.app import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,7 +16,9 @@ class User(db.Model):
     is_2fa_enabled = Column(Boolean, default=False)
     encryption_key = Column(String(44), nullable=False)
     encrypted_credentials = Column(String(255), nullable=True)
+    role_id = Column(Integer, ForeignKey('roles.id'), nullable=True)
 
+    role = relationship('Role', back_populates='users')
     documents = relationship('Document', back_populates='user')
     accounts = relationship('Account', back_populates='user')
     widgets = relationship('Widget', back_populates='user')
@@ -26,16 +28,16 @@ class User(db.Model):
     email_notifications = relationship('EmailNotification', back_populates='user')
     in_app_notifications = relationship('InAppNotification', back_populates='user')
     interactions = relationship('InteractionHistory', back_populates='user')
-    transactions = relationship('Transaction', back_populates='user')
     security_bag = relationship('UserSecurity', back_populates='user', uselist=False)
 
-    def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
+    def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False, role=None):
         self.username = username
         self.password_hash = self._generate_password_hash(password)
         self.email = email
         self.is_2fa_enabled = is_2fa_enabled
         self.encryption_key = Fernet.generate_key().decode()
         self.encrypted_credentials = self._encrypt_credentials(password)
+        self.role = role
 
     @staticmethod
     def _generate_password_hash(password: str) -> str:
@@ -53,4 +55,4 @@ class User(db.Model):
         return f.decrypt(self.encrypted_credentials.encode()).decode()
 
 
-# File 6: Update Main App to Register Widget Controller in app.py
+# File 3: Role Repository for CRUD Operations in repositories/access_control/role_repository.py
