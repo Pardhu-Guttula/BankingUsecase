@@ -23,19 +23,16 @@
     <main>
         <section>
             <h2>Welcome, {{ user.username }}</h2>
-            <h3>Tailored Products for You</h3>
+            <p>Here are some products tailored for you:</p>
             <ul>
                 {% for product in products %}
-                    <li>
-                        <h4>{{ product.name }}</h4>
-                        <p>{{ product.description }}</p>
-                    </li>
+                    <li>{{ product }}</li>
                 {% endfor %}
             </ul>
         </section>
     </main>
     <footer>
-        <p>&copy; 2023 My Bank</p>
+        <p>&copy; 2023 My Company</p>
     </footer>
 </body>
 </html>
