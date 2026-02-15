@@ -2,7 +2,6 @@
 
 from backend.models.authentication.user_model import User
 from backend.app import db
-from datetime import datetime, timedelta
 
 class UserRepository:
     @staticmethod
@@ -28,4 +27,4 @@ class UserRepository:
         return datetime.utcnow() - user.last_activity > timedelta(minutes=timeout)
 
 
-# File 2: Update User Model to Include Last Activity Field in models/authentication/user_model.py
+# File 3: Update Authentication Service to Use Encryption in auth/services/authentication_service.py
