@@ -39,6 +39,19 @@ body {
     margin-top: 20px;
 }
 
+.card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .container {
@@ -46,12 +59,16 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .menu {
-        display: block;
+        display: flex;
+        flex-direction: column;
     }
     .menu a {
         display: block;
+        margin: 10px 0;
+    }
+    .card {
         margin: 10px 0;
     }
 }
@@ -67,4 +84,19 @@ body {
     }
 }
 
-# File 2: Home HTML Template with Responsive Layout in templates/home.html
+/* Cross-Browser Compatibility */
+input, button, select, textarea {
+    /* Ensure the styles are consistent across different browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.container, .card, .menu a, body {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+
+# File 2: Home HTML Template with Cross-Browser Compatible Features in templates/home.html
