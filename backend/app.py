@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -34,12 +34,12 @@ def create_app():
     from backend.controllers.authentication.auth_controller import auth_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
     from backend.status.controllers.status_controller import status_controller
-    from backend.history.controllers.interaction_controller import interaction_controller
+    from backend.notifications.controllers.notification_controller import notification_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
     app.register_blueprint(status_controller, url_prefix='/status')
-    app.register_blueprint(interaction_controller, url_prefix='/history')
+    app.register_blueprint(notification_controller, url_prefix='/notifications')
 
     @app.route('/')
     def home():
@@ -61,4 +61,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 6: requirements.txt Update
+# File 8: requirements.txt Update
