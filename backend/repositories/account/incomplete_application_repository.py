@@ -10,11 +10,7 @@ class IncompleteApplicationRepository:
         db.session.commit()
 
     @staticmethod
-    def get_incomplete_application_by_user_id(user_id: int) -> list[IncompleteApplication]:
-        return IncompleteApplication.query.filter_by(user_id=user_id).order_by(IncompleteApplication.saved_at.desc()).all()
-    
-    @staticmethod
-    def get_incomplete_application_by_id(application_id: int) -> IncompleteApplication:
-        return IncompleteApplication.query.filter_by(id=application_id).first()
+    def get_by_user_id(user_id: int) -> list[IncompleteApplication]:
+        return IncompleteApplication.query.filter_by(user_id=user_id).all()
 
-# File 3: IncompleteApplication Service to Handle Business Logic in services/account/incomplete_application_service.py
+# File 3: Incomplete Application Service in services/account/incomplete_application_service.py
