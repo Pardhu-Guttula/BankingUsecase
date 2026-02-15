@@ -1,7 +1,6 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Assign Permissions to Roles
 
 from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
 from backend.app import db
 
 class RolePermission(db.Model):
@@ -11,8 +10,9 @@ class RolePermission(db.Model):
     role_id = Column(Integer, ForeignKey('roles.id'), nullable=False)
     permission_id = Column(Integer, ForeignKey('permissions.id'), nullable=False)
 
-    role = relationship('Role', back_populates='permissions')
-    permission = relationship('Permission', back_populates='roles')
+    def __init__(self, role_id: int, permission_id: int):
+        self.role_id = role_id
+        self.permission_id = permission_id
 
 
-# File 3: Update Role Model to Include Relationship with Permission in models/access_control/role_model.py
+# File 3: Permission Repository in `repositories/access_control/permission_repository.py`
