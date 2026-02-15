@@ -1,16 +1,22 @@
-# Epic Title: Manage Secure Storage of Credentials
+# Epic Title: Overview of Financial Activities
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
+from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.register_blueprint(auth_controller, url_prefix='/auth')
+app.register_blueprint(dashboard_controller, url_prefix='/api')
 
 DATABASE_URI = 'mysql+pymysql://username:password@localhost/db_name'
 engine = create_engine(DATABASE_URI)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+login_manager = LoginManager(app)
+login_manager.login_view = "auth_controller.login"
 
 @app.before_request
 def before_request():
@@ -31,4 +37,4 @@ if __name__ == '__main__':
 
 
 
-# File 8: requirements.txt Update for Secure Storage
+# File 4: requirements.txt Update
