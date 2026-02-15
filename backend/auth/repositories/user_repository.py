@@ -2,7 +2,7 @@
 
 from backend.models.authentication.user_model import User
 from backend.app import db
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class UserRepository:
     @staticmethod
@@ -23,9 +23,5 @@ class UserRepository:
         user.last_activity = datetime.utcnow()
         db.session.commit()
 
-    @staticmethod
-    def is_session_expired(user: User, timeout: int) -> bool:
-        return datetime.utcnow() - user.last_activity > timedelta(minutes=timeout)
 
-
-# File 2: Update User Model to Include Last Activity Field in models/authentication/user_model.py
+# File 3: Modify Authentication Service to Handle Password Verification in auth/services/authentication_service.py
