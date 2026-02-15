@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Customizable Widgets
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -39,10 +39,12 @@ def create_app():
     from backend.controllers.access_control.role_controller import role_controller
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
+    from backend.controllers.dashboard.dashboard_controller import dashboard_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
+    app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -71,4 +73,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 4: requirements.txt
+# File 6: Schema for Widgets Table in database/create_widgets_table.sql
