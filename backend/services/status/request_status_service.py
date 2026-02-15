@@ -1,30 +1,26 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Real-time Status Updates
 
-from backend.models.status.request_status_model import RequestStatus
 from backend.repositories.status.request_status_repository import RequestStatusRepository
+from backend.models.status.request_status_model import RequestStatus
 from datetime import datetime
 
 class RequestStatusService:
     @staticmethod
-    def create_status(request_id: int, status: str, user_id: int) -> RequestStatus:
-        status_obj = RequestStatus(request_id=request_id, status=status, user_id=user_id)
-        RequestStatusRepository.save(status_obj)
-        return status_obj
+    def create_status(request_id: int, status: str, request_type: str) -> None:
+        request_status = RequestStatus(request_id=request_id, status=status, request_type=request_type)
+        RequestStatusRepository.save(request_status)
 
     @staticmethod
-    def update_status(request_id: int, new_status: str) -> None:
-        status_obj = RequestStatusRepository.get_by_request_id(request_id)
-        if status_obj:
-            status_obj.status = new_status
-            status_obj.last_updated = datetime.utcnow()
-            RequestStatusRepository.save(status_obj)
+    def update_status(request_id: int, status: str) -> None:
+        request_status = RequestStatus.query.filter_by(request_id=request_id).order_by(RequestStatus.updated_at.desc()).first()
+        if request_status:
+            request_status.status = status
+            request_status.updated_at = datetime.utcnow()
+            RequestStatusRepository.update(request_status)
 
     @staticmethod
-    def get_status_by_request_id(request_id: int) -> RequestStatus:
-        return RequestStatusRepository.get_by_request_id(request_id)
+    def get_statuses_by_request(request_id: int) -> list:
+        return RequestStatusRepository.find_by_request_id(request_id)
 
-    @staticmethod
-    def get_statuses_by_user_id(user_id: int) -> list[RequestStatus]:
-        return RequestStatusRepository.get_by_user_id(user_id)
 
-# File 4: Request Status Controller in controllers/status/request_status_controller.py
+# File 4: Status Update Controller in controllers/status/request_status_controller.py
