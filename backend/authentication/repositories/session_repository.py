@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -39,4 +39,4 @@ class SessionRepository:
 
 
 
-# File 3: Updated Authentication Service in authentication/services/auth_service.py
+# File 5: Database Schema Update for Secure Storage in database/users.sql
