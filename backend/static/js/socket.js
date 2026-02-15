@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates
+# Epic Title: In-app Notifications
 
 document.addEventListener("DOMContentLoaded", () => {
     const socket = io();
@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     socket.on(`user_${USER_ID}`, (message) => {
-        alert(`New update: ${message}`);
+        showNotification(`New update: ${message}`);
     });
 });
 
 
-# File 4: Base HTML Template Modification to Include SocketIO Script in authentication/templates/base.html
+# File 6: App Update to Initialize Notification Service and Register Notification Controller in app.py
