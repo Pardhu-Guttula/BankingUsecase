@@ -24,4 +24,4 @@ class Transaction(db.Model):
         self.description = description
 
 
-# File 3: Update User Model to Include Relationship with Account in models/authentication/user_model.py
+# File 3: User Model Update to Include Relationship with Account in models/authentication/user_model.py
