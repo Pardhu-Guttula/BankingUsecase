@@ -66,7 +66,6 @@ def create_app():
     from backend.integration.controllers.core_banking_data_sync_controller import core_banking_data_sync_controller
     from backend.controllers.dashboard.account_dashboard_controller import account_dashboard_controller
     from backend.controllers.account.opening_requests.account_opening_request_controller import account_opening_request_controller
-    from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -98,7 +97,6 @@ def create_app():
     app.register_blueprint(core_banking_data_sync_controller, url_prefix='/integration')
     app.register_blueprint(account_dashboard_controller, url_prefix='/dashboard/accounts')
     app.register_blueprint(account_opening_request_controller, url_prefix='/account')
-    app.register_blueprint(service_modification_request_controller, url_prefix='/account')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -126,4 +124,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Service Modification Requests Table in database/create_service_modification_requests_table.sql
+# File 6: Schema for Account Opening Requests Table in database/create_account_opening_requests_table.sql
