@@ -9,4 +9,4 @@ class FinancialActivityService:
         return FinancialActivityRepository.find_by_user_id(user_id)
 
 
-# File 4: Dashboard Controller Updated for Financial Summary in controllers/dashboard/dashboard_controller.py
+# File 4: Dashboard Controller Updated for Financial Summary in backend/controllers/dashboard/dashboard_controller.py
