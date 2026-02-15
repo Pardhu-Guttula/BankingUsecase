@@ -1,4 +1,4 @@
-# Epic Title: Role-Based Access Control
+# Epic Title: Quick Access to Features
 
 import logging
 import os
@@ -11,11 +11,11 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Role-Based Access Control
+    # Epic Title: Quick Access to Features
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
-        
+
     except Exception as e:
         logger.error(f"Error during startup: {e}")
         raise
