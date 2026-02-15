@@ -1,4 +1,4 @@
-# Epic Title: Define User Roles
+# Epic Title: Maintain Separate Database
 
 from flask import Flask
 from authentication.controllers.auth_controller import auth_controller
@@ -10,22 +10,28 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_login import LoginManager
 from real_time import socketio, start_listener
-from accesscontrol.controllers.role_controller import role_controller
+from core_integration.config import Config
+from core_integration.models import portal_db, core_banking_db
 
 app = Flask(__name__)
-app.config.from_object('config.Config')
+app.config.from_object(Config)
+Config.init_app(app)
+
+# Initialize databases
+portal_db.init_app(app)
+core_banking_db.init_app(app)
+
 app.register_blueprint(auth_controller, url_prefix='/auth')
 app.register_blueprint(application_controller, url_prefix='/api')
 app.register_blueprint(document_controller, url_prefix='/api')
 app.register_blueprint(interaction_controller, url_prefix='/api')
-app.register_blueprint(role_controller, url_prefix='/api')
 
 register_blueprints(app)
 configure_cors(app)
 
-DATABASE_URI = 'mysql+pymysql://username:password@localhost/db_name'
-engine = create_engine(DATABASE_URI)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+portal_engine = create_engine(Config.PORTAL_DATABASE_URI)
+core_banking_engine = create_engine(Config.CORE_BANKING_DATABASE_URI)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=portal_engine)
 
 login_manager = LoginManager(app)
 login_manager.login_view = "auth_controller.login"
@@ -50,4 +56,4 @@ if __name__ == '__main__':
     socketio.run(app, debug=True)
 
 
-# File 8: Schema Definition for Roles and UserRoles Tables in database/05_create_roles_and_user_roles_tables.sql
+# File 4: Portal Database SQLAlchemy Bindings in core_integration/models/portal_db.py
