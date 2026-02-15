@@ -1,1 +1,1 @@
-# File 1: Update Database Configuration in app.py to Support Separate DB
+# File 1: Policy Model to Define Access Policies in models/access_control/policy_model.py
