@@ -25,4 +25,4 @@ def sync_transactions(account_id: str):
         return jsonify({"error": str(e)}), e.response.status_code
 
 
-# File 3: Update Main App to Register Core Banking Sync Controller in app.py
+# File 7: Update Main App to Register Core Banking Sync Controller in app.py
