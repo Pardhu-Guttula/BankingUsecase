@@ -19,7 +19,6 @@ class User(db.Model):
     service_modifications = relationship('ServiceModification', back_populates='user')
     statuses = relationship('RequestStatus', back_populates='user')
     approvals = relationship('RequestApproval', back_populates='approver')
-    email_notifications = relationship('EmailNotification', back_populates='user')
 
     def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
@@ -35,4 +34,4 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# File 3: Email Notification Repository for CRUD Operations in repositories/notifications/email_notification_repository.py
+# File 3: Status Repository for CRUD Operations in repositories/status/request_status_repository.py
