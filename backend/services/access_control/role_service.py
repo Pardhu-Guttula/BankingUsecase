@@ -1,32 +1,40 @@
 # Epic Title: Role-based Access Control
 
 from backend.repositories.access_control.role_repository import RoleRepository
-from backend.repositories.access_control.permission_repository import PermissionRepository
 from backend.models.access_control.role_model import Role
-from backend.models.access_control.permission_model import Permission
 
 class RoleService:
     @staticmethod
-    def create_role(name: str, description: str = None) -> Role:
-        role = Role(name, description)
+    def create_role(name: str, description: str = '') -> Role:
+        role = Role(name=name, description=description)
         RoleRepository.save(role)
         return role
 
     @staticmethod
-    def assign_permission_to_role(role_id: int, permission_id: int) -> None:
-        role = RoleRepository.find_by_id(role_id)
-        permission = PermissionRepository.find_by_id(permission_id)
-        if role and permission:
-            role.permissions.append(permission)
-            RoleRepository.save(role)
+    def update_role(role_id: int, name: str = None, description: str = None) -> Role:
+        role = RoleRepository.get_role_by_id(role_id)
+        if name is not None:
+            role.name = name
+        if description is not None:
+            role.description = description
+        RoleRepository.update(role)
+        return role
 
     @staticmethod
-    def get_all_roles() -> list[Role]:
-        return RoleRepository.find_all()
+    def delete_role(role_id: int) -> None:
+        role = RoleRepository.get_role_by_id(role_id)
+        RoleRepository.delete(role)
 
     @staticmethod
-    def get_all_permissions() -> list[Permission]:
-        return PermissionRepository.find_all()
+    def assign_role_to_user(user, role_id: int) -> None:
+        role = RoleRepository.get_role_by_id(role_id)
+        user.role = role
+        db.session.commit()
+
+    @staticmethod
+    def remove_role_from_user(user) -> None:
+        user.role = None
+        db.session.commit()
 
 
-# File 7: Permission Form to Capture Permission Data in forms/permission_form.py
+# File 5: Role Controller in access_control/controllers/role_controller.py
