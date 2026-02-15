@@ -20,9 +20,9 @@ def open_account():
             age=form.age.data,
             initial_deposit=form.initial_deposit.data
         )
-        return jsonify({"message": "Account opened successfully", "account_id": account.id}), 201
+        return jsonify({"message": "Account opened successfully and sent for approval", "account_id": account.id}), 201
     else:
         return jsonify({"errors": form.errors}), 400
+    
 
-
-# File 6: Update Main App to Register Account Opening Controller in app.py
+# File 8: Update Main App to Register Approval Controller in app.py
