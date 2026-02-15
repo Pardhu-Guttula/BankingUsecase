@@ -17,6 +17,3 @@ class SyncLog(db.Model):
         self.sync_type = sync_type
         self.status = status
         self.details = details
-
-
-# File 2: Sync Log Repository in repositories/core_banking/sync_log_repository.py
