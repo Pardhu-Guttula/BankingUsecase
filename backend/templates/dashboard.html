@@ -1,29 +1,22 @@
-# Epic Title: Responsive Design
+# Epic Title: Personalized Dashboard
 
 {% extends "base.html" %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2>Your Dashboard</h2>
-<p>Here you can view and manage all your accounts and services.</p>
-<div class="account-summary">
-    <h3>Accounts</h3>
+<h2>Personalized Dashboard</h2>
+{% for account_data in accounts %}
+    <h3>{{ account_data.account.account_type }} - {{ account_data.account.account_number }}</h3>
+    <p>Balance: ${{ account_data.account.balance }}</p>
+    <h4>Transactions:</h4>
     <ul>
-        {% for account in accounts %}
-        <li>{{ account.account_number }} - {{ account.account_type }}: ${{ account.balance }}</li>
+        {% for transaction in account_data.transactions %}
+        <li>{{ transaction.transaction_type }}: ${{ transaction.amount }} on {{ transaction.transaction_date }}</li>
         {% endfor %}
     </ul>
-</div>
-<div class="service-requests">
-    <h3>Service Requests</h3>
-    <ul>
-        {% for request in service_requests %}
-        <li>{{ request.service_name }} - {{ request.status }}</li>
-        {% endfor %}
-    </ul>
-</div>
+{% endfor %}
 {% endblock %}
 
 
-# File 4: Dashboard Controller Update to Render Templates in backend/controllers/dashboard/dashboard_controller.py
+# File 9: Update Main App to Register Dashboard Controller in app.py
