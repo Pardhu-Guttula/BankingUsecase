@@ -1,4 +1,4 @@
-# Epic Title: Cross-Browser Compatibility
+# Epic Title: Consistency Across Devices
 
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
@@ -11,4 +11,4 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-# File 5: Update app.py to Register Dashboard Blueprint for Cross-Browser Compatibility
+# File 5: Implement Logging Middleware for Consistent Behavioral Tracking in middleware/logging_middleware.py
