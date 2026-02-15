@@ -1,1 +1,1 @@
-# File 1: Core Banking Integration Settings Model in models/core_banking/integration_settings_model.py
+# File 1: Synchronization Model for Tracking Data Sync Records in models/core_banking/sync_record_model.py
