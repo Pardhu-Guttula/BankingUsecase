@@ -15,4 +15,4 @@ def get_dashboard():
     return render_template('dashboard.html', accounts=user_accounts, service_requests=user_service_requests)
 
 
-# File 6: Update Main App to Serve Static Files and Register Blueprint in backend/app.py
+# File 5: Update App to Serve Static Files and Register Blueprint in backend/app.py
