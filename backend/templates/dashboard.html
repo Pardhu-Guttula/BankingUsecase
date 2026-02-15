@@ -1,36 +1,97 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/css/responsive.css">
+    <script>
+        async function loadWidgets() {
+            const response = await fetch('/dashboard/widgets');
+            const widgets = await response.json();
+            const widgetContainer = document.getElementById('widgets');
+            widgetContainer.innerHTML = '';
+            widgets.forEach(widget => {
+                const widgetDiv = document.createElement('div');
+                widgetDiv.className = 'widget';
+                widgetDiv.innerHTML = `
+                    <h2>${widget.widget_type}</h2>
+                    <p>Data Source: ${widget.data_source}</p>
+                    <p>Position: ${widget.position}</p>
+                    <button onclick="removeWidget(${widget.id})">Remove</button>
+                `;
+                widgetContainer.appendChild(widgetDiv);
+            });
+        }
 
-{% block title %}Dashboard{% endblock %}
+        async function loadSummary() {
+            const response = await fetch('/dashboard/summary');
+            const summary = await response.json();
+            const summaryContainer = document.getElementById('summary');
+            summaryContainer.innerHTML = '';
+            summaryContainer.innerHTML = `
+                <h2>Account Summary</h2>
+                <ul>
+                    ${summary.accounts.map(acc => `<li>${acc.account_name}: ${acc.balance}</li>`).join('')}
+                </ul>
+                <h2>Recent Transactions</h2>
+                <ul>
+                    ${summary.transactions.map(txn => `<li>${txn.amount} (${txn.transaction_type}) at ${txn.timestamp}</li>`).join('')}
+                </ul>
+            `;
+        }
 
-{% block content %}
-<h2>Personalized Dashboard</h2>
-<h3>Widgets</h3>
-<ul>
-    {% for widget in widgets %}
-    <li>{{ widget.name }} - {{ widget.config }}
-        <form method="POST" action="{{ url_for('dashboard_controller.remove_widget', widget_id=widget.id) }}" style="display:inline">
-            <button type="submit">Remove</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
-<h3>Add New Widget</h3>
-<form method="POST" action="{{ url_for('dashboard_controller.add_widget') }}">
-    <div>
-        <label for="name">Widget Name:</label>
-        <input type="text" id="name" name="name" required>
+        async function addWidget() {
+            const widgetType = prompt('Enter widget type:');
+            const dataSource = prompt('Enter data source:');
+            const position = parseInt(prompt('Enter position:'));
+            const response = await fetch('/widgets', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ widget_type: widgetType, data_source: dataSource, position: position })
+            });
+            const result = await response.json();
+            alert(result.message);
+            loadWidgets();
+        }
+
+        async function removeWidget(widgetId) {
+            const response = await fetch(`/widgets/${widgetId}`, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            alert(result.message);
+            loadWidgets();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWidgets();
+            loadSummary();
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+        </div>
+        <div>
+            <a href="/account/open">Open Account</a>
+            <a href="/account/modification">Modify Service</a>
+            <a href="/approval">Approvals</a>
+            <a href="/auth/logout">Logout</a>
+        </div>
+    </nav>
+    <div id="content">
+        <h1>Your Dashboard</h1>
+        <div id="summary"></div>
+        <button onclick="addWidget()">Add Widget</button>
+        <div id="widgets"></div>
     </div>
-    <div>
-        <label for="config">Widget Config:</label>
-        <input type="text" id="config" name="config" required>
-    </div>
-    <div>
-        <button type="submit">Add Widget</button>
-    </div>
-</form>
-{% endblock %}
+</body>
+</html>
 
 
-# File 7: Update Main App to Register Dashboard Controller in app.py
+# File 3: Update App to Serve Static Files in app.py (Already Exists, Re-emitting for Context)
