@@ -21,12 +21,8 @@ def create_app():
         MAIL_USERNAME='your-email@example.com',
         MAIL_PASSWORD='your-email-password',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
-        STATIC_FOLDER='static',
-        UPLOAD_FOLDER=os.path.join(os.getcwd(), 'backend/uploads')
+        STATIC_FOLDER='static'
     )
-
-    if not os.path.isdir(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
 
     db.init_app(app)
     mail.init_app(app)
@@ -99,4 +95,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Create Schema for Documents in database/
+# File 7: Create Schema for Interaction History in database/
