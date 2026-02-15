@@ -18,4 +18,4 @@ class WidgetRepository:
     def get_by_user_id(user_id: int) -> list[Widget]:
         return Widget.query.filter_by(user_id=user_id).all()
 
-# File 3: Widget Service for Widget Business Logic in services/dashboard/widget_service.py
+# File 3: Widget Service in services/dashboard/widget_service.py
