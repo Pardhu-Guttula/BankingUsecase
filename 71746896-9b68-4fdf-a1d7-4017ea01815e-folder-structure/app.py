@@ -1,10 +1,10 @@
-# Epic Title: Role-Based Access Control
+# Epic Title: Implement Multi-Factor Authentication
 
 import logging
 import os
 from django.core.wsgi import get_wsgi_application
 from django.urls import path
-from backend.controllers.authentication.role_based_access_controller import admin_dashboard_view, user_dashboard_view
+from backend.controllers.authentication.multi_factor_auth_controller import login_view, mfa_verify_view
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
@@ -13,7 +13,7 @@ application = get_wsgi_application()
 logger = logging.getLogger('myproject')
 
 def main() -> None:
-    # Epic Title: Role-Based Access Control
+    # Epic Title: Implement Multi-Factor Authentication
     try:
         logger.info("Starting application...")
         # Place for additional startup code if necessary
@@ -26,6 +26,6 @@ if __name__ == "__main__":
     main()
 
 urlpatterns = [
-    path('admin_dashboard/', admin_dashboard_view, name='admin_dashboard'),
-    path('user_dashboard/', user_dashboard_view, name='user_dashboard'),
+    path('login/', login_view, name='login'),
+    path('mfa_verify/', mfa_verify_view, name='mfa_verify'),
 ]
