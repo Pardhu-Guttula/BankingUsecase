@@ -1,0 +1,30 @@
+<!-- Epic Title: Quick Access to Features -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Features</title>
+    <link rel="stylesheet" href="{% static 'css/feature_dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>{{ user.username }}'s Dashboard</h1>
+        </header>
+        <main>
+            <h2>Quick Access to Essential Features</h2>
+            <div class="features">
+                {% for feature in essential_features %}
+                    <div class="feature-card">
+                        <a href="{{ feature.url }}">
+                            <h3>{{ feature.name }}</h3>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>
