@@ -17,4 +17,4 @@ class Widget(db.Model):
         self.position = position
 
 
-# File 2: Widgets Repository in repositories/dashboard/widget_repository.py
+# File 2: Widgets Repository in backend/repositories/dashboard/widget_repository.py
