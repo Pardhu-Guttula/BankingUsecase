@@ -1,4 +1,4 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Create Secure User Sessions
 
 from flask import Blueprint, request, jsonify, session
 from flask_login import login_user, current_user, logout_user
@@ -17,6 +17,7 @@ def login():
     user = UserRepository.find_by_username(username)
     if user and user.check_password(password):
         session['pre_mfa_user_id'] = user.id
+        session.permanent = True
         return jsonify({'message': 'Password correct, enter MFA token'}), 200
 
     return jsonify({'message': 'Invalid username or password'}), 401
@@ -36,6 +37,7 @@ def mfa():
 
     if MFAService.verify_otp(user.mfa_secret, otp):
         login_user(user)
+        session['last_activity'] = int(datetime.utcnow().timestamp())
         return jsonify({'message': 'Login successful'}), 200
 
     return jsonify({'message': 'Invalid MFA token'}), 401
@@ -43,7 +45,8 @@ def mfa():
 @authentication_controller.route('/logout', methods=['POST'])
 def logout():
     logout_user()
+    session.clear()
     return jsonify({'message': 'Logged out successfully'}), 200
 
 
-# File 5: Update app.py to Register Authentication Controller Blueprint
+# File 3: Update app.py to Apply Session Middleware
