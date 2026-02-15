@@ -2,12 +2,20 @@
 
 from dashboard.repositories.status_update_repository import StatusUpdateRepository
 from dashboard.models.status_update_model import StatusUpdate
+from dashboard.services.email_notification_service import EmailNotificationService
 
 class StatusUpdateService:
     @staticmethod
-    def create_status_update(request_id: int, status: str) -> StatusUpdate:
+    def create_status_update(request_id: int, status: str, user_email: str) -> StatusUpdate:
         status_update = StatusUpdate(request_id, status)
         StatusUpdateRepository.save(status_update)
+
+        # Send email notification
+        EmailNotificationService.send_email(
+            to=user_email,
+            subject="Status Update Notification",
+            body=f"Your request (ID: {request_id}) status has been updated to '{status}'."
+        )
         return status_update
 
     @staticmethod
@@ -20,4 +28,4 @@ class StatusUpdateService:
         } for update in updates]
 
 
-# File 4: Status Update Controller for Handling Requests in dashboard/controllers/status_update_controller.py
+# File 3: App Update to Register Updated Status Update Service in app.py
