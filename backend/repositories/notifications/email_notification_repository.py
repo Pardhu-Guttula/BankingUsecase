@@ -3,6 +3,7 @@
 from backend.models.notifications.email_notification_model import EmailNotification
 from backend.app import db
 
+
 class EmailNotificationRepository:
     @staticmethod
     def save(email_notification: EmailNotification) -> None:
@@ -10,9 +11,8 @@ class EmailNotificationRepository:
         db.session.commit()
 
     @staticmethod
-    def mark_as_sent(email_notification: EmailNotification) -> None:
-        email_notification.sent = True
-        db.session.commit()
+    def get_notifications_by_user(user_id: int) -> list[EmailNotification]:
+        return EmailNotification.query.filter_by(user_id=user_id).all()
 
 
-# File 4: Email Notification Service Layer in services/notifications/email_notification_service.py
+# File 3: Notification Service to Handle Email Logic in services/notifications/email_notification_service.py
