@@ -1,4 +1,4 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Manage Secure Storage of Credentials
 
 from authentication.models.user_model import User
 from backend.app import db
@@ -18,4 +18,4 @@ class UserRepository:
         return User.query.get(user_id)
 
 
-# File 3: Two-Factor Code Model Definition in authentication/models/two_factor_code_model.py
+# File 4: User Authentication Service in authentication/services/authentication_service.py
