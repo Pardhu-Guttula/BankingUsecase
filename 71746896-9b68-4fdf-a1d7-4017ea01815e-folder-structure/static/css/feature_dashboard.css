@@ -1,0 +1,60 @@
+/* Epic Title: Quick Access to Features */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+header {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 20px;
+    flex: 1 1 calc(25% - 40px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.feature-card a {
+    text-decoration: none;
+    color: #333;
+}
+
+.feature-card h3 {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .feature-card {
+        flex: 1 1 calc(50% - 40px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .feature-card {
+        flex: 1 1 calc(20% - 40px);
+    }
+}
