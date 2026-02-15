@@ -120,4 +120,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Update requirements.txt with Required Dependencies
+# File 6: Schema for Users Table with Secure Field in database/create_users_table.sql
