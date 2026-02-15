@@ -2,7 +2,9 @@
 
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from backend.access_control.services.policy_service import PolicyService
+from backend.services.access_control.policy_service import PolicyService
+from backend.repositories.access_control.policy_repository import PolicyRepository
+from backend.models.access_control.policy_model import Policy
 
 policy_controller = Blueprint('policy_controller', __name__)
 
@@ -10,47 +12,21 @@ policy_controller = Blueprint('policy_controller', __name__)
 @login_required
 def create_policy():
     data = request.get_json()
-    policy_name = data.get('name')
-    description = data.get('description', "")
+    policy = PolicyService.create_policy(data['name'], data['description'], data['role_id'])
+    return jsonify({"message": "Policy created successfully", "policy": policy.name}), 201
 
-    if not policy_name:
-        return jsonify({"message": "Policy name is required"}), 400
-
-    if PolicyService.create_policy(policy_name, description):
-        return jsonify({"message": "Policy created successfully"}), 201
-    return jsonify({"message": "Policy already exists"}), 409
-
-@policy_controller.route('/policies', methods=['GET'])
+@policy_controller.route('/policies/<int:policy_id>', methods=['PUT'])
 @login_required
-def get_policies():
-    policies = PolicyService.get_all_policies()
-    return jsonify([{"id": policy.id, "name": policy.name, "description": policy.description} for policy in policies]), 200
-
-@policy_controller.route('/policies/assign', methods=['POST'])
-@login_required
-def assign_policy():
+def update_policy(policy_id):
     data = request.get_json()
-    role_id = data.get('role_id')
-    policy_id = data.get('policy_id')
+    policy = PolicyService.update_policy(policy_id, data.get('name'), data.get('description'), data.get('is_active'))
+    return jsonify({"message": "Policy updated successfully", "policy": policy.name}), 200
 
-    if not role_id or not policy_id:
-        return jsonify({"message": "Role ID and Policy ID are required"}), 400
-
-    PolicyService.assign_policy(role_id, policy_id)
-    return jsonify({"message": "Policy assigned successfully"}), 200
-
-@policy_controller.route('/policies/remove', methods=['POST'])
+@policy_controller.route('/policies/<int:policy_id>', methods=['DELETE'])
 @login_required
-def remove_policy():
-    data = request.get_json()
-    role_id = data.get('role_id')
-    policy_id = data.get('policy_id')
-
-    if not role_id or not policy_id:
-        return jsonify({"message": "Role ID and Policy ID are required"}), 400
-
-    PolicyService.remove_policy(role_id, policy_id)
-    return jsonify({"message": "Policy removed successfully"}), 200
+def delete_policy(policy_id):
+    PolicyService.delete_policy(policy_id)
+    return jsonify({"message": "Policy deleted successfully"}), 200
 
 
-# File 7: Middleware for Policy Enforcement in middleware/policy_enforcer.py
+# File 6: Middleware to Enforce Policy Restrictions based on Roles in middleware/policy_middleware.py
