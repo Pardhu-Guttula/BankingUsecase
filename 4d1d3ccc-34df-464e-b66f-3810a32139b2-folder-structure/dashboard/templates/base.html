@@ -1,0 +1,39 @@
+# Epic Title: Consistency Across Devices
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard_controller.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('widget_controller.get_user_widgets') }}">Widgets</a></li>
+                    <li><a href="{{ url_for('dashboard_summary_controller.get_financial_summary') }}">Summary</a></li>
+                    <li><a href="{{ url_for('account_opening_controller.get_user_requests') }}">Account Requests</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Responsive Dashboard</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+# File 2: Dashboard Home Template in dashboard/templates/home.html
