@@ -1,23 +1,21 @@
 # Epic Title: Role-Based Access Control
 
 from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
 
 class RoleService:
     @staticmethod
-    def assign_role(user_id: int, role: str) -> None:
+    def assign_role(user: User, role: str) -> None:
         # Epic Title: Role-Based Access Control
-        user = User.objects.get(id=user_id)
-        group, created = Group.objects.get_or_create(name=role)
-        user.groups.add(group)
+        user.profile.roles.add(role)
         user.save()
 
     @staticmethod
-    def get_all_roles() -> list:
+    def remove_role(user: User, role: str) -> None:
         # Epic Title: Role-Based Access Control
-        return list(Group.objects.values_list('name', flat=True))
+        user.profile.roles.remove(role)
+        user.save()
 
     @staticmethod
-    def user_has_role(user: User, role: str) -> bool:
+    def has_role(user: User, role: str) -> bool:
         # Epic Title: Role-Based Access Control
-        return user.groups.filter(name=role).exists()
+        return role in user.profile.roles.all()
