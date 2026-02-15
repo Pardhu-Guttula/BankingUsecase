@@ -42,7 +42,6 @@ def create_app():
     from backend.integration.controllers.integration_controller import integration_controller
     from backend.access.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
-    from backend.access_control.controllers.policy_controller import policy_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -55,7 +54,6 @@ def create_app():
     app.register_blueprint(integration_controller, url_prefix='/integration')
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(permission_controller, url_prefix='/permissions')
-    app.register_blueprint(policy_controller, url_prefix='/policies')
 
     @app.route('/')
     def home():
@@ -77,4 +75,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 9: requirements.txt Update
+# File 8: requirements.txt Update
