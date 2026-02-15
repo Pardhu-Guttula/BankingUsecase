@@ -1,31 +1,34 @@
-# Epic Title: Implement Multi-Factor Authentication
+# Epic Title: Manage Secure Storage of Credentials
 
-import logging
 from flask import Flask
-from flask_login import LoginManager
-from backend.authentication.models.user_model import db, User
-from backend.authentication.controllers.mfa_controller import mfa_bp
+from authentication.controllers.auth_controller import auth_controller
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/dbname'
-app.config['SECRET_KEY'] = 'your_secret_key'
-db.init_app(app)
+app.register_blueprint(auth_controller, url_prefix='/auth')
 
-login_manager = LoginManager()
-login_manager.init_app(app)
+DATABASE_URI = 'mysql+pymysql://username:password@localhost/db_name'
+engine = create_engine(DATABASE_URI)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-@login_manager.user_loader
-def load_user(user_id):
-    # Epic Title: Implement Multi-Factor Authentication
-    return User.query.get(int(user_id))
+@app.before_request
+def before_request():
+    # Code to handle something before a request if needed
+    pass
 
-@app.before_first_request
-def create_tables():
-    # Epic Title: Implement Multi-Factor Authentication
-    db.create_all()
+@app.after_request
+def after_request(response):
+    # Code to handle something after a request if needed
+    return response
 
-app.register_blueprint(mfa_bp, url_prefix='/auth')
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    SessionLocal.remove()
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
     app.run(debug=True)
+
+
+
+# File 8: requirements.txt Update for Secure Storage
