@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Core Banking System Integration
 
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +21,7 @@ def create_app():
         MAIL_USE_TLS=True,
         MAIL_USERNAME='your-email@example.com',
         MAIL_PASSWORD='your-email-password',
+        CORE_BANKING_API_TOKEN='your_core_banking_api_token',
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
         STATIC_FOLDER='static',
         UPLOAD_FOLDER=os.path.join(os.getcwd(), 'backend/uploads')
@@ -107,4 +108,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 7: Schema for Role Table in database/create_roles_table.sql
+# File 8: Schema for Core Banking Account Table in database/create_core_banking_accounts_table.sql
