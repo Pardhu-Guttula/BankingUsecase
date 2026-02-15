@@ -5,8 +5,20 @@ from backend.app import db
 
 class UserRepository:
     @staticmethod
-    def get_user_by_username(username: str) -> User:
+    def save(user: User) -> None:
+        db.session.add(user)
+        db.session.commit()
+
+    @staticmethod
+    def find_by_username(username: str) -> User:
         return User.query.filter_by(username=username).first()
 
+    @staticmethod
+    def find_by_email(email: str) -> User:
+        return User.query.filter_by(email=email).first()
 
-# File 4: Authentication Controller Handling Login Process with MFA in authentication/controllers/authentication_controller.py
+    @staticmethod
+    def find_by_id(user_id: int) -> User:
+        return User.query.filter_by(id=user_id).first()
+
+# File 4: Authentication Controller in authentication/controllers/authentication_controller.py (Already exists, Modified)
