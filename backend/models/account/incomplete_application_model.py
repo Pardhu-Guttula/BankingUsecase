@@ -1,23 +1,24 @@
 # Epic Title: Interaction History and Documentation Upload
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
-from sqlalchemy.orm import relationship
+from datetime import datetime
 from backend.app import db
-import datetime
+
 
 class IncompleteApplication(db.Model):
     __tablename__ = 'incomplete_applications'
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    data = Column(Text, nullable=False)
-    last_updated = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    application_data = Column(Text, nullable=False)
+    saved_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    user = relationship('User', back_populates='incomplete_applications')
-
-    def __init__(self, user_id: int, data: str):
+    def __init__(self, user_id: int, application_data: str, saved_at: DateTime = None):
         self.user_id = user_id
-        self.data = data
+        self.application_data = application_data
+        if saved_at is None:
+            saved_at = datetime.utcnow()
+        self.saved_at = saved_at
 
 
-# File 2: Update User Model to Include Relationship with Incomplete Applications in models/authentication/user_model.py
+# File 2: Incomplete Application Repository for Data Access in repositories/account/incomplete_application_repository.py
