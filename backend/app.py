@@ -1,6 +1,6 @@
 # Epic Title: Role-based Access Control
 
-from flask import Flask, send_from_directory, render_template
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
@@ -107,4 +107,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 9: Schema for Permission Table in database/create_permissions_table.sql
+# File 7: Schema for Role Table in database/create_roles_table.sql
