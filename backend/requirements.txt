@@ -10,3 +10,4 @@ flask-wtf==1.0.0
 flask-mail==0.9.1
 pyjwt==2.3.0
 bcrypt==3.2.0
+itsdangerous==2.0.1
