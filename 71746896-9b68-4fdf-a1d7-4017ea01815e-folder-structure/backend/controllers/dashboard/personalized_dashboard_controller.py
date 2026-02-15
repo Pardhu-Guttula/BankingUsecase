@@ -8,5 +8,5 @@ from backend.services.dashboard.product_service import ProductService
 def personalized_dashboard_view(request):
     # Epic Title: Display Tailored Products
     user_profile = request.user.profile
-    products = ProductService.get_relevant_products(user_profile)
-    return render(request, 'dashboard/personalized_dashboard.html', {'products': products})
+    tailored_products = ProductService.get_products_for_profile(user_profile)
+    return render(request, 'dashboard/personalized_dashboard.html', {'products': tailored_products})
