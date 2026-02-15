@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Customizable Widgets
 
 from backend.models.dashboard.widget_model import Widget
 from backend.app import db
@@ -10,12 +10,13 @@ class WidgetRepository:
         db.session.commit()
 
     @staticmethod
-    def delete(widget: Widget) -> None:
+    def remove(widget: Widget) -> None:
         db.session.delete(widget)
         db.session.commit()
 
     @staticmethod
-    def get_by_user_id(user_id: int) -> list[Widget]:
+    def find_by_user_id(user_id: int) -> list[Widget]:
         return Widget.query.filter_by(user_id=user_id).all()
 
-# File 3: Widget Service in services/dashboard/widget_service.py
+
+# File 3: Widgets Service in services/dashboard/widget_service.py
