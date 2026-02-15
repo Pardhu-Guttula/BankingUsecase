@@ -1,10 +1,12 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Customizable Widgets
 
 CREATE TABLE IF NOT EXISTS widgets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     widget_type VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    position INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-# File 7: Update requirements.txt with Required Dependency
+
+# File 7: requirements.txt
