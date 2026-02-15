@@ -1,0 +1,29 @@
+# Epic Title: Role-based Access Control
+
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from backend.app import db
+
+roles_users = Table(
+    'roles_users',
+    db.Column('user_id', Integer, db.ForeignKey('users.id')),
+    db.Column('role_id', Integer, db.ForeignKey('roles.id'))
+)
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
+    description = Column(String(255), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    users = relationship("User", secondary=roles_users, back_populates="roles")
+
+    def __init__(self, name: str, description: str = None):
+        self.name = name
+        self.description = description
+
+
+# File 2: Update User Model to Include Role Relationship in models/authentication/user_model.py
