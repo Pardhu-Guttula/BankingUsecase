@@ -1,0 +1,33 @@
+<!-- Epic Title: User-Friendly Interface -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User-Friendly Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/user_friendly_dashboard.css' %}">
+</head>
+<body>
+    <header>
+        <h1>User-Friendly Dashboard</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Welcome, {{ user.username }}</h2>
+            <p>This dashboard is designed for ease of use and intuitive navigation.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Company</p>
+    </footer>
+</body>
+</html>
