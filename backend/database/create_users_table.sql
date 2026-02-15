@@ -1,4 +1,4 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Manage Secure Storage of Credentials
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
