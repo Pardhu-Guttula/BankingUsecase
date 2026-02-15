@@ -7,7 +7,6 @@ from flask_mail import Mail
 from datetime import timedelta
 import os
 from backend.middleware.session_middleware import SessionMiddleware
-from backend.middleware.policy_middleware import PolicyMiddleware
 
 db = SQLAlchemy()
 mail = Mail()
@@ -86,7 +85,6 @@ def create_app():
         return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
     app.before_request(SessionMiddleware.before_request)
-    app.before_request(PolicyMiddleware.enforce_policy)
     app.after_request(SessionMiddleware.after_request)
 
     @app.before_request
@@ -109,4 +107,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: Schema for Policy Table in database/create_policies_table.sql
+# File 9: Schema for Permission Table in database/create_permissions_table.sql
