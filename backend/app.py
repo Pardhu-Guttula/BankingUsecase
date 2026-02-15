@@ -1,4 +1,4 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Interaction History and Documentation Upload
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -106,7 +106,6 @@ def create_app():
     app.register_blueprint(request_status_controller, url_prefix='/status')
     app.register_blueprint(document_upload_controller, url_prefix='/documents')
     app.register_blueprint(incomplete_application_controller, url_prefix='/applications')
-    app.register_blueprint(core_banking_api_route, url_prefix='/')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -134,4 +133,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 9: Schema for Transactions Table in database/create_transactions_table.sql
+# File 6: Schema for Incomplete Applications Table in database/create_incomplete_applications_table.sql
