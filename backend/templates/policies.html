@@ -1,0 +1,19 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Manage Policies{% endblock %}
+
+{% block content %}
+<h2>Manage Policies</h2>
+<p>Below is a list of available policies:</p>
+<ul>
+    {% for policy in policies %}
+    <li>{{ policy.role.name }}: {{ policy.service_name }} - {{ policy.access_level }}</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('policy_controller.new_policy') }}">Create New Policy</a>
+{% endblock %}
+
+
+## New Policy Template in templates/new_policy.html
