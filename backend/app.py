@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Core Banking System Integration
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -40,7 +40,6 @@ def create_app():
     from backend.integration.controllers.api_controller import api_controller
     from backend.integration.controllers.sync_controller import sync_controller
     from backend.integration.controllers.integration_controller import integration_controller
-    from backend.access.controllers.role_controller import role_controller
 
     app.register_blueprint(auth_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
@@ -51,7 +50,6 @@ def create_app():
     app.register_blueprint(api_controller, url_prefix='/api')
     app.register_blueprint(sync_controller, url_prefix='/sync')
     app.register_blueprint(integration_controller, url_prefix='/integration')
-    app.register_blueprint(role_controller, url_prefix='/roles')
 
     @app.route('/')
     def home():
@@ -73,4 +71,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: requirements.txt Update
+# File 6: requirements.txt Update
