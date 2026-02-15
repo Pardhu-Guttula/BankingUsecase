@@ -3,9 +3,7 @@
 CREATE TABLE IF NOT EXISTS roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL,
-    description VARCHAR(255),
-    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+    description VARCHAR(255)
 );
 
-
-# File 8: Update requirements.txt with Only Necessary Dependencies
+# File 9: Schema for Users Table Updated for Role in database/update_users_table_for_role.sql
