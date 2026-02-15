@@ -5,7 +5,7 @@ from backend.app import create_app
 app = create_app()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
-# File 6: requirements.txt Update
+# File 11: Schema Definition for Permissions Table in database/22_create_permissions_table.sql
