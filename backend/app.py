@@ -1,9 +1,10 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
-from flask import Flask
+from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import timedelta
+import os
 
 db = SQLAlchemy()
 
@@ -17,7 +18,8 @@ def create_app():
         MAIL_USE_TLS=True,
         MAIL_USERNAME='your-email@example.com',
         MAIL_PASSWORD='your-email-password',
-        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15)
+        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
+        STATIC_FOLDER='static'
     )
 
     db.init_app(app)
@@ -32,6 +34,14 @@ def create_app():
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(dashboard_controller, url_prefix='/api')
 
+    @app.route('/')
+    def home():
+        return render_template('home.html')
+
+    @app.route('/static/<path:filename>')
+    def static_files(filename):
+        return send_from_directory(app.config['STATIC_FOLDER'], filename)
+
     return app
 
 if __name__ == '__main__':
@@ -41,4 +51,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 9: requirements.txt Update
+# File 7: requirements.txt Update
