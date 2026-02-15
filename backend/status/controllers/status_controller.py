@@ -12,7 +12,8 @@ def create_status():
     data = request.get_json()
     request_id = data.get('request_id')
     status = data.get('status')
-    if StatusService.create_status(request_id, status):
+    user_email = current_user.email
+    if StatusService.create_status(request_id, status, user_email):
         return jsonify({"message": "Status created successfully."}), 201
     return jsonify({"message": "Failed to create status."}), 500
 
@@ -21,9 +22,10 @@ def create_status():
 def update_status(status_id):
     data = request.get_json()
     new_status = data.get('status')
-    if StatusService.update_status(status_id, new_status):
+    user_email = current_user.email
+    if StatusService.update_status(status_id, new_status, user_email):
         return jsonify({"message": "Status updated successfully."}), 200
     return jsonify({"message": "Failed to update status."}), 500
 
 
-# File 5: User Request Model to Manage Requests in models/status/request_model.py
+# File 5: requirements.txt Update
