@@ -18,4 +18,4 @@ class Transaction(db.Model):
     user = relationship('User', back_populates='transactions')
 
 
-# File 7: Update User Model to Include Relationships with Account and Transaction in models/authentication/user_model.py
+# File 7: Update Main App to Register Dashboard Controller in app.py (Existing File, Re-emitting for Context)
