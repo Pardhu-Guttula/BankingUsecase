@@ -9,8 +9,8 @@ dashboard_controller = Blueprint('dashboard_controller', __name__)
 @dashboard_controller.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-    summary = DashboardService.get_summary(current_user.id)
-    return render_template('dashboard.html', summary=summary)
+    data = DashboardService.get_dashboard_data(current_user.id)
+    return render_template('dashboard.html', data=data)
 
 
-# File 3: Update Dashboard Template to Show Financial Summary in templates/dashboard.html
+# File 5: Dashboard HTML Template to Display Relevant Data in templates/dashboard.html
