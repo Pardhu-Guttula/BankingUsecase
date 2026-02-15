@@ -1,14 +1,14 @@
-# Epic Title: Consistency Across Devices
+# Epic Title: Implement Adaptive Layouts
 
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 
-dashboard_bp = Blueprint('dashboard_bp', __name__)
+dashboard = Blueprint('dashboard', __name__)
 
-@dashboard_bp.route('/dashboard', methods=['GET'])
+@dashboard.route('/dashboard')
 @login_required
-def dashboard():
+def get_dashboard():
     return render_template('dashboard.html')
 
 
-# File 5: Implement Responsive Layouts with Router Integration in app.py
+# File 5: Update app.py to Register Dashboard Route
