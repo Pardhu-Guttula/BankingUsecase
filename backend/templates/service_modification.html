@@ -1,0 +1,25 @@
+# Epic Title: Account Opening and Service Modifications
+
+{% extends "base.html" %}
+
+{% block title %}Modify Account Services{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Modify Account Services</h2>
+    <form method="POST" action="{{ url_for('service_modification_controller.modify_services') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.service_type.label }}<br>
+            {{ form.service_type(class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }}<br>
+            {{ form.description(class_="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+# File 2: Service Modification Form Definition for Data Validation in forms/service_modification_form.py
