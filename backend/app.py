@@ -104,7 +104,6 @@ def create_app():
     app.register_blueprint(service_modification_request_controller, url_prefix='/account')
     app.register_blueprint(approval_workflow_controller, url_prefix='/approval-workflow')
     app.register_blueprint(request_status_controller, url_prefix='/status')
-    app.register_blueprint(document_upload_controller, url_prefix='/documents')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
@@ -132,4 +131,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-# File 6: Schema for Documents Table in database/create_documents_table.sql
+# File 6: Schema for Interaction Histories Table in database/create_interaction_histories_table.sql
