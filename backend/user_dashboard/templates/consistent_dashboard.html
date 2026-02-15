@@ -22,18 +22,18 @@
     </nav>
     <main>
         <section>
-            <h2>Welcome, {{ current_user.username }}</h2>
-            <p>This is your consistent experience dashboard.</p>
-            <button onclick="executeFunction('feature1')">Feature 1</button>
-            <button onclick="executeFunction('feature2')">Feature 2</button>
+            <h2>Welcome to your consistent dashboard</h2>
+            <p>Core functionalities are accessible and the navigation pattern is consistent across all devices.</p>
+            <button onclick="displayMessage('Feature 1')">Feature 1</button>
+            <button onclick="displayMessage('Feature 2')">Feature 2</button>
         </section>
     </main>
     <footer>
         <p>&copy; 2023 My Company</p>
     </footer>
     <script>
-        function executeFunction(feature) {
-            alert('Executing ' + feature);
+        function displayMessage(feature) {
+            alert('Navigating to ' + feature);
         }
     </script>
 </body>
