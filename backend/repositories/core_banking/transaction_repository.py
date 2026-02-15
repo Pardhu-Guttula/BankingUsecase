@@ -1,25 +1,20 @@
 # Epic Title: Core Banking System Integration
 
-from backend.models.core_banking.transaction_model import CoreBankingTransaction
+from backend.models.core_banking.transaction_model import Transaction
 from backend.app import db
 
 class TransactionRepository:
     @staticmethod
-    def get_transaction_by_id(transaction_id: int) -> CoreBankingTransaction:
-        return CoreBankingTransaction.query.get(transaction_id)
-
-    @staticmethod
-    def get_transactions_by_account_id(account_id: int) -> list[CoreBankingTransaction]:
-        return CoreBankingTransaction.query.filter_by(account_id=account_id).all()
-
-    @staticmethod
-    def save(transaction: CoreBankingTransaction) -> None:
+    def save(transaction: Transaction) -> None:
         db.session.add(transaction)
         db.session.commit()
 
     @staticmethod
-    def update(transaction: CoreBankingTransaction) -> None:
-        db.session.commit()
+    def get_by_user_id(user_id: int) -> list[Transaction]:
+        return Transaction.query.filter_by(user_id=user_id).all()
 
+    @staticmethod
+    def get_by_external_id(external_id: str) -> Transaction | None:
+        return Transaction.query.filter_by(external_id=external_id).first()
 
-# File 5: Core Banking Sync Service in services/core_banking/core_banking_sync_service.py
+# File 6: Update Request Repository to Include External ID Handling in repositories/core_banking/request_repository.py (Modified)
