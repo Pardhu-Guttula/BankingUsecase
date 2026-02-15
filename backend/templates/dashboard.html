@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Responsive Design
 
 {% extends "base.html" %}
 
@@ -6,22 +6,25 @@
 
 {% block content %}
 <h2>Hello, {{ current_user.username }}!</h2>
-<h3>Your Accounts</h3>
-<ul>
-    {% for account in data.accounts %}
-    <li>
-        <h4>{{ account.account_type }} - {{ account.account_number }}</h4>
-        <p>Balance: ${{ account.balance }}</p>
-        <h5>Recent Transactions</h5>
-        <ul>
-            {% for transaction in account.transactions %}
-            <li>{{ transaction.type }}: ${{ transaction.amount }} on {{ transaction.date }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container">
+    <h3>Your Accounts</h3>
+    <div class="row">
+        {% for account in data.accounts %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <h3>{{ account.account_type }} - {{ account.account_number }}</h3>
+                <p>Balance: ${{ account.balance }}</p>
+                <h5>Recent Transactions</h5>
+                <ul>
+                    {% for transaction in account.transactions %}
+                    <li>{{ transaction.type }}: ${{ transaction.amount }} on {{ transaction.date }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
 
-
-# File 6: Update Main App to Register Dashboard Controller in app.py
+# File 3: Form HTML Template with Consistent Layout in templates/form.html
