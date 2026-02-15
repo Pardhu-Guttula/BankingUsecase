@@ -22,19 +22,17 @@
     </nav>
     <main>
         <section>
-            <h2>Welcome, {{ current_user.username }}</h2>
-            <p>
-                This dashboard is designed to be simple and intuitive, allowing you to find essential features easily.
-            </p>
-            <button onclick="navigateTo('feature1')">Feature 1</button>
-            <button onclick="navigateTo('feature2')">Feature 2</button>
+            <h2>Welcome to your user-friendly dashboard</h2>
+            <p>Here you can easily find and use essential features:</p>
+            <button onclick="displayMessage('Feature 1')">Feature 1</button>
+            <button onclick="displayMessage('Feature 2')">Feature 2</button>
         </section>
     </main>
     <footer>
         <p>&copy; 2023 My Company</p>
     </footer>
     <script>
-        function navigateTo(feature) {
+        function displayMessage(feature) {
             alert('Navigating to ' + feature);
         }
     </script>
