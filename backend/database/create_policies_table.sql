@@ -1,11 +1,12 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Access Policies for Different Roles
 
 CREATE TABLE IF NOT EXISTS policies (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
     role_id INT NOT NULL,
-    action VARCHAR(255) NOT NULL,
+    service_name VARCHAR(255) NOT NULL,
+    action VARCHAR(50) NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
-# File 8: Update requirements.txt with Required Dependencies
+
+# File 6: Update `app.py` to Register Policy Controller
