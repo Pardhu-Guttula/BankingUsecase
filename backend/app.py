@@ -1,10 +1,10 @@
-# Epic Title: Consistent User Experience
+# Epic Title: Responsive User Interface
 
 import logging
 from flask import Flask
 from flask_login import LoginManager
 from backend.authentication.models.user_model import db, User
-from backend.user_dashboard.controllers.consistent_ui_controller import consistent_ui_bp
+from backend.user_dashboard.controllers.responsive_ui_controller import responsive_ui_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/dbname'
@@ -16,15 +16,15 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Epic Title: Consistent User Experience
+    # Epic Title: Responsive User Interface
     return User.query.get(int(user_id))
 
 @app.before_first_request
 def create_tables():
-    # Epic Title: Consistent User Experience
+    # Epic Title: Responsive User Interface
     db.create_all()
 
-app.register_blueprint(consistent_ui_bp, url_prefix='/dashboard')
+app.register_blueprint(responsive_ui_bp, url_prefix='/dashboard')
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
