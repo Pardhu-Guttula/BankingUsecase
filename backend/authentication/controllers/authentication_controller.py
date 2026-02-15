@@ -1,25 +1,38 @@
 # Epic Title: User Authentication and Security
 
-from flask import Blueprint, request, jsonify
-from backend.authentication.repositories.user_repository import UserRepository
+from flask import Blueprint, request, jsonify, session
+from flask_login import login_user, current_user
+from backend.services.authentication.authentication_service import AuthenticationService
 
 authentication_controller = Blueprint('authentication_controller', __name__)
 
-@authentication_controller.route('/register', methods=['POST'])
-def register():
+@authentication_controller.route('/login', methods=['POST'])
+def login():
     data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    email = data.get('email')
+    user = AuthenticationService.validate_user_credentials(data['username'], data['password'])
+    if not user:
+        return jsonify({"error": "Invalid username or password"}), 401
 
-    if not username or not password or not email:
-        return jsonify({"message": "Username, password and email are required"}), 400
+    if user.is_2fa_enabled:
+        session['user_id'] = user.id
+        session['2fa_required'] = True
+        return jsonify({"message": "2FA required"}), 200
+    else:
+        login_user(user)
+        return jsonify({"message": "Logged in successfully"}), 200
 
-    if UserRepository.get_user_by_username(username):
-        return jsonify({"message": "Username already exists"}), 409
+@authentication_controller.route('/verify-2fa', methods=['POST'])
+def verify_2fa():
+    if not session.get('2fa_required'):
+        return jsonify({"error": "2FA not required"}), 400
 
-    user = UserRepository.create_user(username, password, email)
-    return jsonify({"message": "User registered successfully", "user_id": user.id}), 201
+    user = User.query.get(session['user_id'])
+    token = request.get_json().get('token')
+    if AuthenticationService.validate_mfa_token(user, token):
+        login_user(user)
+        session.pop('2fa_required', None)
+        return jsonify({"message": "Logged in successfully"}), 200
+    return jsonify({"error": "Invalid 2FA token"}), 401
 
 
-# File 4: Update Main App to Register Authentication Controller in app.py
+# File 5: Middleware for 2FA Session Management in middleware/session_middleware.py
