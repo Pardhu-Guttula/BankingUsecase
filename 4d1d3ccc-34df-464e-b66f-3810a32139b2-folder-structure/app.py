@@ -1,13 +1,13 @@
-# Epic Title: Consistency Across Devices
+# Epic Title: Approval and Processing Workflows
 
 from flask import Flask
 from authentication.controllers.authentication_controller import authentication_controller
 from dashboard.controllers.widget_controller import widget_controller
+from dashboard.controllers.dashboard_controller import dashboard_controller
 from dashboard.controllers.dashboard_summary_controller import dashboard_summary_controller
 from dashboard.controllers.account_opening_controller import account_opening_controller
 from dashboard.controllers.service_modification_controller import service_modification_controller
 from dashboard.controllers.approval_workflow_controller import approval_workflow_controller
-from dashboard.controllers.dashboard_controller import dashboard_controller
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from flask_login import LoginManager
@@ -21,15 +21,13 @@ app.config.update(
 )
 
 Path("authentication/models").mkdir(parents=True, exist_ok=True)
-Path("authentication/repositories").mkdir(parents=True, exist.ok=True)
+Path("authentication/repositories").mkdir(parents=True, exist_ok=True)
 Path("authentication/services").mkdir(parents=True, exist_ok=True)
-Path("authentication/controllers").mkdir(parents=True, exist.ok=True)
-Path("dashboard/models").mkdir(parents=True, exist.ok=True)
-Path("dashboard/repositories").mkdir(parents=True, exist.ok=True)
-Path("dashboard/services").mkdir(parents=True, exist.ok=True)
+Path("authentication/controllers").mkdir(parents=True, exist_ok=True)
+Path("dashboard/models").mkdir(parents=True, exist_ok=True)
+Path("dashboard/repositories").mkdir(parents=True, exist_ok=True)
+Path("dashboard/services").mkdir(parents=True, exist_ok=True)
 Path("dashboard/controllers").mkdir(parents=True, exist.ok=True)
-Path("dashboard/static/css").mkdir(parents=True, exist.ok=True)
-Path("dashboard/templates").mkdir(parents=True, exist.ok=True)
 Path("database").mkdir(parents=True, exist.ok=True)
 
 db.init_app(app)
@@ -58,4 +56,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 5: requirements.txt Update
+# File 6: Schema Definition for Approval Workflows Table in database/14_create_approval_workflows_table.sql
