@@ -1,20 +1,23 @@
 # Epic Title: Core Banking System Integration
 
-from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from datetime import datetime
 from backend.app import db
-import datetime
 
-class CoreBankingTransaction(db.Model):
-    __tablename__ = 'core_banking_transactions'
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
 
     id = Column(Integer, primary_key=True)
-    account_id = Column(Integer, ForeignKey('core_banking_accounts.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     amount = Column(Float, nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    status = Column(String(50), nullable=False, default='pending')
+    external_id = Column(String(100), unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-    def __init__(self, account_id: int, amount: float):
-        self.account_id = account_id
+    def __init__(self, user_id: int, amount: float, status: str = 'pending', external_id: str):
+        self.user_id = user_id
         self.amount = amount
+        self.status = status
+        self.external_id = external_id
 
-
-# File 3: Core Banking Account Repository in repositories/core_banking/account_repository.py
+# File 4: Update Request Model to Include External ID in models/core_banking/request_model.py (Modified)
