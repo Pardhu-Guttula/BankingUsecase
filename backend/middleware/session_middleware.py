@@ -1,7 +1,8 @@
 # Epic Title: Create Secure User Sessions
 
 from flask import session, redirect, url_for, request
-from datetime import timedelta
+from datetime import datetime, timedelta
+from flask_login import current_user, logout_user
 
 class SessionMiddleware:
     @staticmethod
@@ -13,6 +14,8 @@ class SessionMiddleware:
             now = int(datetime.utcnow().timestamp())
             if now - session['last_activity'] > 15 * 60:
                 session.clear()
+                if current_user.is_authenticated:
+                    logout_user()
                 return redirect(url_for('authentication_controller.login', next=request.url))
         session['last_activity'] = int(datetime.utcnow().timestamp())
 
