@@ -1,10 +1,9 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Interaction History and Documentation Upload
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from backend.app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from cryptography.fernet import Fernet
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -14,11 +13,7 @@ class User(db.Model):
     password_hash = Column(String(255), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     is_2fa_enabled = Column(Boolean, default=False)
-    encryption_key = Column(String(44), nullable=False)
-    encrypted_credentials = Column(String(255), nullable=True)
-    role_id = Column(Integer, ForeignKey('roles.id'), nullable=True)
 
-    role = relationship('Role', back_populates='users')
     documents = relationship('Document', back_populates='user')
     accounts = relationship('Account', back_populates='user')
     widgets = relationship('Widget', back_populates='user')
@@ -28,31 +23,20 @@ class User(db.Model):
     email_notifications = relationship('EmailNotification', back_populates='user')
     in_app_notifications = relationship('InAppNotification', back_populates='user')
     interactions = relationship('InteractionHistory', back_populates='user')
-    security_bag = relationship('UserSecurity', back_populates='user', uselist=False)
+    incomplete_applications = relationship('IncompleteApplication', back_populates='user')
 
-    def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False, role=None):
+    def __init__(self, username: str, password: str, email: str, is_2fa_enabled: bool = False):
         self.username = username
         self.password_hash = self._generate_password_hash(password)
         self.email = email
         self.is_2fa_enabled = is_2fa_enabled
-        self.encryption_key = Fernet.generate_key().decode()
-        self.encrypted_credentials = self._encrypt_credentials(password)
-        self.role = role
 
     @staticmethod
     def _generate_password_hash(password: str) -> str:
         return generate_password_hash(password)
 
-    def _encrypt_credentials(self, plain_text: str) -> str:
-        f = Fernet(self.encryption_key)
-        return f.encrypt(plain_text.encode()).decode()
-
     def verify_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
 
-    def get_decrypted_credentials(self) -> str:
-        f = Fernet(self.encryption_key)
-        return f.decrypt(self.encrypted_credentials.encode()).decode()
 
-
-# File 3: Role Repository for CRUD Operations in repositories/access_control/role_repository.py
+# File 3: Incomplete Application Repository for CRUD Operations in repositories/account/incomplete_application_repository.py
