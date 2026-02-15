@@ -1,1 +1,1 @@
-# File 1: Update User Repository to Manage User Sessions in auth/repositories/user_repository.py
+# File 1: Update User Model for Secure Storage in models/authentication/user_model.py
