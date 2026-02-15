@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from flask import Flask, send_from_directory, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -59,4 +59,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 10: requirements.txt Update
+# File 8: requirements.txt Update
