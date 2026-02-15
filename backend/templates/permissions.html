@@ -1,0 +1,20 @@
+# Epic Title: Role-based Access Control
+
+{% extends "base.html" %}
+
+{% block title %}Manage Permissions{% endblock %}
+
+{% block content %}
+<h2>Manage Permissions</h2>
+<p>Below is a list of available permissions:</p>
+<ul>
+    {% for permission in permissions %}
+    <li>{{ permission.name }} - {{ permission.description }}</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('permission_controller.new_permission') }}">Create New Permission</a>
+<a href="{{ url_for('permission_controller.assign_permission') }}">Assign Permission to Role</a>
+{% endblock %}
+
+
+## New Permission Template in templates/new_permission.html
