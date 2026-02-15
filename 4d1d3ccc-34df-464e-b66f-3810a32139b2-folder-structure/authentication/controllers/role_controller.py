@@ -3,13 +3,11 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from authentication.services.role_service import RoleService
-from authentication.decorators.access_policy_decorator import requires_permission
 
 role_controller = Blueprint('role_controller', __name__)
 
 @role_controller.route('/roles', methods=['POST'])
 @login_required
-@requires_permission('manage_roles')
 def define_role():
     if not current_user.is_admin:
         return jsonify({"error": "Access denied"}), 403
@@ -26,14 +24,12 @@ def define_role():
 
 @role_controller.route('/roles', methods=['GET'])
 @login_required
-@requires_permission('view_roles')
 def get_all_roles():
     roles = RoleService.get_all_roles()
     return jsonify([{"id": role.id, "name": role.name, "description": role.description} for role in roles]), 200
 
 @role_controller.route('/roles/<int:role_id>/permissions', methods=['POST'])
 @login_required
-@requires_permission('assign_permissions')
 def assign_permission(role_id):
     if not current_user.is_admin:
         return jsonify({"error": "Access denied"}), 403
@@ -48,4 +44,4 @@ def assign_permission(role_id):
     return jsonify({"message": "Permission assigned successfully"}), 200
 
 
-# File 4: Integrate Access Policy in Permission Controller in authentication/controllers/permission_controller.py
+# File 9: Permission Controller for Handling Requests in authentication/controllers/permission_controller.py
