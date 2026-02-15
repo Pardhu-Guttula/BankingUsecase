@@ -1,4 +1,4 @@
-# Epic Title: Approval and Processing Workflows
+# Epic Title: Streamline Account Opening Requests
 
 from flask import Flask, send_from_directory, render_template, session
 from flask_sqlalchemy import SQLAlchemy
@@ -40,15 +40,13 @@ def create_app():
     from backend.controllers.authentication.authentication_controller import authentication_controller
     from backend.controllers.portal_main_database.portal_main_controller import portal_main_controller
     from backend.controllers.dashboard.dashboard_controller import dashboard_controller
-    from backend.controllers.account.modifications.service_modification_request_controller import service_modification_request_controller
-    from backend.controllers.approval_workflow.approval_workflow_controller import approval_workflow_controller
+    from backend.controllers.account.opening_requests.account_opening_request_controller import account_opening_request_controller
 
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(authentication_controller, url_prefix='/auth')
     app.register_blueprint(portal_main_controller, url_prefix='/portal')
     app.register_blueprint(dashboard_controller, url_prefix='/dashboard')
-    app.register_blueprint(service_modification_request_controller, url_prefix='/account')
-    app.register_blueprint(approval_workflow_controller, url_prefix='/approval')
+    app.register_blueprint(account_opening_request_controller, url_prefix='/account')
 
     app.before_request(SessionMiddleware.before_request)
     app.after_request(SessionMiddleware.after_request)
