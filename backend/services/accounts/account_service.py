@@ -27,4 +27,4 @@ class AccountService:
         return transaction
 
 
-# File 7: Dashboard Controller to Handle Requests in controllers/dashboard/dashboard_controller.py
+# File 7: Dashboard Controller to Handle User Requests in controllers/dashboard/dashboard_controller.py
