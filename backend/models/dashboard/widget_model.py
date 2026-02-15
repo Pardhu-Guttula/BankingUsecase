@@ -17,4 +17,4 @@ class Widget(db.Model):
         self.config = config
 
 
-# File 2: Update User Model to Include Widgets Relationship in models/authentication/user_model.py
+# File 2: Widget Repository to Manage Widgets in dashboard/repositories/widget_repository.py
