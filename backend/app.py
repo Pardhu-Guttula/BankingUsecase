@@ -1,4 +1,4 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Personalized Dashboard
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -27,8 +27,10 @@ def create_app():
     login_manager.session_protection = "strong"
 
     from backend.controllers.authentication.authentication_controller import authentication_controller
+    from backend.controllers.dashboard.dashboard_controller import dashboard_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
+    app.register_blueprint(dashboard_controller, url_prefix='/api')
 
     return app
 
@@ -39,4 +41,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 2: requirements.txt Update
+# File 9: requirements.txt Update
