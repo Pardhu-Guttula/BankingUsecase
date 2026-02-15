@@ -47,7 +47,6 @@ def create_app():
     from backend.access.controllers.role_controller import role_controller
     from backend.access_control.controllers.permission_controller import permission_controller
     from backend.access_control.controllers.policy_controller import policy_controller
-    from backend.notifications.controllers.in_app_notification_controller import in_app_notification_controller
     from backend.controllers.home_controller import home_controller
 
     app.register_blueprint(authentication_controller, url_prefix='/auth')
@@ -66,7 +65,6 @@ def create_app():
     app.register_blueprint(role_controller, url_prefix='/roles')
     app.register_blueprint(permission_controller, url_prefix='/permissions')
     app.register_blueprint(policy_controller, url_prefix='/policies')
-    app.register_blueprint(in_app_notification_controller, url_prefix='/')
     app.register_blueprint(home_controller, url_prefix='/')
 
     @app.route('/static/<path:filename>')
@@ -93,4 +91,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# File 8: Create Schema for In-App Notifications in database/
+# File 7: Create Schema for Email Notifications in database/
