@@ -19,4 +19,4 @@ class WidgetRepository:
         return Widget.query.filter_by(user_id=user_id).all()
 
 
-# File 3: Widgets Service in services/dashboard/widget_service.py
+# File 3: Widgets Service in backend/services/dashboard/widget_service.py
