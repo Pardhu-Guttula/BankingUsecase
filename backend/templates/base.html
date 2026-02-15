@@ -29,8 +29,14 @@
     <footer class="footer">
         <p>© 2023 MyPortal</p>
     </footer>
+    <script>
+        document.querySelector('.menu-btn').addEventListener('click', () => {
+            const nav = document.querySelector('.header nav ul');
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
 </body>
 </html>
 
 
-# File 4: Home Page Template in backend/templates/home.html
+# File 3: Home Page Template in backend/templates/home.html
