@@ -7,9 +7,7 @@ flask_socketio==5.0.1
 python-socketio==5.3.0
 eventlet==0.31.0
 requests==2.26.0
-requests-auth==0.5.0
 pyotp==2.5.0
 bcrypt==3.2.0
-sqlalchemy==1.4.27
 
-This implementation allows admins to define and assign user roles. The `Role` and `UserRole` models handle role definitions and user-role assignments, respectively. The `RoleService` provides the necessary business logic, while the controller and routes handle the API endpoints. The `auth_decorator` ensures only admins can access role management functionalities. The front-end code facilitates creating roles, and the database schema includes tables for roles and user-role assignments.
+This implementation ensures secure transmission of data between the portal and the core banking system. The `core_banking_controller` handles API requests, utilizing JWT authentication for secure access. Proper security measures such as input validation and secure transmission protocols are employed. The `middleware` folder contains reusable decorators to secure routes, ensuring that API endpoints are both secure and well-organized. The database schema includes a `users` table to handle user data securely.
