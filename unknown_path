@@ -1,12 +1,12 @@
-To provide a summary of all financial activities on the dashboard, we need to:
+To implement the functionality for users to add and remove widgets on their dashboard, we need to:
 
-1. Ensure our models can support accounts and transactions.
-2. Extend our services to calculate summaries of financial activities.
-3. Update controllers to fetch and return this summarized data.
-4. Ensure the required SQL table creation scripts are present for storing necessary data.
+1. Define models for storing user widgets.
+2. Create services to manage widget operations.
+3. Implement controllers to handle the API endpoints for adding and removing widgets.
+4. Define the necessary routes to expose these endpoints.
 
 Epic Title: Personalized Dashboard
 
-We will continue using the existing project structure and extend it accordingly.
+We will create necessary files within the `backend/dashboard` directory to manage widgets and update the existing ones.
 
 Let's create and update the necessary files:
