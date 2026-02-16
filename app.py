@@ -1,6 +1,6 @@
 # Epic Title: Responsive Design
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
