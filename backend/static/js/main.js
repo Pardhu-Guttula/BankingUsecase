@@ -1,4 +1,4 @@
-// Epic Title: Real-time Status Updates and Notifications
+// Epic Title: Real-time Status Updates
 
 // JavaScript code to handle any interactive elements for consistency
 document.addEventListener('DOMContentLoaded', function () {
