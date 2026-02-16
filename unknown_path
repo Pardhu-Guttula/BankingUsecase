@@ -1,4 +1,4 @@
-To implement data synchronization mechanisms between the portal and the core banking system reliably and timely, we will develop models, services, controllers, and routes to handle data synchronization. This will ensure that data fetched from or updated to the core banking system is always in sync with the portal.
+To implement secure APIs for integration with the core banking system, we'll set up models, services, controllers, and routes. This will ensure secure data transmission, leveraging secure development practices and proper authentication mechanisms.
 
 Epic Title: Core Banking System Integration
 
