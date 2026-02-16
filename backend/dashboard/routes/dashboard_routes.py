@@ -1,4 +1,4 @@
-# Epic Title: Develop a User-Friendly Dashboard
+# Epic Title: Overview of Financial Activities
 
 from backend.dashboard.controllers.dashboard_controller import dashboard_blueprint
 
