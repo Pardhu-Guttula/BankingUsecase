@@ -1,16 +1,17 @@
-To develop secure APIs for integration between the portal and the core banking system, we will:
+To enable users to save progress on incomplete applications and resume them later, we will:
 
-1. Create secure routes for API endpoints.
-2. Implement authentication and authorization mechanisms.
-3. Use appropriate security practices such as input validation and secure transmission of data.
-4. Ensure API endpoints are structured correctly and follow RESTful principles.
+1. Create a model to store the incomplete application data.
+2. Implement a service to handle saving and retrieving application progress.
+3. Create API endpoints to save and retrieve incomplete applications.
+4. Add front-end code to save progress and resume incomplete applications.
 
-Epic Title: Core Banking System Integration
+Epic Title: Interaction History and Documentation Upload
 
-Given the folder structure and user story, we will:
-1. Set up routes for API endpoints.
-2. Implement controllers to handle core banking system interactions.
-3. Implement security measures such as JWT authentication.
-4. Ensure data is securely transmitted.
+We will implement the following steps:
 
-Let's proceed with the implementation:
+1. Define the `IncompleteApplication` model.
+2. Implement the service for saving and retrieving incomplete applications.
+3. Create API routes to save and retrieve incomplete applications.
+4. Add front-end code to handle saving and resuming applications.
+
+Let's proceed with the implementation.
