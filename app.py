@@ -17,9 +17,6 @@ from backend.account.services.service_modification_service import ServiceModific
 from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.approval_workflow.services import ApprovalService
 from backend.history.routes import register_history_routes
-from backend.status.routes import register_status_routes
-from backend.documents.routes import register_document_routes
-from backend.documents.services.document_service import DocumentService
 from backend.status.models.request_status import RequestStatus
 from backend.status.services.email_service import EmailService
 from backend.status.services.notification_service import NotificationService
@@ -33,7 +30,7 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
-app.config['UPLOAD_FOLDER'] = '/path/to/upload/folder'
+app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['CORE_BANKING_BASE_URL'] = 'https://corebanking.example.com/api'
 app.config['CORE_BANKING_USERNAME'] = 'api_user'
 app.config['CORE_BANKING_PASSWORD'] = 'secure_password'
@@ -56,7 +53,6 @@ approval_service = ApprovalService(db)
 email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'], app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
 notification_service = NotificationService(db)
 interaction_service = InteractionService()
-document_service = DocumentService(app.config['UPLOAD_FOLDER'])
 
 @app.route('/')
 def index():
@@ -66,18 +62,12 @@ def index():
 def history():
     return render_template('history.html', current_year=datetime.now().year)
 
-@app.route('/upload')
-def upload():
-    return render_template('upload.html', current_year=datetime.now().year)
-
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
 register_service_modification_routes(app, service_modification_service)
 register_approval_workflow_routes(app, approval_service)
 register_history_routes(app)
-register_status_routes(app, email_service, notification_service)
-register_document_routes(app, document_service)
 
 if __name__ == '__main__':
     import logging
