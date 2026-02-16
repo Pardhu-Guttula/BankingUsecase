@@ -1,4 +1,4 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Create Secure User Sessions
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
