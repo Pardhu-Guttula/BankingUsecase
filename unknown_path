@@ -1,7 +1,7 @@
-To enforce access policies based on user roles, we will extend our setup to handle access control via policies. This will ensure users can only access services permitted by their roles, adhering to the defined policies.
+To implement the role-based access control with permissions assigned to roles, we will extend our existing setup to include models for permissions, assign permissions to roles, and ensure users can access the services based on their roles.
 
 Epic Title: Role-based Access Control
 
-We will create necessary files within the `backend/rbac` directories: `policies`, `services`, and `controllers`.
+We will create necessary files within the `backend/access_control` directories: `models`, `services`, `controllers`, and `routes`.
 
 Let's create the necessary files:
