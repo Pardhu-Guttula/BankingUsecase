@@ -16,8 +16,6 @@ from backend.status.services import StatusService
 from backend.history.services import InteractionHistoryService
 from backend.documents.services import DocumentService
 from backend.document_upload.routes import register_document_upload_routes
-from backend.applications.routes import register_application_routes
-from backend.applications.services import ApplicationService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
@@ -42,7 +40,6 @@ email_service = EmailService(
 status_service = StatusService(db, socketio, email_service)
 history_service = InteractionHistoryService(db)
 document_service = DocumentService(db, app.config['UPLOAD_FOLDER'])
-application_service = ApplicationService(db)
 
 @app.route('/')
 def index():
@@ -56,7 +53,6 @@ register_approval_workflow_routes(app)
 register_status_routes(app, status_service)
 register_history_routes(app, history_service)
 register_document_upload_routes(app, document_service)
-register_application_routes(app, application_service)
 
 if __name__ == '__main__':
     import logging
