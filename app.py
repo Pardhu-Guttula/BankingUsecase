@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Real-time Status Updates
 
 from datetime import datetime, timedelta
 from flask import Flask, render_template
@@ -18,7 +18,6 @@ from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.approval_workflow.services import ApprovalService
 from backend.status.routes import register_status_routes
 from backend.status.models.request_status import RequestStatus
-from backend.status.services.email_service import EmailService
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -48,7 +47,6 @@ dashboard_service = DashboardService(db)
 opening_request_service = OpeningRequestService(db)
 service_modification_service = ServiceModificationService(db)
 approval_service = ApprovalService(db)
-email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'], app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
 
 @app.route('/')
 def index():
@@ -59,7 +57,7 @@ register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
 register_service_modification_routes(app, service_modification_service)
 register_approval_workflow_routes(app, approval_service)
-register_status_routes(app, email_service)
+register_status_routes(app)
 
 if __name__ == '__main__':
     import logging
