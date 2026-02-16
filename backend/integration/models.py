@@ -5,14 +5,25 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class CoreBankingIntegration(db.Model):
-    __tablename__ = "core_banking_integration_logs"
+class LocalTransaction(db.Model):
+    __tablename__ = "local_transactions"
 
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    request_details: str = db.Column(db.Text, nullable=False)
-    response_details: str = db.Column(db.Text, nullable=True)
-    status_code: int = db.Column(db.Integer, nullable=False)
+    user_id: int = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    amount: float = db.Column(db.Float, nullable=False)
+    transaction_type: str = db.Column(db.String(50), nullable=False)
+    status: str = db.Column(db.String(50), nullable=False)
     timestamp: datetime = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self) -> str:
-        return f"<CoreBankingIntegration {self.id} - {self.status_code} - {self.timestamp}>"
+        return f"<LocalTransaction {self.id} - {self.user_id} - {self.amount} - {self.transaction_type} - {self.status} - {self.timestamp}>"
+
+class CoreBankingDataSync(db.Model):
+    __tablename__ = "core_banking_data_sync"
+
+    id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    entity: str = db.Column(db.String(50), nullable=False)
+    last_synced_at: datetime = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self) -> str:
+        return f"<CoreBankingDataSync {self.entity} - {self.last_synced_at}>"
