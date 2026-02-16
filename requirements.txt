@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation ensures secure transmission of data between the portal and the core banking system. The `core_banking_controller` handles API requests, utilizing JWT authentication for secure access. Proper security measures such as input validation and secure transmission protocols are employed. The `middleware` folder contains reusable decorators to secure routes, ensuring that API endpoints are both secure and well-organized. The database schema includes a `users` table to handle user data securely.
+This implementation allows users to save their incomplete applications and resume them later. The `IncompleteApplication` model stores the form data, and the `ApplicationService` handles saving and retrieving the progress. The front-end code allows users to save their progress and load it back when they resume the application. The necessary database schema is created using a SQL file, and the routes are registered in `app.py`.
