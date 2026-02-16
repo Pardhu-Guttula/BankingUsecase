@@ -1,26 +1,16 @@
-# Epic Title: Interaction History and Documentation Upload
+<!-- Epic Title: Interaction History and Documentation Upload -->
 
 {% extends "base.html" %}
 
-{% block title %}Upload Document{% endblock %}
+{% block title %}
+Upload Document - My Portal
+{% endblock %}
 
 {% block content %}
 <h2>Upload Document</h2>
-<form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.request_id.label }}<br>
-        {{ form.request_id(size=20) }}
-    </div>
-    <div>
-        {{ form.document.label }}<br>
-        {{ form.document() }}
-    </div>
-    <div>
-        <button type="submit">Upload</button>
-    </div>
+<form id="upload-form" action="/api/upload" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="request_id" value="1"> <!-- Example request_id, should be dynamically set -->
+    <input type="file" name="file" required>
+    <button type="submit">Upload</button>
 </form>
 {% endblock %}
-
-
-# File 8: Update Main App to Register Document Controller in app.py
