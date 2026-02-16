@@ -1,4 +1,4 @@
-/* Epic Title: Responsive Design */
+/* Epic Title: Core Banking System Integration */
 
 /* Basic styles for body, header, nav, main, footer */
 body {
@@ -52,30 +52,4 @@ footer {
     color: white;
     text-align: center;
     padding: 1rem;
-}
-
-/* Media Queries for responsive design */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    header, footer {
-        font-size: 1.2rem;
-        text-align: left;
-    }
-    
-    main {
-        padding: 1rem;
-    }
-}
-
-/* Browser-specific fixes */
-/* Flexbox support for older Safari versions */
-@supports (-webkit-flex: 1) {
-    nav ul, main {
-        display: -webkit-flex;
-    }
 }
