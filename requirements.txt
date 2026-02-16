@@ -12,4 +12,4 @@ pyotp==2.5.0
 bcrypt==3.2.0
 sqlalchemy==1.4.27
 
-This implementation allows admins to assign permissions to roles and ensure users can access services based on their roles. The `Permission` and `RolePermission` models manage permission definitions and associations with roles. The `PermissionService` provides the necessary business logic to manage permissions, while controllers and routes handle the API endpoints. Admin-only access control is implemented via decorators, and the front end includes functionality for creating permissions. The database schema is updated to include tables for permissions and role-permission relationships.
+This implementation allows admins to define and assign user roles. The `Role` and `UserRole` models handle role definitions and user-role assignments, respectively. The `RoleService` provides the necessary business logic, while the controller and routes handle the API endpoints. The `auth_decorator` ensures only admins can access role management functionalities. The front-end code facilitates creating roles, and the database schema includes tables for roles and user-role assignments.
