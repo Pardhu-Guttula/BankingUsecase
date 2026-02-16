@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates
+# Epic Title: Responsive Design
 
 from datetime import datetime, timedelta
 from flask import Flask, render_template
@@ -16,8 +16,6 @@ from backend.account.routes.service_modifications import register_service_modifi
 from backend.account.services.service_modification_service import ServiceModificationService
 from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.approval_workflow.services import ApprovalService
-from backend.status.routes import register_status_routes
-from backend.status.models.request_status import RequestStatus
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -57,7 +55,6 @@ register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
 register_service_modification_routes(app, service_modification_service)
 register_approval_workflow_routes(app, approval_service)
-register_status_routes(app)
 
 if __name__ == '__main__':
     import logging
