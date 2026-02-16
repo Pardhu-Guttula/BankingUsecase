@@ -1,8 +1,6 @@
-# Epic Title: Maintain Interaction History
+# Epic Title: Interaction History and Documentation Upload
 
-from backend.history.controllers import history_blueprint
+from backend.history.controllers.history_controller import history_blueprint
 
-def register_history_routes(app, history_service_instance):
-    global history_service
-    history_service = history_service_instance
+def register_history_routes(app):
     app.register_blueprint(history_blueprint, url_prefix='/api')
