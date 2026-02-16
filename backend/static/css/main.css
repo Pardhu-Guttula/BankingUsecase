@@ -54,9 +54,19 @@ footer {
     padding: 1rem;
 }
 
-/* Styles for upload form */
-form#upload-form {
+/* interaction history */
+#interaction-history {
     margin-top: 2rem;
+}
+
+.interaction-record {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.interaction-record:last-child {
+    border-bottom: none;
 }
 
 /* Media Queries for responsive design */
