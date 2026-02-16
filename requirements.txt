@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation includes creating models for widgets, a service to manage widget operations, a controller to handle the widget-related endpoints, and the required SQL script for the database schema. This setup ensures that users can add and remove widgets on their personalized dashboard.
+This implementation includes creating models for accounts and transactions, a service for handling dashboard data, a controller for the dashboard endpoints, and required SQL scripts for the database schema. The `app.py` file is updated to include the dashboard routes. This setup ensures that users can view their personalized dashboard with accounts and transactions data.
