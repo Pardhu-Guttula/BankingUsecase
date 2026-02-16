@@ -1,15 +1,15 @@
-To provide in-app notifications for significant updates on user requests, we need to:
-
-1. Implement a notification service.
-2. Extend the WebSocket logic to push in-app notifications to the user when significant events occur.
-3. Create front-end logic to display these notifications.
+To send email notifications for significant updates on user requests and transactions, we'll integrate an email service in our application. This will require us to manage email configuration and implement the logic to send emails when certain statuses change.
 
 Epic Title: Real-time Status Updates and Notifications
 
 We will:
-1. Create a model for notifications.
-2. Implement a service for managing notifications.
-3. Extend the status update logic to add notifications.
-4. Create front-end components to display notifications.
+1. Create a service for sending emails.
+2. Extend the status update logic to send email notifications for significant events.
+3. Ensure the application configuration includes necessary email settings.
 
-Here's the detailed implementation:
+Here are the steps:
+
+1. Implement an email service.
+2. Update the status controller to send email notifications.
+
+Let's start by implementing the necessary changes:
