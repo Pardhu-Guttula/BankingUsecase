@@ -1,28 +1,24 @@
-// Epic Title: Role-based Access Control
+// Epic Title: Core Banking System Integration
 
+// JavaScript code to handle API interactions and display data
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript loaded successfully!');
 
-    function createRole() {
-        const roleName = document.getElementById('role-name').value;
-        const roleDescription = document.getElementById('role-description').value;
-
-        fetch('/api/roles', {
-            method: 'POST',
+    // Function to fetch external data
+    function fetchExternalData() {
+        fetch('/api/external-data', {
             headers: {
-                'Content-Type': 'application/json',
                 'x-access-token': localStorage.getItem('access_token')
-            },
-            body: JSON.stringify({ name: roleName, description: roleDescription })
+            }
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Role created:', data);
-            alert('Role created successfully!');
+            console.log('Data fetched:', data);
+            // Handle and display data as needed
         })
-        .catch(error => console.error('Error creating role:', error));
+        .catch(error => console.error('Error fetching data:', error));
     }
 
-    // Attach create role function to the button click event
-    document.getElementById('create-role-button').addEventListener('click', createRole);
+    // Fetch data on page load
+    fetchExternalData();
 });
