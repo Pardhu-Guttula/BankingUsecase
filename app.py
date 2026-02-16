@@ -12,8 +12,6 @@ from backend.dashboard.routes import register_dashboard_routes
 from backend.dashboard.services import DashboardService
 from backend.account.routes.opening import register_account_opening_routes
 from backend.account.services.opening_request_service import OpeningRequestService
-from backend.account.routes.service_modifications import register_service_modification_routes
-from backend.account.services.service_modification_service import ServiceModificationService
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -41,7 +39,6 @@ auth = HTTPBasicAuth(app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKI
 mfa_service = MFAService(db)
 dashboard_service = DashboardService(db)
 opening_request_service = OpeningRequestService(db)
-service_modification_service = ServiceModificationService(db)
 
 @app.route('/')
 def index():
@@ -50,7 +47,6 @@ def index():
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
-register_service_modification_routes(app, service_modification_service)
 
 if __name__ == '__main__':
     import logging
