@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation ensures that users receive in-app notifications for significant updates on their requests. The `NotificationService` handles creating and retrieving notifications, and the front-end code displays these notifications in real-time using WebSocket events. The email notifications are managed alongside the in-app notifications for a comprehensive update system.
+This implementation adds an email service to send notifications for significant updates on user requests. The email service is integrated into the existing status update logic, ensuring that users receive notifications via email and real-time updates through WebSocket connections. The configuration settings for the email server are added to `app.py`, and the routes are registered appropriately.
