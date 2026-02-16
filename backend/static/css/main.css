@@ -1,4 +1,4 @@
-/* Epic Title: Interaction History and Documentation Upload */
+/* Epic Title: Real-time Status Updates and Notifications */
 
 /* Basic styles for body, header, nav, main, footer */
 body {
@@ -54,19 +54,15 @@ footer {
     padding: 1rem;
 }
 
-/* interaction history */
-#interaction-history {
-    margin-top: 2rem;
-}
-
-.interaction-record {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-}
-
-.interaction-record:last-child {
-    border-bottom: none;
+.notifications {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
 
 /* Media Queries for responsive design */
