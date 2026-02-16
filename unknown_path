@@ -1,14 +1,17 @@
-To ensure a consistent experience across different devices, we need to:
-
-1. Create a comprehensive base template to serve as the foundation for all pages.
-2. Ensure that the design and navigation are maintained across all device types.
-3. Utilize shared CSS and JavaScript to uphold a consistent look and feel.
+Given the requirements for creating a responsive design, we need to focus on structuring the HTML templates and CSS to adapt to desktop, tablet, and mobile devices.
 
 Epic Title: Responsive Design
 
-Let's build upon the previous setup to implement these user stories.
+To achieve this in a Flask application, we will:
+1. Create base HTML templates and extend them with device-responsive elements.
+2. Use CSS media queries to ensure the layout is adaptive.
+3. Structure the templates and static CSS files appropriately.
 
-1. Extend the `base.html` template to ensure consistent layout and navigation.
-2. Include shared CSS and JavaScript files to maintain consistency.
+Here are the steps:
 
-Let's update and add the necessary files:
+1. Create a `base.html` template that includes the necessary CSS for responsiveness.
+2. Create a sample `index.html` template that extends `base.html`.
+3. Implement CSS media queries for different screen sizes.
+4. Ensure that the application uses these templates.
+
+Let's create and update the necessary files:
