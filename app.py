@@ -31,8 +31,7 @@ from backend.applications.services.application_service import ApplicationService
 from backend.authentication.models import User
 from backend.access_control.routes import register_access_control_routes
 from backend.middleware.auth_decorator import admin_required
-from backend.access_control.models.role import db as role_db
-from backend.access_control.models.permission import db as permission_db
+from backend.access_control.models.role import db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/portal_db'
@@ -53,35 +52,34 @@ app.config['SMTP_PORT'] = 587
 app.config['SMTP_USERNAME'] = 'your-email@example.com'
 app.config['SMTP_PASSWORD'] = 'your-email-password'
 
-role_db.init_app(app)
-permission_db.init_app(app)
+db.init_app(app)
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 auth = HTTPBasicAuth(app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'])
 
-mfa_service = MFAService(role_db)
-dashboard_service = DashboardService(role_db)
-opening_request_service = OpeningRequestService(role_db)
-service_modification_service = ServiceModificationService(role_db)
-approval_service = ApprovalService(role_db)
+mfa_service = MFAService(db)
+dashboard_service = DashboardService(db)
+opening_request_service = OpeningRequestService(db)
+service_modification_service = ServiceModificationService(db)
+approval_service = ApprovalService(db)
 email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'], app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
-notification_service = NotificationService(role_db)
+notification_service = NotificationService(db)
 interaction_service = InteractionService()
 document_service = DocumentService(app.config['UPLOAD_FOLDER'])
 application_service = ApplicationService()
-sync_service = SyncService(app.config['CORE_BANKING_BASE_URL'], app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'], role_db.create_scoped_session())
+sync_service = SyncService(app.config['CORE_BANKING_BASE_URL'], app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'], db.create_scoped_session())
 
 @app.route('/')
 def index():
     return render_template('index.html', current_year=datetime.now().year)
 
-@app.route('/manage-permissions')
+@app.route('/manage-roles')
 @admin_required
-def manage_permissions():
-    return render_template('manage_permissions.html', current_year=datetime.now().year)
+def manage_roles():
+    return render_template('manage_roles.html', current_year=datetime.now().year)
 
-register_auth_routes(app, role_db, mfa_service)
+register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
 register_service_modification_routes(app, service_modification_service)
