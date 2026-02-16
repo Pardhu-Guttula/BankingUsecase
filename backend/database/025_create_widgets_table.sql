@@ -1,3 +1,5 @@
+(This file should already exist from a previous user story.)
+
 -- Epic Title: Personalized Dashboard
 
 CREATE TABLE widgets (
