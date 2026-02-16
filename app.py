@@ -1,4 +1,4 @@
-# Epic Title: Maintain Interaction History
+# Epic Title: Real-time Status Updates and Notifications
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -10,10 +10,8 @@ from backend.account.opening_requests.routes import register_account_opening_rou
 from backend.account.service_modifications.routes import register_service_modification_routes
 from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.status.routes import register_status_routes
-from backend.history.routes import register_history_routes
 from backend.access.services.email_service import EmailService
 from backend.status.services import StatusService
-from backend.history.services import InteractionHistoryService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
@@ -35,7 +33,6 @@ email_service = EmailService(
 )
 
 status_service = StatusService(db, socketio, email_service)
-history_service = InteractionHistoryService(db)
 
 @app.route('/')
 def index():
@@ -47,7 +44,6 @@ register_account_opening_routes(app)
 register_service_modification_routes(app)
 register_approval_workflow_routes(app)
 register_status_routes(app, status_service)
-register_history_routes(app, history_service)
 
 if __name__ == '__main__':
     import logging
