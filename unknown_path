@@ -1,17 +1,14 @@
-To provide real-time status updates on user requests, we need to integrate WebSockets with Flask to push updates to the client-side whenever the status of a request changes.
+To ensure a consistent experience across different devices, we need to:
 
-Epic Title: Real-time Status Updates
+1. Create a comprehensive base template to serve as the foundation for all pages.
+2. Ensure that the design and navigation are maintained across all device types.
+3. Utilize shared CSS and JavaScript to uphold a consistent look and feel.
 
-We will:
-1. Set up a WebSocket server using Flask-SocketIO.
-2. Create the necessary models to track request statuses.
-3. Implement the server-side logic to emit socket events when statuses change.
-4. Create the client-side logic to listen for and display real-time updates.
+Epic Title: Responsive Design
 
-Here are the steps:
+Let's build upon the previous setup to implement these user stories.
 
-1. Define models for requests and statuses.
-2. Implement WebSocket communication on the server-side.
-3. Create the front-end logic to handle real-time updates.
+1. Extend the `base.html` template to ensure consistent layout and navigation.
+2. Include shared CSS and JavaScript files to maintain consistency.
 
-Let's start by defining our necessary files:
+Let's update and add the necessary files:
