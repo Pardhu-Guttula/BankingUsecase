@@ -1,23 +1,37 @@
 # Epic Title: Core Banking System Integration
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from backend.integration.services import CoreBankingService
+from flask_sqlalchemy import SQLAlchemy
+from backend.integration.data_sync import DataSyncService, LocalTransaction
 
-integration_blueprint = Blueprint('integration', __name__)
-# Initialize CoreBankingService later in app.py to inject dependencies
-core_banking_service = None  # Placeholder for real instance
+sync_blueprint = Blueprint('sync', __name__)
+# Initialize DataSyncService later in app.py to inject dependencies
+data_sync_service = None  # Placeholder for real instance
+db = None  # Placeholder for real instance
 
-@integration_blueprint.route('/core_banking/request', methods=['POST'])
+@sync_blueprint.route('/sync/<string:entity>', methods=['POST'])
 @jwt_required()
-def core_banking_request():
+def sync_data(entity: str):
     current_user_id = get_jwt_identity()
-    data = request.json.get('data')
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-
     try:
-        response = core_banking_service.make_request(endpoint='/some_endpoint', method='POST', data=data)
-        return jsonify(response), 200
+        data_sync_service.fetch_and_sync_data(entity)
+        return jsonify({"message": f"Data synchronization for {entity} completed successfully."}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@sync_blueprint.route('/transactions', methods=['GET'])
+@jwt_required()
+def get_transactions():
+    current_user_id = get_jwt_identity()
+    try:
+        local_transactions = LocalTransaction.query.filter_by(user_id=current_user_id).order_by(LocalTransaction.timestamp.desc()).all()
+        return jsonify([{
+            "id": txn.id,
+            "amount": txn.amount,
+            "transaction_type": txn.transaction_type,
+            "status": txn.status,
+            "timestamp": txn.timestamp
+        } for txn in local_transactions]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
