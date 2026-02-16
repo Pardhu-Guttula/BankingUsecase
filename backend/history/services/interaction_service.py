@@ -1,23 +1,16 @@
 # Epic Title: Interaction History and Documentation Upload
 
-from backend.models.interactions.interaction_model import Interaction
-from backend.history.repositories.interaction_repository import InteractionRepository
-from backend.app import db
+from backend.history.models.interaction_history import InteractionHistory, db
 
 class InteractionService:
-    @staticmethod
-    def log_interaction(user_id: int, action: string, details: str = None) -> bool:
-        try:
-            interaction = Interaction(user_id=user_id, action=action, details=details)
-            InteractionRepository.save(interaction)
-            return True
-        except Exception as e:
-            db.session.rollback()
-            return False
+    def __init__(self):
+        pass
 
-    @staticmethod
-    def get_user_interactions(user_id: int) -> list[Interaction]:
-        return InteractionRepository.get_interactions_by_user_id(user_id)
+    def log_interaction(self, user_id: int, action: str) -> InteractionHistory:
+        interaction = InteractionHistory(user_id=user_id, action=action)
+        db.session.add(interaction)
+        db.session.commit()
+        return interaction
 
-
-# File 4: Interaction Controller to Expose Interaction Endpoints in history/controllers/interaction_controller.py
+    def get_interaction_history(self, user_id: int) -> list[InteractionHistory]:
+        return InteractionHistory.query.filter_by(user_id=user_id).order_by(InteractionHistory.timestamp.desc()).all()
