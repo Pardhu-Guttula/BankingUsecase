@@ -1,5 +1,5 @@
-To implement the specified user story where users can see an overview of their financial activities on their dashboard, we will enhance our existing dashboard functionality to include a summary of accounts, transactions, and other financial activities.
+To implement the specified user story where the portal must be functional on desktops, tablets, and mobile devices with adaptive design, we will focus on creating a responsive front-end layout using CSS. Since the provided structure doesn't have an explicit front-end framework or CSS file besides a `static/css` folder, we'll create a CSS file within that folder to handle the responsive design.
 
-Epic Title: Overview of Financial Activities
+Epic Title: Implement Adaptive Layouts
 
-We'll update the necessary services, controllers, and routes in the `dashboard` directory and ensure they integrate smoothly with the existing setup.
+Let's start by creating the necessary files in the `backend/static/css` folder and ensure they include responsive design rules.
