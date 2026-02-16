@@ -7,7 +7,9 @@ flask_socketio==5.0.1
 python-socketio==5.3.0
 eventlet==0.31.0
 requests==2.26.0
+requests-auth==0.5.0
 pyotp==2.5.0
 bcrypt==3.2.0
+sqlalchemy==1.4.27
 
-This implementation ensures that the portal will function correctly on different web browsers. Key measures include adding meta tags for compatibility, following CSS best practices, and incorporating JavaScript polyfills. The design is tested to work on all major browsers, providing flexibility and a consistent user experience.
+This implementation allows admins to assign permissions to roles and ensure users can access services based on their roles. The `Permission` and `RolePermission` models manage permission definitions and associations with roles. The `PermissionService` provides the necessary business logic to manage permissions, while controllers and routes handle the API endpoints. Admin-only access control is implemented via decorators, and the front end includes functionality for creating permissions. The database schema is updated to include tables for permissions and role-permission relationships.
