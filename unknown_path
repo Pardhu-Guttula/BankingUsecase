@@ -1,7 +1,7 @@
-To define and assign user roles to achieve role-based access control, we will create necessary models, services, controllers, and routes. The implementation will include defining roles, assigning them to users, and ensuring appropriate access based on their profiles.
+To integrate the core banking system while maintaining a separate database for the portal, a clear boundary needs to be established between the data stored locally in the portal's database and the data fetched from the core banking system. We will implement logic to decide when to fetch data from the local database versus when to integrate with and fetch data from the core banking system.
 
-Epic Title: Role-based Access Control
+Epic Title: Core Banking System Integration
 
-We will create necessary files within the `backend/access_control` directories: `models`, `services`, `controllers`, and `routes`.
+We will create necessary files within the `backend/integration` directories: `models`, `services`, `controllers`, and `routes`.
 
 Let's create the necessary files:
