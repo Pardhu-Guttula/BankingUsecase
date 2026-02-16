@@ -1,11 +1,16 @@
-To ensure that the portal works correctly on different web browsers, we need to:
+To enable admins to assign permissions to roles and ensure that each role can access appropriate services, we will:
 
-1. Ensure that our HTML and CSS follow best practices for cross-browser compatibility.
-2. Utilize polyfills for JavaScript to handle differences in browser implementations.
-3. Use responsive design principles so that the application looks and works properly across various browsers.
+1. Create models for defining permissions and associating them with roles.
+2. Implement services to manage permissions and their assignments to roles.
+3. Develop controllers and routes for managing permissions and role-permission assignments.
+4. Ensure proper middleware to check user permissions based on roles.
+  
+Epic Title: Role-based Access Control
 
-Epic Title: Responsive Design
+The implementation strategy includes:
+1. Defining the `Permission` model and associations with the `Role` model.
+2. Implementing a service to handle permission management and their assignments to roles.
+3. Creating controllers and routes for managing permissions and their assignments.
+4. Adding middleware to check permissions for protecting routes.
 
-We will focus on enhancing and organizing the existing templates and static resources to ensure cross-browser compatibility.
-
-Let's start by enhancing HTML, CSS, and JavaScript to ensure compatibility across major browsers:
+Let's proceed with the implementation:
