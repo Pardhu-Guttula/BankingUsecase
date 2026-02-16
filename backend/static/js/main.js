@@ -3,4 +3,5 @@
 // JavaScript code to handle any interactive elements for consistency
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript loaded successfully!');
+    // Polyfills can be added here for browser compatibility
 });
