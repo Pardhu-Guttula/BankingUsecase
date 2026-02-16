@@ -1,4 +1,4 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Real-time Status Updates
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -10,29 +10,14 @@ from backend.account.opening_requests.routes import register_account_opening_rou
 from backend.account.service_modifications.routes import register_service_modification_routes
 from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.status.routes import register_status_routes
-from backend.access.services.email_service import EmailService
-from backend.status.services import StatusService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
 app.config['JWT_SECRET_KEY'] = 'super-secret' 
-app.config['SMTP_SERVER'] = 'smtp.example.com'
-app.config['SMTP_PORT'] = 587
-app.config['SMTP_USERNAME'] = 'your-email@example.com'
-app.config['SMTP_PASSWORD'] = 'your-email-password'
 
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
-
-email_service = EmailService(
-    app.config['SMTP_SERVER'], 
-    app.config['SMTP_PORT'], 
-    app.config['SMTP_USERNAME'], 
-    app.config['SMTP_PASSWORD']
-)
-
-status_service = StatusService(db, socketio, email_service)
 
 @app.route('/')
 def index():
@@ -43,7 +28,7 @@ register_dashboard_routes(app)
 register_account_opening_routes(app)
 register_service_modification_routes(app)
 register_approval_workflow_routes(app)
-register_status_routes(app, status_service)
+register_status_routes(app)
 
 if __name__ == '__main__':
     import logging
