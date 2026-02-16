@@ -1,36 +1,55 @@
-/* Epic Title: Implement Adaptive Layouts */
+/* Epic Title: Consistency Across Devices */
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Default styles for desktop */
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    flex: 1;
 }
 
-.header, .main-content, .footer {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
+header, .main-content, footer {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
 
-.header {
-    background-color: #f8f8f8;
+header {
+    background-color: #4CAF50;
+    color: white;
 }
 
 .main-content {
     background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.footer {
-    background-color: #f8f8f8;
+footer {
+    color: #fff;
+    background-color: #4CAF50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
 }
 
 /* Tablet view */
@@ -38,9 +57,12 @@ body {
     .container {
         padding: 10px;
     }
-    .header, .main-content, .footer {
-        margin: 5px 0;
-        padding: 8px;
+    header, .main-content, footer {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    nav a {
+        padding: 5px;
     }
 }
 
@@ -49,8 +71,16 @@ body {
     .container {
         padding: 5px;
     }
-    .header, .main-content, .footer {
-        margin: 3px 0;
+    header, .main-content, footer {
         padding: 5px;
+        margin-bottom: 5px;
+    }
+    nav a {
+        padding: 2px;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
