@@ -1,30 +1,25 @@
 # Epic Title: Role-based Access Control
 
-from backend.access_control.roles.role_repository import RoleRepository
-from backend.access_control.roles.user_role_repository import UserRoleRepository
-from backend.models.access_control.role_model import Role
-from flask import current_app
+from backend.access_control.models.role import Role, UserRole, db
 
 class RoleService:
-    @staticmethod
-    def create_role(name: str, description: str = None) -> bool:
-        if RoleRepository.get_role_by_name(name):
-            return False
-        new_role = Role(name=name, description=description)
-        RoleRepository.save(new_role)
-        return True
+    def __init__(self):
+        pass
 
-    @staticmethod
-    def get_all_roles() -> list[Role]:
-        return RoleRepository.get_all_roles()
+    def create_role(self, name: str, description: str) -> Role:
+        role = Role(name=name, description=description)
+        db.session.add(role)
+        db.session.commit()
+        return role
 
-    @staticmethod
-    def assign_role(user_id: int, role_id: int) -> None:
-        UserRoleRepository.assign_role_to_user(user_id, role_id)
+    def assign_role_to_user(self, user_id: int, role_id: int) -> UserRole:
+        user_role = UserRole(user_id=user_id, role_id=role_id)
+        db.session.add(user_role)
+        db.session.commit()
+        return user_role
 
-    @staticmethod
-    def remove_role(user_id: int, role_id: int) -> None:
-        UserRoleRepository.remove_role_from_user(user_id, role_id)
+    def get_roles(self) -> list[Role]:
+        return Role.query.all()
 
-
-# File 6: Role Controller to Expose Endpoints for Role Management in access/controllers/role_controller.py
+    def get_user_roles(self, user_id: int) -> list[UserRole]:
+        return UserRole.query.filter_by(user_id=user_id).all()
