@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation includes responsive HTML templates and CSS, ensuring the portal adapts to any device's screen size, providing a seamless and intuitive user experience. The `base.html` file acts as a foundation, and the media queries in the CSS ensure appropriate adaptations for tablets and mobile devices.
+This implementation provides an efficient approval and processing workflow for account opening and service modification requests. It includes models to track approval requests, services to manage the approval processes, controllers to expose the necessary API endpoints, and SQL scripts to create the required database tables. This setup ensures that all requests are approved and processed efficiently and promptly.
