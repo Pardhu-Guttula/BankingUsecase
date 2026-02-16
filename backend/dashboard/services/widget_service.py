@@ -1,24 +1,34 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Customizable Widgets
 
-from backend.dashboard.repositories.widget_repository import WidgetRepository
-from backend.models.dashboard.widget_model import Widget
+import logging
+from typing import List
+from backend.dashboard.models.widget import Widget
+from backend.authentication.models.user import User
+
+logger = logging.getLogger(__name__)
 
 class WidgetService:
-    @staticmethod
-    def add_widget(user_id: int, name: str, config: str) -> Widget:
-        widget = Widget(user_id, name, config)
-        WidgetRepository.save(widget)
+    def __init__(self, db):
+        self.db = db
+    
+    def get_widgets_by_user_id(self, user_id: int) -> List[Widget]:
+        widgets = Widget.query.filter_by(user_id=user_id).all()
+        logger.info(f"Retrieved {len(widgets)} widgets for user_id: {user_id}")
+        return widgets
+    
+    def add_widget(self, user_id: int, widget_type: str, settings: str) -> Widget:
+        widget = Widget(user_id=user_id, widget_type=widget_type, settings=settings)
+        self.db.session.add(widget)
+        self.db.session.commit()
+        logger.info(f"Added widget {widget_type} for user_id: {user_id}")
         return widget
-
-    @staticmethod
-    def remove_widget(widget_id: int) -> None:
-        widget = WidgetRepository.find_by_id(widget_id)
+    
+    def remove_widget(self, widget_id: int) -> bool:
+        widget = Widget.query.get(widget_id)
         if widget:
-            WidgetRepository.delete(widget)
-
-    @staticmethod
-    def get_widgets_by_user(user_id: int) -> list[Widget]:
-        return WidgetRepository.find_by_user_id(user_id)
-
-
-# File 4: Add Widgets to Dashboard Controller for Widget Management in dashboard/controllers/dashboard_controller.py
+            self.db.session.delete(widget)
+            self.db.session.commit()
+            logger.info(f"Removed widget {widget.id} for user_id: {widget.user_id}")
+            return True
+        logger.warning(f"Widget with id {widget_id} not found")
+        return False
