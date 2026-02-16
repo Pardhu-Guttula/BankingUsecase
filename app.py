@@ -22,8 +22,8 @@ from backend.applications.services import ApplicationService
 from backend.integration.routes import register_sync_routes, register_integration_routes
 from backend.integration.services import CoreBankingService
 from backend.integration.data_sync import DataSyncService
-from backend.rbac.routes import register_rbac_routes
-from backend.rbac.services import RoleService
+from backend.access_control.routes import register_role_routes
+from backend.access_control.services import RoleService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
@@ -73,7 +73,7 @@ register_document_upload_routes(app, document_service)
 register_application_routes(app, application_service)
 register_integration_routes(app, core_banking_service)
 register_sync_routes(app, data_sync_service, db)
-register_rbac_routes(app, role_service)
+register_role_routes(app, role_service)
 
 if __name__ == '__main__':
     import logging
