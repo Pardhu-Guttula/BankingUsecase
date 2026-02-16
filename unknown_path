@@ -1,4 +1,4 @@
-To implement the role-based access control with permissions assigned to roles, we will extend our existing setup to include models for permissions, assign permissions to roles, and ensure users can access the services based on their roles.
+To define and assign user roles to achieve role-based access control, we will create necessary models, services, controllers, and routes. The implementation will include defining roles, assigning them to users, and ensuring appropriate access based on their profiles.
 
 Epic Title: Role-based Access Control
 
