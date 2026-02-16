@@ -1,10 +1,10 @@
 # Epic Title: Core Banking System Integration
 
 import logging
-from typing import Optional
 from datetime import datetime, timedelta
+from typing import Optional
 from flask_sqlalchemy import SQLAlchemy
-from backend.integration.models import CoreBankingDataSync
+from backend.integration.models import CoreBankingDataSync, LocalTransaction
 from backend.integration.services import CoreBankingService
 
 logger = logging.getLogger(__name__)
@@ -50,6 +50,14 @@ class DataSyncService:
     def _process_and_save_data(self, entity: str, data: dict):
         # Placeholder function to process and save data
         if entity == 'transactions':
-            # Process transaction data and save to the database
-            pass
-        logger.info(f"Data for {entity} processed and saved successfully.")
+            for txn in data:
+                local_txn = LocalTransaction(
+                    user_id=txn['user_id'],
+                    amount=txn['amount'],
+                    transaction_type=txn['transaction_type'],
+                    status=txn['status'],
+                    timestamp=datetime.strptime(txn['timestamp'], '%Y-%m-%dT%H:%M:%S')
+                )
+                self.db.session.add(local_txn)
+            self.db.session.commit()
+            logger.info(f"Data for {entity} processed and saved successfully.")
