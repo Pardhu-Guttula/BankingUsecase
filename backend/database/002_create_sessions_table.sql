@@ -1,4 +1,4 @@
--- Epic Title: Create Secure User Sessions
+-- Epic Title: Manage Secure Storage of Credentials
 
 CREATE TABLE sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
