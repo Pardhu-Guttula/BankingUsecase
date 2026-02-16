@@ -1,12 +1,7 @@
-To implement a personalized dashboard that displays relevant accounts and transactions based on the user profile, we will extend the existing project. We will:
+To ensure the secure storage of user credentials, we will continue to use bcrypt for hashing passwords, add encryption for session tokens, and ensure any sensitive information is handled appropriately.
 
-1. Create models for accounts and transactions.
-2. Create a service to retrieve and process the data.
-3. Implement a controller to handle dashboard-related requests.
-4. Define routes to provide API endpoints.
+Epic Title: User Authentication and Security
 
-Epic Title: Personalized Dashboard
-
-We will create necessary files within the `backend/dashboard` directory and extend existing models if necessary.
+We will extend the existing authentication services and models to include secure storage mechanisms.
 
 Let's create and update the necessary files:
