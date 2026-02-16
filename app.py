@@ -1,4 +1,4 @@
-# Epic Title: Core Banking System Integration
+# Epic Title: Interaction History and Documentation Upload
 
 from datetime import datetime, timedelta
 from flask import Flask, render_template
@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
 from requests.auth import HTTPBasicAuth
-from backend.integration.routes import register_integration_routes
 from backend.authentication.routes import register_auth_routes
 from backend.authentication.services.mfa_service import MFAService
 from backend.dashboard.routes import register_dashboard_routes
@@ -66,6 +65,18 @@ application_service = ApplicationService()
 def index():
     return render_template('index.html', current_year=datetime.now().year)
 
+@app.route('/history')
+def history():
+    return render_template('history.html', current_year=datetime.now().year)
+
+@app.route('/upload')
+def upload():
+    return render_template('upload.html', current_year=datetime.now().year)
+
+@app.route('/application-form')
+def application_form():
+    return render_template('application_form.html', current_year=datetime.now().year)
+
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
@@ -75,7 +86,6 @@ register_history_routes(app)
 register_status_routes(app, email_service, notification_service)
 register_document_routes(app, document_service)
 register_application_routes(app)
-register_integration_routes(app)
 
 if __name__ == '__main__':
     import logging
