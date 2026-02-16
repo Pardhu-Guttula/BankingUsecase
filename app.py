@@ -19,13 +19,11 @@ from backend.approval_workflow.services import ApprovalService
 from backend.history.routes import register_history_routes
 from backend.status.routes import register_status_routes
 from backend.documents.routes import register_document_routes
-from backend.applications.routes import register_application_routes
 from backend.documents.services.document_service import DocumentService
 from backend.status.models.request_status import RequestStatus
 from backend.status.services.email_service import EmailService
 from backend.status.services.notification_service import NotificationService
 from backend.history.services.interaction_service import InteractionService
-from backend.applications.services.application_service import ApplicationService
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -59,7 +57,6 @@ email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'],
 notification_service = NotificationService(db)
 interaction_service = InteractionService()
 document_service = DocumentService(app.config['UPLOAD_FOLDER'])
-application_service = ApplicationService()
 
 @app.route('/')
 def index():
@@ -73,10 +70,6 @@ def history():
 def upload():
     return render_template('upload.html', current_year=datetime.now().year)
 
-@app.route('/application-form')
-def application_form():
-    return render_template('application_form.html', current_year=datetime.now().year)
-
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
@@ -85,7 +78,6 @@ register_approval_workflow_routes(app, approval_service)
 register_history_routes(app)
 register_status_routes(app, email_service, notification_service)
 register_document_routes(app, document_service)
-register_application_routes(app)
 
 if __name__ == '__main__':
     import logging
