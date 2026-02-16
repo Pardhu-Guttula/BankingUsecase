@@ -1,7 +1,7 @@
-To ensure the secure storage of user credentials, we will continue to use bcrypt for hashing passwords, add encryption for session tokens, and ensure any sensitive information is handled appropriately.
+To implement a secure login mechanism with multi-factor authentication (MFA), we will build upon the existing authentication and security structure. We will introduce services to handle MFA, including generating and verifying time-based one-time passwords (TOTP).
 
 Epic Title: User Authentication and Security
 
-We will extend the existing authentication services and models to include secure storage mechanisms.
+We will create necessary files within the `backend/authentication` directories: `services` for MFA, `controllers` for login flow, and extend the existing models for handling MFA data.
 
-Let's create and update the necessary files:
+Let's create the necessary files:
