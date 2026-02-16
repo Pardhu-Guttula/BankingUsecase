@@ -1,43 +1,42 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: Customizable Widgets
 
 from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user
-from backend.services.dashboard.widget_service import WidgetService
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from backend.dashboard.services.widget_service import WidgetService
 
-widget_controller = Blueprint('widget_controller', __name__)
+widget_blueprint = Blueprint('widgets', __name__)
+widget_service = WidgetService(db)
 
-@widget_controller.route('/widgets', methods=['POST'])
-@login_required
+@widget_blueprint.route('/widgets', methods=['GET'])
+@jwt_required()
+def get_widgets():
+    current_user_id = get_jwt_identity()
+    widgets = widget_service.get_widgets_by_user_id(current_user_id)
+    return jsonify([{
+        "id": widget.id,
+        "widget_type": widget.widget_type,
+        "settings": widget.settings,
+        "created_at": widget.created_at
+    } for widget in widgets]), 200
+
+@widget_blueprint.route('/widgets', methods=['POST'])
+@jwt_required()
 def add_widget():
-    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    data = request.json
     widget_type = data.get('widget_type')
-    position = data.get('position')
-    if not widget_type or position is None:
-        return jsonify({'message': 'Widget type and position are required'}), 400
-
-    widget = WidgetService.add_widget(current_user.id, widget_type, position)
+    settings = data.get('settings', '')
+    widget = widget_service.add_widget(current_user_id, widget_type, settings)
     return jsonify({
-        'id': widget.id,
-        'widget_type': widget.widget_type,
-        'position': widget.position
+        "id": widget.id,
+        "widget_type": widget.widget_type,
+        "settings": widget.settings,
+        "created_at": widget.created_at
     }), 201
 
-@widget_controller.route('/widgets/<int:widget_id>', methods=['DELETE'])
-@login_required
+@widget_blueprint.route('/widgets/<int:widget_id>', methods=['DELETE'])
+@jwt_required()
 def remove_widget(widget_id: int):
-    WidgetService.remove_widget(current_user.id, widget_id)
-    return jsonify({'message': 'Widget removed successfully'}), 200
-
-@widget_controller.route('/widgets', methods=['GET'])
-@login_required
-def get_user_widgets():
-    widgets = WidgetService.get_user_widgets(current_user.id)
-    widget_list = [{
-        'id': widget.id,
-        'widget_type': widget.widget_type,
-        'position': widget.position
-    } for widget in widgets]
-    return jsonify(widget_list), 200
-
-
-# File 5: Register Widget Controller Blueprint in app.py (Already Exists, Modified)
+    if widget_service.remove_widget(widget_id):
+        return '', 204
+    return jsonify({"error": "Widget not found"}), 404
