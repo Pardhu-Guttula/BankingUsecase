@@ -1,7 +1,7 @@
-To implement the functionality where users receive email notifications for significant updates, we'll integrate an email service into our existing status update system. This involves creating an email sending service and ensuring it gets triggered on significant updates.
+To implement real-time status updates for user requests, we can leverage Websockets with Flask-SocketIO. This will ensure that users receive notifications in real-time as the status of their requests changes.
 
-Epic Title: Real-time Status Updates and Notifications
+Epic Title: Real-time Status Updates
 
-We will focus on creating the necessary files in the `backend/status` and `backend/access/services` directories, and ensuring that email notifications are sent when significant updates occur.
+We will create the necessary files, including models, services, controllers, and routes, to handle and broadcast real-time updates. Additionally, we'll ensure our frontend can receive and display these updates.
 
-Let's create the necessary files:
+Let's start by creating the necessary backend setup:
