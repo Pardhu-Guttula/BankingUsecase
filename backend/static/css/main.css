@@ -1,4 +1,4 @@
-/* Epic Title: Real-time Status Updates */
+/* Epic Title: Responsive Design */
 
 /* Basic styles for body, header, nav, main, footer */
 body {
@@ -54,12 +54,6 @@ footer {
     padding: 1rem;
 }
 
-.status {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
 /* Media Queries for responsive design */
 @media (max-width: 768px) {
     nav ul {
@@ -75,13 +69,5 @@ footer {
     
     main {
         padding: 1rem;
-    }
-}
-
-/* Browser-specific fixes */
-/* Flexbox support for older Safari versions */
-@supports (-webkit-flex: 1) {
-    nav ul, main {
-        display: -webkit-flex;
     }
 }
