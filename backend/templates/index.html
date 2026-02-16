@@ -1,24 +1,30 @@
-<!-- Epic Title: Implement Adaptive Layouts -->
+<!-- Epic Title: Consistency Across Devices -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Portal</title>
+    <title>Consistent UI Portal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>Responsive Portal Header</h1>
+        <header>
+            <h1>Portal Header</h1>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Account</a>
+                <a href="#">Settings</a>
+            </nav>
         </header>
         <main class="main-content">
-            <h2>Welcome to the Responsive Portal</h2>
-            <p>This portal adapts to different screen sizes and devices.</p>
+            <h2>Welcome to the Portal</h2>
+            <p>This portal ensures a consistent experience across all devices.</p>
         </main>
-        <footer class="footer">
-            <p>Footer Content</p>
+        <footer>
+            <p>&copy; 2023 Consistent UI Portal</p>
         </footer>
     </div>
 </body>
