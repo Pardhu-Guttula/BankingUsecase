@@ -1,5 +1,5 @@
-To maintain a consistent user interface across different devices, we will enhance our existing stylesheet and template setup to ensure consistency in design and navigation across various devices like desktops, tablets, and mobile phones.
+To ensure that the portal functions correctly on different web browsers and maintains cross-browser compatibility, we will follow best practices for CSS and HTML, and ensure that our existing responsive design is tested against different browsers.
 
-Epic Title: Consistency Across Devices
+Epic Title: Cross-Browser Compatibility
 
-We'll focus on enhancing the `static/css/styles.css` for consistency and ensuring the `templates/index.html` structure supports this consistency. Let's create the necessary files.
+We will update our `styles.css` to use common CSS properties that ensure compatibility, and adjust our HTML to follow best practices. Let's create the necessary file:
