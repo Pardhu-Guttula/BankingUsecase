@@ -1,7 +1,11 @@
-To meet the requirement of secure user sessions that expire after 15 minutes of inactivity, we need to configure our Flask application to manage session expiration. We'll be relying on Flask extensions for JWT to manage token-based sessions. We will set the `JWT_ACCESS_TOKEN_EXPIRES` configuration to 15 minutes and ensure that tokens are refreshed to maintain session validity while users are active.
+To ensure that the portal works correctly on different web browsers, we need to:
 
-Epic Title: User Authentication and Security
+1. Ensure that our HTML and CSS follow best practices for cross-browser compatibility.
+2. Utilize polyfills for JavaScript to handle differences in browser implementations.
+3. Use responsive design principles so that the application looks and works properly across various browsers.
 
-We will utilize the existing project structure and add necessary configurations and routes to handle session management.
+Epic Title: Responsive Design
 
-Let's create the necessary files and update existing ones:
+We will focus on enhancing and organizing the existing templates and static resources to ensure cross-browser compatibility.
+
+Let's start by enhancing HTML, CSS, and JavaScript to ensure compatibility across major browsers:
