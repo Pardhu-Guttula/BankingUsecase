@@ -1,8 +1,6 @@
-# Epic Title: Real-time Status Updates and Notifications
+# Epic Title: Real-time Status Updates
 
-from backend.status.controllers.status_controller import status_blueprint, email_service
+from backend.status.controllers.status_controller import status_blueprint
 
-def register_status_routes(app, email_service_instance):
-    global email_service
-    email_service = email_service_instance
+def register_status_routes(app):
     app.register_blueprint(status_blueprint, url_prefix='/api')
