@@ -19,17 +19,13 @@ class DashboardService:
         logger.debug(f"Fetching transactions for account {account_id}")
         return Transaction.query.filter_by(account_id=account_id).order_by(Transaction.timestamp.desc()).limit(limit).all()
 
-    def get_user_widgets(self, user_id: int) -> list[Widget]:
-        logger.debug(f"Fetching widgets for user {user_id}")
-        return Widget.query.filter_by(user_id=user_id).all()
-
     def get_dashboard_data(self, user_id: int) -> dict:
         logger.debug(f"Fetching dashboard data for user {user_id}")
         accounts = self.get_user_accounts(user_id)
         widgets = self.get_user_widgets(user_id)
         result = {
-            "accounts": [account for account in accounts],
-            "widgets": [widget for widget in widgets]
+            "accounts": accounts,
+            "widgets": widgets
         }
         for account in accounts:
             transactions = self.get_account_transactions(account.id)
@@ -51,22 +47,7 @@ class DashboardService:
             logger.debug(f"Removed widget {widget_id} for user {user_id}")
         else:
             logger.warn(f"Widget {widget_id} not found for user {user_id}")
-            
-    def get_financial_summary(self, user_id: int) -> dict:
-        accounts = self.get_user_accounts(user_id)
-        summary = {
-            "total_balance": sum(account.balance for account in accounts),
-            "total_transactions": 0,
-            "recent_transactions": []
-        }
 
-        for account in accounts:
-            transactions = self.get_account_transactions(account.id, limit=5)
-            summary["total_transactions"] += len(transactions)
-            summary["recent_transactions"].extend(transactions)
-
-        summary["recent_transactions"] = sorted(
-            summary["recent_transactions"], key=lambda x: x.timestamp, reverse=True)[:5]
-        
-        logger.debug(f"Financial summary for user {user_id}: {summary}")
-        return summary
+    def get_user_widgets(self, user_id: int) -> list[Widget]:
+        logger.debug(f"Fetching widgets for user {user_id}")
+        return Widget.query.filter_by(user_id=user_id).all()
