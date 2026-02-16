@@ -49,3 +49,5 @@ if __name__ == '__main__':
     import logging
     logging.basicConfig(level=logging.INFO)
     socketio.run(app, debug=True)
+
+Finally, ensure your application can install the required dependencies:
