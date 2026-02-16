@@ -1,5 +1,7 @@
-To ensure that the portal functions correctly on different web browsers and maintains cross-browser compatibility, we will follow best practices for CSS and HTML, and ensure that our existing responsive design is tested against different browsers.
+To enforce access policies based on user roles, we will extend our setup to handle access control via policies. This will ensure users can only access services permitted by their roles, adhering to the defined policies.
 
-Epic Title: Cross-Browser Compatibility
+Epic Title: Role-based Access Control
 
-We will update our `styles.css` to use common CSS properties that ensure compatibility, and adjust our HTML to follow best practices. Let's create the necessary file:
+We will create necessary files within the `backend/rbac` directories: `policies`, `services`, and `controllers`.
+
+Let's create the necessary files:
