@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation adds an email service to send notifications for significant updates on user requests. The email service is integrated into the existing status update logic, ensuring that users receive notifications via email and real-time updates through WebSocket connections. The configuration settings for the email server are added to `app.py`, and the routes are registered appropriately.
+This implementation provides real-time status updates for user requests using Flask-SocketIO for WebSocket communication. The server emits updates when the status of a request changes, and the client listens for these updates, displaying them in real-time. The models, controllers, and template code ensure that statuses are updated and reflected correctly.
