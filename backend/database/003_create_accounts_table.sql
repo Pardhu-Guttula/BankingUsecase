@@ -1,4 +1,4 @@
--- Epic Title: Develop a User-Friendly Dashboard
+-- Epic Title: Overview of Financial Activities
 
 CREATE TABLE accounts (
     id INT AUTO_INCREMENT PRIMARY KEY,
