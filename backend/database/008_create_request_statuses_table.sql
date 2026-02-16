@@ -1,4 +1,4 @@
--- Epic Title: Real-time Status Updates
+-- Epic Title: Real-time Status Updates and Notifications
 
 CREATE TABLE request_statuses (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,4 +9,4 @@ CREATE TABLE request_statuses (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-Next, let's modify `app.py` to include Flask-SocketIO and register the status routes:
+Next, let's modify `app.py` to include the EmailService and register the status routes with the service instances:
