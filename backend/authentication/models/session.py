@@ -1,6 +1,6 @@
-# Epic Title: Implement Secure Login Mechanism
+# Epic Title: Create Secure User Sessions
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -12,6 +12,11 @@ class Session(db.Model):
     user_id: int = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     session_token: str = db.Column(db.String(255), unique=True, nullable=False)
     created_at: datetime = db.Column(db.DateTime, default=datetime.utcnow)
+    last_activity: datetime = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def is_expired(self) -> bool:
+        expiration_time = self.last_activity + timedelta(minutes=15)
+        return datetime.utcnow() > expiration_time
 
     def __repr__(self) -> str:
         return f"<Session {self.session_token}>"
