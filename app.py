@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Real-time Status Updates and Notifications
 
 from datetime import datetime, timedelta
 from flask import Flask, render_template
@@ -16,11 +16,10 @@ from backend.account.routes.service_modifications import register_service_modifi
 from backend.account.services.service_modification_service import ServiceModificationService
 from backend.approval_workflow.routes import register_approval_workflow_routes
 from backend.approval_workflow.services import ApprovalService
-from backend.history.routes import register_history_routes
+from backend.status.routes import register_status_routes
 from backend.status.models.request_status import RequestStatus
 from backend.status.services.email_service import EmailService
 from backend.status.services.notification_service import NotificationService
-from backend.history.services.interaction_service import InteractionService
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -52,22 +51,17 @@ service_modification_service = ServiceModificationService(db)
 approval_service = ApprovalService(db)
 email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'], app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
 notification_service = NotificationService(db)
-interaction_service = InteractionService()
 
 @app.route('/')
 def index():
     return render_template('index.html', current_year=datetime.now().year)
-
-@app.route('/history')
-def history():
-    return render_template('history.html', current_year=datetime.now().year)
 
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
 register_account_opening_routes(app, opening_request_service)
 register_service_modification_routes(app, service_modification_service)
 register_approval_workflow_routes(app, approval_service)
-register_history_routes(app)
+register_status_routes(app, email_service, notification_service)
 
 if __name__ == '__main__':
     import logging
