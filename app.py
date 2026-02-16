@@ -25,7 +25,7 @@ from backend.integration.data_sync import DataSyncService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
-app.config['JWT_SECRET_KEY'] = 'super-secret'
+app.config['JWT_SECRET_KEY'] = 'super-secret' 
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['CORE_BANKING_BASE_URL'] = 'https://corebanking.example.com/api'
 app.config['CORE_BANKING_USERNAME'] = 'api_user'
@@ -42,9 +42,9 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 auth = HTTPBasicAuth(app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'])
 
 email_service = EmailService(
-    app.config['SMTP_SERVER'],
-    app.config['SMTP_PORT'],
-    app.config['SMTP_USERNAME'],
+    app.config['SMTP_SERVER'], 
+    app.config['SMTP_PORT'], 
+    app.config['SMTP_USERNAME'], 
     app.config['SMTP_PASSWORD']
 )
 
@@ -69,7 +69,7 @@ register_history_routes(app, history_service)
 register_document_upload_routes(app, document_service)
 register_application_routes(app, application_service)
 register_integration_routes(app, core_banking_service)
-register_sync_routes(app, data_sync_service, db)
+register_sync_routes(app, data_sync_service)
 
 if __name__ == '__main__':
     import logging
