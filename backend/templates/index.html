@@ -1,31 +1,12 @@
-<!-- Epic Title: Cross-Browser Compatibility -->
+<!-- Epic Title: Responsive Design -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cross-Browser Compatible Portal</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Portal Header</h1>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Dashboard</a>
-                <a href="#">Account</a>
-                <a href="#">Settings</a>
-            </nav>
-        </header>
-        <main class="main-content">
-            <h2>Welcome to the Portal</h2>
-            <p>This portal functions correctly across all major web browsers.</p>
-        </main>
-        <footer>
-            <p>&copy; 2023 Cross-Browser Compatible Portal</p>
-        </footer>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Home - My Portal
+{% endblock %}
+
+{% block content %}
+<h2>Welcome to My Portal</h2>
+<p>This portal adapts to any device, providing a seamless experience across desktops, tablets, and mobile devices.</p>
+{% endblock %}
