@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Core Banking System Integration
 
 from datetime import datetime, timedelta
 from flask import Flask, render_template
@@ -22,22 +22,15 @@ from backend.status.routes import register_status_routes
 from backend.documents.routes import register_document_routes
 from backend.applications.routes import register_application_routes
 from backend.documents.services.document_service import DocumentService
-from backend.integration.services.sync_service import SyncService
 from backend.status.models.request_status import RequestStatus
 from backend.status.services.email_service import EmailService
 from backend.status.services.notification_service import NotificationService
 from backend.history.services.interaction_service import InteractionService
 from backend.applications.services.application_service import ApplicationService
 from backend.authentication.models import User
-from backend.access_control.routes import register_access_control_routes
-from backend.middleware.auth_decorator import admin_required
-from backend.access_control.models.role import db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/portal_db'
-app.config['SQLALCHEMY_BINDS'] = {
-    'core_banking': 'mysql://user:password@localhost/core_banking_db'
-}
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
 app.config['JWT_SECRET_KEY'] = 'super-secret'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
@@ -52,7 +45,7 @@ app.config['SMTP_PORT'] = 587
 app.config['SMTP_USERNAME'] = 'your-email@example.com'
 app.config['SMTP_PASSWORD'] = 'your-email-password'
 
-db.init_app(app)
+db = SQLAlchemy(app)
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -68,16 +61,10 @@ notification_service = NotificationService(db)
 interaction_service = InteractionService()
 document_service = DocumentService(app.config['UPLOAD_FOLDER'])
 application_service = ApplicationService()
-sync_service = SyncService(app.config['CORE_BANKING_BASE_URL'], app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'], db.create_scoped_session())
 
 @app.route('/')
 def index():
     return render_template('index.html', current_year=datetime.now().year)
-
-@app.route('/manage-roles')
-@admin_required
-def manage_roles():
-    return render_template('manage_roles.html', current_year=datetime.now().year)
 
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
@@ -88,8 +75,7 @@ register_history_routes(app)
 register_status_routes(app, email_service, notification_service)
 register_document_routes(app, document_service)
 register_application_routes(app)
-register_integration_routes(app, sync_service)
-register_access_control_routes(app)
+register_integration_routes(app)
 
 if __name__ == '__main__':
     import logging
