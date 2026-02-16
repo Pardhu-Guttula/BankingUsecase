@@ -1,4 +1,4 @@
--- Epic Title: Implement Secure Login Mechanism
+-- Epic Title: Create Secure User Sessions
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
