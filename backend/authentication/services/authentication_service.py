@@ -1,35 +1,50 @@
-# Epic Title: User Authentication and Security
+# Epic Title: Create Secure User Sessions
 
-from backend.authentication.repositories.user_repository import UserRepository
-from backend.authentication.repositories.two_factor_repository import TwoFactorAuthRepository
-from backend.models.authentication.two_factor_model import TwoFactorAuth
-from pyotp import TOTP
-from flask import current_app
-import base64
+import logging
+from datetime import datetime
+from flask import request
+from werkzeug.security import check_password_hash
+from backend.authentication.models.user import User
+from backend.authentication.models.session import Session
+from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 class AuthenticationService:
-    @staticmethod
-    def authenticate(username: str, password: str) -> bool:
-        user = UserRepository.get_user_by_username(username)
-        if user and UserRepository.verify_password(user, password):
-            if user.is_2fa_enabled:
-                return False  # Prompt for 2FA
-            return True
-        return False
-
-    @staticmethod
-    def verify_2fa(user_id: int, otp: str) -> bool:
-        two_factor = TwoFactorAuthRepository.get_by_user_id(user_id)
-        if two_factor:
-            totp = TOTP(two_factor.otp_secret)
-            return totp.verify(otp)
-        return False
-
-    @staticmethod
-    def enable_2fa(user_id: int) -> None:
-        secret = base64.b32encode(current_app.secret_key.encode()).decode('utf-8')
-        two_factor = TwoFactorAuth(user_id=user_id, otp_secret=secret)
-        TwoFactorAuthRepository.save(two_factor)
-
-
-# File 6: Authentication Controller to Handle Login Endpoints in authentication/controllers/authentication_controller.py
+    def __init__(self, db):
+        self.db = db
+    
+    def authenticate_user(self, username: str, password: str) -> Optional[User]:
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password_hash, password):
+            logger.info(f"Authentication successful for user: {username}")
+            return user
+        logger.warning(f"Authentication failed for user: {username}")
+        return None
+    
+    def create_session(self, user_id: int) -> Session:
+        session_token = self._generate_session_token()
+        session = Session(user_id=user_id, session_token=session_token)
+        self.db.session.add(session)
+        self.db.session.commit()
+        logger.info(f"Session created for user_id: {user_id}")
+        return session
+    
+    def update_last_activity(self, session_token: str):
+        session = Session.query.filter_by(session_token=session_token).first()
+        if session and not session.is_expired():
+            session.last_activity = datetime.utcnow()
+            self.db.session.commit()
+            logger.info(f"Session updated for session_token: {session_token}")
+    
+    def _generate_session_token(self) -> str:
+        import uuid
+        return str(uuid.uuid4())
+    
+    def is_session_valid(self, session_token: str) -> bool:
+        session = Session.query.filter_by(session_token=session_token).first()
+        if not session or session.is_expired():
+            logger.info(f"Session expired or invalid: {session_token}")
+            return False
+        logger.info(f"Session valid: {session_token}")
+        return True
