@@ -1,27 +1,30 @@
-// Epic Title: Interaction History and Documentation Upload
+// Epic Title: Real-time Status Updates and Notifications
 
-// JavaScript code to handle fetching and displaying interaction history
+// JavaScript code to handle any interactive elements for consistency
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript loaded successfully!');
     var socket = io.connect('http://' + document.domain + ':' + location.port);
-    
-    // Function to fetch interaction history
-    function fetchInteractionHistory() {
-        fetch('/api/interaction-history', {credentials: 'include'})
-            .then(response => response.json())
-            .then(data => {
-                const historyDiv = document.getElementById('interaction-history');
-                historyDiv.innerHTML = '';
-                data.forEach(interaction => {
-                    const interactionDiv = document.createElement('div');
-                    interactionDiv.classList.add('interaction-record');
-                    interactionDiv.textContent = `${interaction.timestamp}: ${interaction.action}`;
-                    historyDiv.appendChild(interactionDiv);
-                });
-            })
-            .catch(error => console.error('Error fetching interaction history:', error));
+
+    socket.on('status_update', function(msg) {
+        var statusElement = document.getElementById("status-" + msg.request_id);
+        if (statusElement) {
+            statusElement.textContent = "Status: " + msg.status;
+        } else {
+            console.log("Status element for request " + msg.request_id + " not found.");
+        }
+        showNotification(msg.status, msg.request_id);
+    });
+
+    function showNotification(message, requestId) {
+        const notificationsDiv = document.getElementById("notifications");
+        const notification = document.createElement("div");
+        notification.classList.add("notifications");
+        notification.textContent = `Request ${requestId}: ${message}`;
+
+        notificationsDiv.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
     }
-    
-    // Fetch interaction history on page load
-    fetchInteractionHistory();
 });
