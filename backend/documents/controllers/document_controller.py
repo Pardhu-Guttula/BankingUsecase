@@ -1,23 +1,41 @@
 # Epic Title: Interaction History and Documentation Upload
 
-from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user
-from backend.services.documents.document_service import DocumentService
+from flask import Blueprint, request, jsonify, current_app
+from flask_jwt_extended import jwt_required
+from backend.documents.services.document_service import DocumentService
 
-document_controller = Blueprint('document_controller', __name__)
+document_blueprint = Blueprint('documents', __name__)
+document_service = None  # Will be initialized in app.py
 
-@document_controller.route('/upload', methods=['POST'])
-@login_required
+@document_blueprint.route('/upload', methods=['POST'])
+@jwt_required()
 def upload_document():
     if 'file' not in request.files:
-        return jsonify({"message": "No file part"}), 400
+        return jsonify({"error": "No file part"}), 400
+
     file = request.files['file']
     if file.filename == '':
-        return jsonify({"message": "No selected file"}), 400
-    if file and DocumentService.allowed_file(file.filename):
-        document = DocumentService.upload_document(file, current_user.id)
-        return jsonify({"message": "File uploaded successfully", "document_id": document.id}), 201
-    return jsonify({"message": "File type not allowed"}), 400
+        return jsonify({"error": "No selected file"}), 400
 
+    request_id = request.form.get('request_id')
+    if not request_id:
+        return jsonify({"error": "No request ID provided"}), 400
 
-# File 6: Update Main App to Register Document Controller and Set Upload Folder in app.py
+    document = document_service.save_document(request_id, file)
+    return jsonify({
+        "id": document.id,
+        "filename": document.filename,
+        "filepath": document.filepath,
+        "uploaded_at": document.uploaded_at
+    }), 201
+
+@document_blueprint.route('/documents/<int:request_id>', methods=['GET'])
+@jwt_required()
+def get_documents(request_id: int):
+    documents = document_service.get_documents_for_request(request_id)
+    return jsonify([{
+        "id": doc.id,
+        "filename": doc.filename,
+        "filepath": doc.filepath,
+        "uploaded_at": doc.uploaded_at
+    } for doc in documents]), 200
