@@ -1,3 +1,5 @@
+(This file should already exist from a previous user story; ensure it has `Account`, `Transaction`, and `Widget` models.)
+
 # Epic Title: Personalized Dashboard
 
 from datetime import datetime
@@ -30,3 +32,15 @@ class Transaction(db.Model):
 
     def __repr__(self) -> str:
         return f"<Transaction {self.amount} {self.transaction_type}>"
+
+class Widget(db.Model):
+    __tablename__ = "widgets"
+
+    id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id: int = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    name: str = db.Column(db.String(50), nullable=False)
+    config: str = db.Column(db.Text, nullable=True)  # JSON or any serialized config
+    created_at: datetime = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self) -> str:
+        return f"<Widget {self.name}>"
