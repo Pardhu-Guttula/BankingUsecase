@@ -1,9 +1,8 @@
 # Epic Title: User Authentication and Security
 
-from datetime import timedelta
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, set_access_cookies, set_refresh_cookies
+from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
 from requests.auth import HTTPBasicAuth
 from backend.authentication.routes import register_auth_routes
@@ -13,10 +12,6 @@ from backend.authentication.models import User
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
 app.config['JWT_SECRET_KEY'] = 'super-secret'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
-app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
-app.config['JWT_TOKEN_LOCATION'] = ['cookies']
-app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['CORE_BANKING_BASE_URL'] = 'https://corebanking.example.com/api'
 app.config['CORE_BANKING_USERNAME'] = 'api_user'
