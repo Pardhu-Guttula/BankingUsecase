@@ -1,7 +1,7 @@
-To implement in-app notifications for significant updates, we can leverage a notification service that integrates with Flask-SocketIO. This will ensure users receive immediate notifications within the app whenever there's an update.
+To implement the functionality where users receive email notifications for significant updates, we'll integrate an email service into our existing status update system. This involves creating an email sending service and ensuring it gets triggered on significant updates.
 
 Epic Title: Real-time Status Updates and Notifications
 
-We will create the necessary models, services, controllers, and routes to support in-app notifications. Additionally, we will ensure that these notifications are displayed to the user when significant updates occur.
+We will focus on creating the necessary files in the `backend/status` and `backend/access/services` directories, and ensuring that email notifications are sent when significant updates occur.
 
 Let's create the necessary files:
