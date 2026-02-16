@@ -1,34 +1,32 @@
-# Epic Title: Consistency Across Devices
+<!-- Epic Title: Responsive Design -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Portal{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive_styles.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}My Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-
-<header>
-    <h1 class="header-logo">Portal</h1>
-</header>
-
-<nav class="nav">
-    <a href="{{ url_for('dashboard_controller.get_dashboard') }}">Dashboard</a>
-    <a href="{{ url_for('auth.login') }}">Login</a>
-</nav>
-
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
-
-<footer>
-    <p>&copy; 2023 Portal. All rights reserved.</p>
-</footer>
-
+    <header>
+        <h1>My Portal</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; {{ current_year }} My Portal</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
-
-
-# File 3: Update Dashboard Template for Consistent Experience in templates/dashboard.html
