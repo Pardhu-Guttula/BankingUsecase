@@ -1,0 +1,424 @@
+To enforce access policies based on user roles, we need to:
+
+1. Create access policies that define what each role can access.
+2. Implement services to evaluate access policies for users based on their roles.
+3. Develop middleware to enforce these policies on API endpoints.
+4. Ensure that only permitted services are accessible by the role assigned to the user.
+
+Epic Title: Role-based Access Control
+
+The implementation strategy includes:
+1. Extending models to include policy definitions for roles.
+2. Implementing a service to manage and evaluate policies.
+3. Creating middleware to enforce policies on protected routes.
+4. Updating controllers and routes to demonstrate policy enforcement.
+
+Let's proceed with the implementation:
+
+##### FILE 1
+**
+
+# Epic Title: Role-based Access Control
+
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+class Policy(db.Model):
+    __tablename__ = "policies"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    description = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self) -> str:
+        return f"<Policy {self.name}>"
+
+class RolePolicy(db.Model):
+    __tablename__ = "role_policies"
+
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), primary_key=True)
+    policy_id = db.Column(db.Integer, db.ForeignKey('policies.id'), primary_key=True)
+    assigned_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    role = db.relationship('Role', back_populates='policies')
+    policy = db.relationship('Policy', back_populates='roles')
+
+Role.policies = db.relationship('RolePolicy', order_by=RolePolicy.policy_id, back_populates='role')
+Policy.roles = db.relationship('RolePolicy', order_by=RolePolicy.role_id, back_populates='policy')
+
+##### FILE 2
+**Path: backend/access_control/services/policy_service.py**
+
+# Epic Title: Role-based Access Control
+
+from backend.access_control.models.policy import Policy, RolePolicy, db
+
+class PolicyService:
+    def __init__(self):
+        pass
+
+    def create_policy(self, name: str, description: str) -> Policy:
+        policy = Policy(name=name, description=description)
+        db.session.add(policy)
+        db.session.commit()
+        return policy
+
+    def assign_policy_to_role(self, role_id: int, policy_id: int) -> RolePolicy:
+        role_policy = RolePolicy(role_id=role_id, policy_id=policy_id)
+        db.session.add(role_policy)
+        db.session.commit()
+        return role_policy
+
+    def get_policies(self) -> list[Policy]:
+        return Policy.query.all()
+
+    def get_role_policies(self, role_id: int) -> list[RolePolicy]:
+        return RolePolicy.query.filter_by(role_id=role_id).all()
+
+##### FILE 3
+**Path: backend/access_control/controllers/policy_controller.py**
+
+# Epic Title: Role-based Access Control
+
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
+from backend.access_control.services.policy_service import PolicyService
+from backend.middleware.auth_decorator import admin_required
+
+policy_blueprint = Blueprint('policies', __name__)
+policy_service = PolicyService()
+
+@policy_blueprint.route('/policies', methods=['POST'])
+@jwt_required()
+@admin_required
+def create_policy():
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+    
+    if not name:
+        return jsonify({"error": "Policy name is required"}), 400
+
+    policy = policy_service.create_policy(name, description)
+    return jsonify({"id": policy.id, "name": policy.name, "description": policy.description}), 201
+
+@policy_blueprint.route('/policies/assign', methods=['POST'])
+@jwt_required()
+@admin_required
+def assign_policy_to_role():
+    data = request.json
+    role_id = data.get('role_id')
+    policy_id = data.get('policy_id')
+
+    if not role_id or not policy_id:
+        return jsonify({"error": "Role ID and Policy ID are required"}), 400
+
+    role_policy = policy_service.assign_policy_to_role(role_id, policy_id)
+    return jsonify({"role_id": role_policy.role_id, "policy_id": role_policy.policy_id}), 201
+
+@policy_blueprint.route('/policies', methods=['GET'])
+@jwt_required()
+@admin_required
+def get_policies():
+    policies = policy_service.get_policies()
+    return jsonify([{"id": policy.id, "name": policy.name, "description": policy.description} for policy in policies]), 200
+
+##### FILE 4
+**Path: backend/access_control/routes.py**
+
+# Epic Title: Role-based Access Control
+
+from backend.access_control.controllers.policy_controller import policy_blueprint
+
+def register_access_control_routes(app):
+    app.register_blueprint(policy_blueprint, url_prefix='/api')
+
+##### FILE 5
+**Path: backend/middleware/auth_decorator.py**
+
+# Epic Title: Role-based Access Control
+
+from functools import wraps
+from flask import jsonify
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
+from backend.access_control.models.role import UserRole
+from backend.access_control.models.policy import RolePolicy
+
+def admin_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        verify_jwt_in_request()
+        user_id = get_jwt_identity()
+
+        user_roles = UserRole.query.filter_by(user_id=user_id).all()
+        roles = [user_role.role.name for user_role in user_roles]
+
+        if 'admin' not in roles:
+            return jsonify(msg="Admins only!"), 403
+
+        return fn(*args, **kwargs)
+    
+    return wrapper
+
+def policy_required(policy_name):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            verify_jwt_in_request()
+            user_id = get_jwt_identity()
+
+            user_roles = UserRole.query.filter_by(user_id=user_id).all()
+            role_ids = [user_role.role_id for user_role in user_roles]
+            policies = RolePolicy.query.filter(RolePolicy.role_id.in_(role_ids)).all()
+
+            policy_names = [p.policy.name for p in policies]
+
+            if policy_name not in policy_names:
+                return jsonify(msg=f"Policy '{policy_name}' required!"), 403
+
+            return fn(*args, **kwargs)
+        
+        return wrapper
+    
+    return decorator
+
+##### FILE 6
+**Path: backend/static/js/main.js**
+
+// Epic Title: Role-based Access Control
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('JavaScript loaded successfully!');
+
+    function createPolicy() {
+        const policyName = document.getElementById('policy-name').value;
+        const policyDescription = document.getElementById('policy-description').value;
+
+        fetch('/api/policies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem('access_token')
+            },
+            body: JSON.stringify({ name: policyName, description: policyDescription })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Policy created:', data);
+            alert('Policy created successfully!');
+        })
+        .catch(error => console.error('Error creating policy:', error));
+    }
+
+    // Attach create policy function to the button click event
+    document.getElementById('create-policy-button').addEventListener('click', createPolicy);
+});
+
+##### FILE 7
+**Path: backend/templates/manage_policies.html**
+
+<!-- Epic Title: Role-based Access Control -->
+
+{% extends "base.html" %}
+
+{% block title %}
+Manage Policies - My Portal
+{% endblock %}
+
+{% block content %}
+<h2>Manage Policies</h2>
+<form>
+    <div>
+        <label for="policy-name">Policy Name</label>
+        <input type="text" id="policy-name" required>
+    </div>
+    <div>
+        <label for="policy-description">Policy Description</label>
+        <input type="text" id="policy-description">
+    </div>
+    <button type="button" id="create-policy-button">Create Policy</button>
+</form>
+{% endblock %}
+
+##### FILE 8
+**Path: backend/templates/base.html**
+
+<!-- Epic Title: Role-based Access Control -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}My Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>My Portal</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('manage_policies') }}">Manage Policies</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; {{ current_year }} My Portal</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
+##### FILE 9
+**Path: backend/database/042_create_policies_table.sql**
+
+-- Epic Title: Role-based Access Control
+
+CREATE TABLE policies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE role_policies (
+    role_id INT,
+    policy_id INT,
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (role_id, policy_id),
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+    FOREIGN KEY (policy_id) REFERENCES policies(id) ON DELETE CASCADE
+);
+
+##### FILE 10
+**Path: app.py**
+
+# Epic Title: Role-based Access Control
+
+from datetime import datetime, timedelta
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
+from flask_socketio import SocketIO
+from requests.auth import HTTPBasicAuth
+from backend.integration.routes import register_integration_routes
+from backend.authentication.routes import register_auth_routes
+from backend.authentication.services.mfa_service import MFAService
+from backend.dashboard.routes import register_dashboard_routes
+from backend.dashboard.services import DashboardService
+from backend.account.routes.opening import register_account_opening_routes
+from backend.account.services.opening_request_service import OpeningRequestService
+from backend.account.routes.service_modifications import register_service_modification_routes
+from backend.account.services.service_modification_service import ServiceModificationService
+from backend.approval_workflow.routes import register_approval_workflow_routes
+from backend.approval_workflow.services import ApprovalService
+from backend.history.routes import register_history_routes
+from backend.status.routes import register_status_routes
+from backend.documents.routes import register_document_routes
+from backend.applications.routes import register_application_routes
+from backend.documents.services.document_service import DocumentService
+from backend.integration.services.sync_service import SyncService
+from backend.status.models.request_status import RequestStatus
+from backend.status.services.email_service import EmailService
+from backend.status.services.notification_service import NotificationService
+from backend.history.services.interaction_service import InteractionService
+from backend.applications.services.application_service import ApplicationService
+from backend.authentication.models import User
+from backend.access_control.routes import register_access_control_routes
+from backend.middleware.auth_decorator import admin_required
+from backend.access_control.models.role import db as role_db
+from backend.access_control.models.policy import db as policy_db
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/portal_db'
+app.config['SQLALCHEMY_BINDS'] = {
+    'core_banking': 'mysql://user:password@localhost/core_banking_db'
+}
+app.config['JWT_SECRET_KEY'] = 'super-secret'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+app.config['UPLOAD_FOLDER'] = '/path/to/upload/folder'
+app.config['CORE_BANKING_BASE_URL'] = 'https://corebanking.example.com/api'
+app.config['CORE_BANKING_USERNAME'] = 'api_user'
+app.config['CORE_BANKING_PASSWORD'] = 'secure_password'
+app.config['SMTP_SERVER'] = 'smtp.example.com'
+app.config['SMTP_PORT'] = 587
+app.config['SMTP_USERNAME'] = 'your-email@example.com'
+app.config['SMTP_PASSWORD'] = 'your-email-password'
+
+role_db.init_app(app)
+policy_db.init_app(app)
+jwt = JWTManager(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+auth = HTTPBasicAuth(app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'])
+
+mfa_service = MFAService(role_db)
+dashboard_service = DashboardService(role_db)
+opening_request_service = OpeningRequestService(role_db)
+service_modification_service = ServiceModificationService(role_db)
+approval_service = ApprovalService(role_db)
+email_service = EmailService(app.config['SMTP_SERVER'], app.config['SMTP_PORT'], app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
+notification_service = NotificationService(role_db)
+interaction_service = InteractionService()
+document_service = DocumentService(app.config['UPLOAD_FOLDER'])
+application_service = ApplicationService()
+sync_service = SyncService(app.config['CORE_BANKING_BASE_URL'], app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'], role_db.create_scoped_session())
+
+@app.route('/')
+def index():
+    return render_template('index.html', current_year=datetime.now().year)
+
+@app.route('/manage-policies')
+@admin_required
+def manage_policies():
+    return render_template('manage_policies.html', current_year=datetime.now().year)
+
+register_auth_routes(app, role_db, mfa_service)
+register_dashboard_routes(app, dashboard_service)
+register_account_opening_routes(app, opening_request_service)
+register_service_modification_routes(app, service_modification_service)
+register_approval_workflow_routes(app, approval_service)
+register_history_routes(app)
+register_status_routes(app, email_service, notification_service)
+register_document_routes(app, document_service)
+register_application_routes(app)
+register_integration_routes(app, sync_service)
+register_access_control_routes(app)
+
+if __name__ == '__main__':
+    import logging
+    logging.basicConfig(level=logging.INFO)
+    socketio.run(app, debug=True)
+
+##### FILE 11
+**Path: requirements.txt**
+
+flask==2.0.2
+flask_sqlalchemy==2.5.1
+werkzeug==2.0.2
+mysqlclient==2.1.0
+flask_jwt_extended==4.3.1
+flask_socketio==5.0.1
+python-socketio==5.3.0
+eventlet==0.31.0
+requests==2.26.0
+requests-auth==0.5.0
+pyotp==2.5.0
+bcrypt==3.2.0
+sqlalchemy==1.4.27
+
+This implementation allows admins to enforce access policies based on roles. The `Policy` and `RolePolicy` models manage policy definitions and role-policy relationships, respectively. The `PolicyService` provides the necessary business logic, while controllers and routes handle the API endpoints. Admin-only access control is enforced via decorators, and the front end includes functionality for creating policies. The database schema includes tables for policies and role-policy relationships.
