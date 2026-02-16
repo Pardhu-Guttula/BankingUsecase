@@ -49,3 +49,45 @@ def assign_role():
 def get_roles():
     roles = role_service.get_roles()
     return jsonify([{"id": role.id, "name": role.name, "description": role.description} for role in roles]), 200
+
+@role_blueprint.route('/permissions', methods=['POST'])
+@jwt_required()
+def create_permission():
+    current_user_id = get_jwt_identity()
+    if not is_admin(current_user_id):
+        return jsonify({"error": "Unauthorized"}), 403
+
+    name = request.json.get('name')
+    description = request.json.get('description', "")
+    if not name:
+        return jsonify({"error": "Permission name is required"}), 400
+
+    try:
+        permission = role_service.create_permission(name, description)
+        return jsonify({"message": "Permission created successfully", "permission": {"id": permission.id, "name": permission.name, "description": permission.description}}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@role_blueprint.route('/permissions/assign', methods=['POST'])
+@jwt_required()
+def assign_permission():
+    current_user_id = get_jwt_identity()
+    if not is_admin(current_user_id):
+        return jsonify({"error": "Unauthorized"}), 403
+
+    role_id = request.json.get('role_id')
+    permission_id = request.json.get('permission_id')
+    if not role_id or not permission_id:
+        return jsonify({"error": "Role ID and Permission ID are required"}), 400
+
+    try:
+        role_permission = role_service.assign_permission_to_role(role_id, permission_id)
+        return jsonify({"message": "Permission assigned successfully", "role_permission": {"id": role_permission.id, "role_id": role_permission.role_id, "permission_id": role_permission.permission_id}}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@role_blueprint.route('/permissions', methods=['GET'])
+@jwt_required()
+def get_permissions():
+    permissions = role_service.get_permissions()
+    return jsonify([{"id": permission.id, "name": permission.name, "description": permission.description} for permission in permissions]), 200
