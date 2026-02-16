@@ -1,55 +1,44 @@
 # Epic Title: Role-based Access Control
 
 from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user
-from backend.services.access_control.role_permission_service import RolePermissionService
-from backend.repositories.access_control.permission_repository import PermissionRepository
-from backend.models.access_control.permission_model import Permission
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from backend.access_control.services.permission_service import PermissionService
+from backend.middleware.auth_decorator import admin_required
 
-permission_controller = Blueprint('permission_controller', __name__)
+permission_blueprint = Blueprint('permissions', __name__)
+permission_service = PermissionService()
 
-@permission_controller.route('/permissions', methods=['POST'])
-@login_required
+@permission_blueprint.route('/permissions', methods=['POST'])
+@jwt_required()
+@admin_required
 def create_permission():
-    data = request.get_json()
-    permission = Permission(name=data['name'], description=data.get('description', ''))
-    PermissionRepository.save(permission)
-    return jsonify({"message": "Permission created successfully", "permission": permission.name}), 201
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+    
+    if not name:
+        return jsonify({"error": "Permission name is required"}), 400
 
-@permission_controller.route('/permissions/<int:permission_id>', methods=['PUT'])
-@login_required
-def update_permission(permission_id):
-    data = request.get_json()
-    permission = PermissionRepository.get_permission_by_id(permission_id)
-    if not permission:
-        return jsonify({"message": "Permission not found"}), 404
-    if 'name' in data:
-        permission.name = data['name']
-    if 'description' in data:
-        permission.description = data['description']
-    PermissionRepository.update(permission)
-    return jsonify({"message": "Permission updated successfully"}), 200
+    permission = permission_service.create_permission(name, description)
+    return jsonify({"id": permission.id, "name": permission.name, "description": permission.description}), 201
 
-@permission_controller.route('/permissions/<int:permission_id>', methods=['DELETE'])
-@login_required
-def delete_permission(permission_id):
-    permission = PermissionRepository.get_permission_by_id(permission_id)
-    if not permission:
-        return jsonify({"message": "Permission not found"}), 404
-    PermissionRepository.delete(permission)
-    return jsonify({"message": "Permission deleted successfully"}), 200
+@permission_blueprint.route('/permissions/assign', methods=['POST'])
+@jwt_required()
+@admin_required
+def assign_permission_to_role():
+    data = request.json
+    role_id = data.get('role_id')
+    permission_id = data.get('permission_id')
 
-@permission_controller.route('/assign_permission/<int:role_id>/<int:permission_id>', methods=['POST'])
-@login_required
-def assign_permission(role_id, permission_id):
-    RolePermissionService.assign_permission(role_id, permission_id)
-    return jsonify({"message": "Permission assigned successfully"}), 200
+    if not role_id or not permission_id:
+        return jsonify({"error": "Role ID and Permission ID are required"}), 400
 
-@permission_controller.route('/remove_permission/<int:role_id>/<int:permission_id>', methods=['POST'])
-@login_required
-def remove_permission(role_id, permission_id):
-    RolePermissionService.remove_permission(role_id, permission_id)
-    return jsonify({"message": "Permission removed successfully"}), 200
+    role_permission = permission_service.assign_permission_to_role(role_id, permission_id)
+    return jsonify({"role_id": role_permission.role_id, "permission_id": role_permission.permission_id}), 201
 
-
-# File 8: Update Main App to Register Permission Controller in app.py
+@permission_blueprint.route('/permissions', methods=['GET'])
+@jwt_required()
+@admin_required
+def get_permissions():
+    permissions = permission_service.get_permissions()
+    return jsonify([{"id": permission.id, "name": permission.name, "description": permission.description} for permission in permissions]), 200
