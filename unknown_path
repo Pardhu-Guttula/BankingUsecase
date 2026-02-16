@@ -1,7 +1,7 @@
-To implement secure APIs for integration with the core banking system, we'll set up models, services, controllers, and routes. This will ensure secure data transmission, leveraging secure development practices and proper authentication mechanisms.
+To implement the functionality allowing users to save incomplete applications and resume them later, we will create the necessary models, services, controllers, and routes to manage and retrieve incomplete applications.
 
-Epic Title: Core Banking System Integration
+Epic Title: Interaction History and Documentation Upload
 
-We will create necessary files within the `backend/integration` directories: `models`, `services`, `controllers`, and `routes`.
+We will create necessary files within the `backend/applications` directories: `models`, `services`, `controllers`, and `routes`.
 
 Let's create the necessary files:
