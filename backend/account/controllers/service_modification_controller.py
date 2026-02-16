@@ -1,27 +1,47 @@
 # Epic Title: Account Opening and Service Modifications
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required, current_user
-from backend.forms.service_modification_form import ServiceModificationForm
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from backend.account.services.service_modification_service import ServiceModificationService
 
-service_modification_controller = Blueprint('service_modification_controller', __name__)
+service_modification_blueprint = Blueprint('service_modification', __name__)
+# Initialize ServiceModificationService later in app.py to inject dependencies
+service_modification_service = None  # Placeholder for real instance
 
-@service_modification_controller.route('/modify_service', methods=['GET', 'POST'])
-@login_required
-def modify_service():
-    form = ServiceModificationForm()
-    if form.validate_on_submit():
-        service_name = form.service_name.data
-        modification_type = form.modification_type.data
-        reason = form.reason.data
-        result = ServiceModificationService.modify_service(current_user.id, service_name, modification_type, reason)
-        if result:
-            flash('Service modification request submitted successfully.', 'success')
-            return redirect(url_for('dashboard_controller.dashboard'))
-        else:
-            flash('An error occurred while processing your request.', 'danger')
-    return render_template('modify_service.html', form=form)
+@service_modification_blueprint.route('/accounts/service_modifications', methods=['POST'])
+@jwt_required()
+def create_modification_request():
+    current_user_id = get_jwt_identity()
+    account_id = request.json.get('account_id')
+    service_name = request.json.get('service_name')
+    new_value = request.json.get('new_value')
 
+    if not account_id or not service_name or not new_value:
+        return jsonify({"error": "All fields (account_id, service_name, new_value) are required"}), 400
 
-# File 3: Service Modification Service to Handle Business Logic in account/services/service_modification_service.py
+    modification_request = service_modification_service.create_modification_request(current_user_id, account_id, service_name, new_value)
+    return jsonify({
+        "message": "Service modification request created successfully",
+        "modification_request": {
+            "id": modification_request.id,
+            "account_id": modification_request.account_id,
+            "service_name": modification_request.service_name,
+            "new_value": modification_request.new_value,
+            "status": modification_request.status,
+            "created_at": modification_request.created_at
+        }
+    }), 201
+
+@service_modification_blueprint.route('/accounts/service_modifications', methods=['GET'])
+@jwt_required()
+def get_modification_requests():
+    current_user_id = get_jwt_identity()
+    modification_requests = service_modification_service.get_modification_requests_for_user(current_user_id)
+    return jsonify([{
+        "id": req.id,
+        "account_id": req.account_id,
+        "service_name": req.service_name,
+        "new_value": req.new_value,
+        "status": req.status,
+        "created_at": req.created_at
+    } for req in modification_requests]), 200
