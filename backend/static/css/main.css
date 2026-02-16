@@ -71,3 +71,11 @@ footer {
         padding: 1rem;
     }
 }
+
+/* Browser-specific fixes */
+/* Flexbox support for older Safari versions */
+@supports (-webkit-flex: 1) {
+    nav ul, main {
+        display: -webkit-flex;
+    }
+}
