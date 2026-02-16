@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
