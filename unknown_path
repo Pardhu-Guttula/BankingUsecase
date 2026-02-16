@@ -1,5 +1,5 @@
-To implement the specified user story where all requests must go through an efficient approval and processing workflow, we will create models, services, controllers, and routes for handling the approval and processing of account opening and service modification requests.
+To implement the specified user story for allowing users to modify services associated with their accounts, we will create the necessary models, services, controllers, and routes to facilitate this process. Proper data validation and approval workflows will be included to ensure a smooth experience.
 
-Epic Title: Approval and Processing Workflows
+Epic Title: Service Modification Requests
 
-We'll set up the necessary files in the `backend/approval_workflow` and `backend/database` folders, and ensure they integrate smoothly with the existing setup.
+Let's start by creating the necessary files in the `backend/account/service_modifications` and `backend/database` folders and ensuring they integrate seamlessly with the existing setup.
