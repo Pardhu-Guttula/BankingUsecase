@@ -1,103 +1,56 @@
-# Epic Title: Implement Adaptive Layouts
+/* Epic Title: Implement Adaptive Layouts */
 
-/* Global reset */
-* {
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body style */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* Default styles for desktop */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-/* Container class for adaptive width */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 15px;
-}
-
-/* Flex layout for rows and columns */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -15px;
-}
-
-.col {
-    flex: 1;
-    padding: 15px;
-    min-width: 300px;
-}
-
-/* Header style */
-header {
-    background: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-.header-logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* Footer style */
-footer {
-    background: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Navigation style */
-.nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    background: #444;
+.header, .main-content, .footer {
     padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
 }
 
-.nav a {
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    text-align: center;
+.header {
+    background-color: #f8f8f8;
 }
 
-.nav a:hover {
-    background: #555;
+.main-content {
+    background-color: #fff;
 }
 
-/* Media query for tablets and mobile */
+.footer {
+    background-color: #f8f8f8;
+}
+
+/* Tablet view */
 @media (max-width: 768px) {
-    .nav a {
-        display: block;
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-logo {
-        font-size: 20px;
-    }
-}
-
-/* Media query for larger screens */
-@media (min-width: 769px) {
     .container {
-        display: flex;
-        flex-wrap: wrap;
+        padding: 10px;
+    }
+    .header, .main-content, .footer {
+        margin: 5px 0;
+        padding: 8px;
     }
 }
 
-
-# File 2: Base Template for Adaptive Layouts in templates/base.html
+/* Mobile view */
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+    .header, .main-content, .footer {
+        margin: 3px 0;
+        padding: 5px;
+    }
+}
