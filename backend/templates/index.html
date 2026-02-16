@@ -1,12 +1,25 @@
-# Epic Title: Responsive Design
+<!-- Epic Title: Implement Adaptive Layouts -->
 
-{% extends "layout.html" %}
-
-{% block content %}
-    <div class="content">
-        <h1>Welcome to the Portal</h1>
-        <p>This is a sample content illustrating the cross-browser compatibility and responsive design.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Responsive Portal Header</h1>
+        </header>
+        <main class="main-content">
+            <h2>Welcome to the Responsive Portal</h2>
+            <p>This portal adapts to different screen sizes and devices.</p>
+        </main>
+        <footer class="footer">
+            <p>Footer Content</p>
+        </footer>
     </div>
-{% endblock %}
-
-# File 3: Layout Template for Cross-Browser Compatibility in templates/layout.html
+</body>
+</html>
