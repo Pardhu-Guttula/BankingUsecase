@@ -1,5 +1,5 @@
-To implement the specified user story where users can add and remove widgets on their dashboard, we will create models for Widgets, services to handle the widget addition/removal, and respective controllers and routes.
+To implement the specified user story for a user-friendly and personalized dashboard, we will create necessary files to display relevant accounts and transactions based on the user profile. 
 
-Epic Title: Customizable Widgets
+Epic Title: Develop a User-Friendly Dashboard
 
-Let's begin by creating the necessary models for Widgets, services to manage widgets, the controller to handle widget actions, and the routes to expose these functionalities.
+Let's begin by creating the necessary models for accounts and transactions, the services to fetch these data, the controller to manage the dashboard view, and the route to serve it.
