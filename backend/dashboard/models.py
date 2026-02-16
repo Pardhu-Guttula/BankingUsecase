@@ -1,5 +1,3 @@
-(This file should already exist from a previous user story; ensure it has `Account`, `Transaction`, and `Widget` models.)
-
 # Epic Title: Personalized Dashboard
 
 from datetime import datetime
