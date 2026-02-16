@@ -1,45 +1,41 @@
 # Epic Title: Role-based Access Control
 
 from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user
-from backend.services.access_control.role_service import RoleService
-from backend.models.authentication.user_model import User
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from backend.access_control.services.role_service import RoleService
+from backend.access_control.models.role import db
 
-role_controller = Blueprint('role_controller', __name__)
+role_blueprint = Blueprint('roles', __name__)
+role_service = RoleService()
 
-@role_controller.route('/roles', methods=['POST'])
-@login_required
+@role_blueprint.route('/roles', methods=['POST'])
+@jwt_required()
 def create_role():
-    data = request.get_json()
-    role = RoleService.create_role(data['name'], data.get('description', ''))
-    return jsonify({"message": "Role created successfully", "role": role.name}), 201
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+    
+    if not name:
+        return jsonify({"error": "Role name is required"}), 400
 
-@role_controller.route('/roles/<int:role_id>', methods=['PUT'])
-@login_required
-def update_role(role_id):
-    data = request.get_json()
-    role = RoleService.update_role(role_id, data.get('name'), data.get('description'))
-    return jsonify({"message": "Role updated successfully", "role": role.name}), 200
+    role = role_service.create_role(name, description)
+    return jsonify({"id": role.id, "name": role.name, "description": role.description}), 201
 
-@role_controller.route('/roles/<int:role_id>', methods=['DELETE'])
-@login_required
-def delete_role(role_id):
-    RoleService.delete_role(role_id)
-    return jsonify({"message": "Role deleted successfully"}), 200
+@role_blueprint.route('/roles/assign', methods=['POST'])
+@jwt_required()
+def assign_role_to_user():
+    data = request.json
+    user_id = data.get('user_id')
+    role_id = data.get('role_id')
 
-@role_controller.route('/assign_role/<int:user_id>/<int:role_id>', methods=['POST'])
-@login_required
-def assign_role(user_id, role_id):
-    user = User.query.get(user_id)
-    RoleService.assign_role_to_user(user, role_id)
-    return jsonify({"message": "Role assigned successfully"}), 200
+    if not user_id or not role_id:
+        return jsonify({"error": "User ID and Role ID are required"}), 400
 
-@role_controller.route('/remove_role/<int:user_id>', methods=['POST'])
-@login_required
-def remove_role(user_id):
-    user = User.query.get(user_id)
-    RoleService.remove_role_from_user(user)
-    return jsonify({"message": "Role removed successfully"}), 200
+    user_role = role_service.assign_role_to_user(user_id, role_id)
+    return jsonify({"id": user_role.id, "user_id": user_role.user_id, "role_id": user_role.role_id}), 201
 
-
-# File 6: Update Main App to Register Role Controller in app.py
+@role_blueprint.route('/roles', methods=['GET'])
+@jwt_required()
+def get_roles():
+    roles = role_service.get_roles()
+    return jsonify([{"id": role.id, "name": role.name, "description": role.description} for role in roles]), 200
