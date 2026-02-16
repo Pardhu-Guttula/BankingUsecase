@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation includes creating models for accounts and transactions, a service for handling dashboard data, a controller for the dashboard endpoints, and required SQL scripts for the database schema. The `app.py` file is updated to include the dashboard routes. This setup ensures that users can view their personalized dashboard with accounts and transactions data.
+This implementation introduces secure storage for user credentials using bcrypt, ensuring passwords are hashed securely before being stored in the database. The JWT tokens are configured to be stored as cookies with CSRF protection, and sessions expire after 15 minutes of inactivity, with the ability to refresh tokens.
