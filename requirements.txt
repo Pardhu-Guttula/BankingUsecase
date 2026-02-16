@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation provides the necessary backend structure to manage service modification requests. The code includes models to store the requests, services to handle the business logic, controllers to expose API routes, and SQL scripts to create the required database tables. This setup ensures users can modify services associated with their accounts easily and efficiently.
+This implementation provides the necessary backend structure to manage account opening requests. The code includes models to store the requests, services to handle the business logic, controllers to expose API routes, and SQL scripts to create the required database tables. This setup ensures a smooth and straightforward process for users to open new accounts.
