@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation ensures that users can securely upload documents when submitting requests. The `DocumentService` handles the storage and retrieval of uploaded documents, while the front-end code facilitates the file upload process. The `Document` model captures metadata about the uploads, and the necessary database schema is created using a SQL file. The document upload endpoint integrates with existing application architecture through registration in `app.py`.
+This implementation provides a detailed history of user interactions within the portal. The `InteractionService` handles the logging and retrieving of interactions, and the front-end code displays the interaction history in a user-friendly manner. The interaction history is stored in a MySQL table, with an API endpoint provided to fetch the data. The user interface displays this data on a dedicated history page.
