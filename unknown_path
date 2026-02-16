@@ -1,7 +1,7 @@
-To maintain a detailed history of user interactions and allow users to view this history within the portal, we will create models, services, controllers, and routes to manage interaction histories.
+To implement in-app notifications for significant updates, we can leverage a notification service that integrates with Flask-SocketIO. This will ensure users receive immediate notifications within the app whenever there's an update.
 
-Epic Title: Maintain Interaction History
+Epic Title: Real-time Status Updates and Notifications
 
-We will create necessary files within the `backend/history` and `backend/history/controllers` directories.
+We will create the necessary models, services, controllers, and routes to support in-app notifications. Additionally, we will ensure that these notifications are displayed to the user when significant updates occur.
 
 Let's create the necessary files:
