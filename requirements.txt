@@ -10,4 +10,4 @@ requests==2.26.0
 pyotp==2.5.0
 bcrypt==3.2.0
 
-This implementation provides real-time status updates for user requests using Flask-SocketIO for WebSocket communication. The server emits updates when the status of a request changes, and the client listens for these updates, displaying them in real-time. The models, controllers, and template code ensure that statuses are updated and reflected correctly.
+This implementation ensures a consistent user experience across different devices by utilizing a comprehensive base template, shared CSS for responsive design, and JavaScript for interactive elements. The design and navigation are maintained across all devices, providing a seamless and intuitive user experience.
