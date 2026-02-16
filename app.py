@@ -1,4 +1,4 @@
-# Epic Title: Role-based Access Control
+# Epic Title: Core Banking System Integration
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -22,8 +22,6 @@ from backend.applications.services import ApplicationService
 from backend.integration.routes import register_sync_routes, register_integration_routes
 from backend.integration.services import CoreBankingService
 from backend.integration.data_sync import DataSyncService
-from backend.access_control.routes import register_role_routes
-from backend.access_control.services import RoleService
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
@@ -56,7 +54,6 @@ document_service = DocumentService(db, app.config['UPLOAD_FOLDER'])
 application_service = ApplicationService(db)
 core_banking_service = CoreBankingService(db, app.config['CORE_BANKING_BASE_URL'], auth)
 data_sync_service = DataSyncService(db, core_banking_service)
-role_service = RoleService(db)
 
 @app.route('/')
 def index():
@@ -73,7 +70,6 @@ register_document_upload_routes(app, document_service)
 register_application_routes(app, application_service)
 register_integration_routes(app, core_banking_service)
 register_sync_routes(app, data_sync_service, db)
-register_role_routes(app, role_service)
 
 if __name__ == '__main__':
     import logging
