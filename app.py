@@ -1,9 +1,9 @@
-# Epic Title: Responsive Design
+# Epic Title: Account Opening and Service Modifications
 
 from datetime import timedelta
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, set_access_cookies, set_refresh_cookies
 from flask_socketio import SocketIO
 from requests.auth import HTTPBasicAuth
 from backend.authentication.routes import register_auth_routes
@@ -48,7 +48,7 @@ approval_service = ApprovalService(db)
 
 @app.route('/')
 def index():
-    return render_template('index.html', current_year=datetime.now().year)
+    return render_template('index.html')
 
 register_auth_routes(app, db, mfa_service)
 register_dashboard_routes(app, dashboard_service)
