@@ -1,7 +1,7 @@
-To implement the functionality allowing users to save incomplete applications and resume them later, we will create the necessary models, services, controllers, and routes to manage and retrieve incomplete applications.
+To implement the document upload capability, we'll create the necessary models, services, controllers, and routes to handle file uploads, storage, and retrieval. We'll ensure that documents are uploaded securely and stored reliably.
 
 Epic Title: Interaction History and Documentation Upload
 
-We will create necessary files within the `backend/applications` directories: `models`, `services`, `controllers`, and `routes`.
+We will create necessary files within the `backend/documents` and `backend/document_upload` directories.
 
 Let's create the necessary files:
