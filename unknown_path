@@ -1,12 +1,12 @@
-To streamline the account opening process, we need to:
+To provide a summary of all financial activities on the dashboard, we need to:
 
-1. Define models to store account opening requests.
-2. Create services to handle the creation and processing of these requests.
-3. Implement controllers to manage API endpoints for account opening.
-4. Update the routes to expose these endpoints.
+1. Ensure our models can support accounts and transactions.
+2. Extend our services to calculate summaries of financial activities.
+3. Update controllers to fetch and return this summarized data.
+4. Ensure the required SQL table creation scripts are present for storing necessary data.
 
-Epic Title: Account Opening and Service Modifications
+Epic Title: Personalized Dashboard
 
-We will create necessary files within the `backend/account/opening_requests` directory to manage account opening requests and update the existing project structure.
+We will continue using the existing project structure and extend it accordingly.
 
 Let's create and update the necessary files:
