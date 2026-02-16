@@ -1,5 +1,5 @@
-To implement the specified user story where the portal must be functional on desktops, tablets, and mobile devices with adaptive design, we will focus on creating a responsive front-end layout using CSS. Since the provided structure doesn't have an explicit front-end framework or CSS file besides a `static/css` folder, we'll create a CSS file within that folder to handle the responsive design.
+To maintain a consistent user interface across different devices, we will enhance our existing stylesheet and template setup to ensure consistency in design and navigation across various devices like desktops, tablets, and mobile phones.
 
-Epic Title: Implement Adaptive Layouts
+Epic Title: Consistency Across Devices
 
-Let's start by creating the necessary files in the `backend/static/css` folder and ensure they include responsive design rules.
+We'll focus on enhancing the `static/css/styles.css` for consistency and ensuring the `templates/index.html` structure supports this consistency. Let's create the necessary files.
