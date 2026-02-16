@@ -1,16 +1,16 @@
-To enable admins to assign permissions to roles and ensure that each role can access appropriate services, we will:
+To provide the functionality where admins can define and assign roles to users, we will:
 
-1. Create models for defining permissions and associating them with roles.
-2. Implement services to manage permissions and their assignments to roles.
-3. Develop controllers and routes for managing permissions and role-permission assignments.
-4. Ensure proper middleware to check user permissions based on roles.
-  
+1. Create models to handle roles and user-role assignments.
+2. Implement services to define roles and assign roles to users.
+3. Develop controllers and routes to manage roles and user-role assignments.
+4. Ensure only admins can access the relevant functionalities.
+
 Epic Title: Role-based Access Control
 
-The implementation strategy includes:
-1. Defining the `Permission` model and associations with the `Role` model.
-2. Implementing a service to handle permission management and their assignments to roles.
-3. Creating controllers and routes for managing permissions and their assignments.
-4. Adding middleware to check permissions for protecting routes.
+Given the folder structure and user story, we will:
+1. Define the `Role` and `UserRole` models.
+2. Implement the service to handle operations related to roles and user-role assignments.
+3. Create controllers and routes for managing roles.
+4. Make sure these operations are only accessible to admins.
 
 Let's proceed with the implementation:
