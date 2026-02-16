@@ -54,15 +54,10 @@ footer {
     padding: 1rem;
 }
 
-.notifications {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background-color: white;
+.status {
     border: 1px solid #ccc;
     padding: 1rem;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    z-index: 1000;
+    margin-bottom: 1rem;
 }
 
 /* Media Queries for responsive design */
