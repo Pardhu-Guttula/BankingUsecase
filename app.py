@@ -1,11 +1,11 @@
-# Epic Title: Streamline Account Opening Requests
+# Epic Title: Customizable Widgets
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from backend.authentication.routes.auth_routes import auth_routes
 from backend.dashboard.routes.dashboard_routes import register_dashboard_routes
-from backend.account.opening_requests.routes import register_account_opening_routes
+from backend.dashboard.routes.widget_routes import register_widget_routes
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
@@ -16,7 +16,7 @@ jwt = JWTManager(app)
 
 app.register_blueprint(auth_routes, url_prefix='/auth')
 register_dashboard_routes(app)
-register_account_opening_routes(app)
+register_widget_routes(app)
 
 if __name__ == '__main__':
     import logging
