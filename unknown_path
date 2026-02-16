@@ -1,12 +1,12 @@
-To manage service modification requests effectively, we need to:
+To streamline the account opening process, we need to:
 
-1. Define models to store service modification requests.
-2. Create services to handle validation, creation, and processing of these requests.
-3. Implement controllers to manage API endpoints for service modifications.
+1. Define models to store account opening requests.
+2. Create services to handle the creation and processing of these requests.
+3. Implement controllers to manage API endpoints for account opening.
 4. Update the routes to expose these endpoints.
 
 Epic Title: Account Opening and Service Modifications
 
-We'll create the necessary files within the `backend/account/service_modifications` directory to manage these modification requests and update the existing project structure.
+We will create necessary files within the `backend/account/opening_requests` directory to manage account opening requests and update the existing project structure.
 
 Let's create and update the necessary files:
