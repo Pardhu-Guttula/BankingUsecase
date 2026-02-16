@@ -1,5 +1,5 @@
-To implement the specified user story for allowing users to modify services associated with their accounts, we will create the necessary models, services, controllers, and routes to facilitate this process. Proper data validation and approval workflows will be included to ensure a smooth experience.
+To implement the specified user story where users can submit account opening requests effortlessly, we will create the necessary models, services, controllers, and routes to facilitate this process. Additionally, proper data validation and error handling will be included to ensure a smooth and straightforward user experience.
 
-Epic Title: Service Modification Requests
+Epic Title: Streamline Account Opening Requests
 
-Let's start by creating the necessary files in the `backend/account/service_modifications` and `backend/database` folders and ensuring they integrate seamlessly with the existing setup.
+Let's start by creating the necessary files in the `backend/account/opening_requests` and `backend/database` folders and ensuring they integrate smoothly with the existing setup.
