@@ -1,0 +1,22 @@
+<!-- Epic Title: Role-based Access Control -->
+
+{% extends "base.html" %}
+
+{% block title %}
+Manage Permissions - My Portal
+{% endblock %}
+
+{% block content %}
+<h2>Manage Permissions</h2>
+<form>
+    <div>
+        <label for="permission-name">Permission Name</label>
+        <input type="text" id="permission-name" required>
+    </div>
+    <div>
+        <label for="permission-description">Permission Description</label>
+        <input type="text" id="permission-description">
+    </div>
+    <button type="button" id="create-permission-button">Create Permission</button>
+</form>
+{% endblock %}
