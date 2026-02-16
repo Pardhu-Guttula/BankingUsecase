@@ -1,32 +1,53 @@
-# Epic Title: Approval and Processing Workflows
+# Epic Title: Account Opening and Service Modifications
 
 import logging
-from datetime import datetime
-from typing import Optional
-from backend.approval_workflow.models import ApprovalWorkflow
+from flask_sqlalchemy import SQLAlchemy
+from backend.approval_workflow.models import ApprovalRequest
+from backend.account.models.opening_request import OpeningRequest
+from backend.account.models.service_modification import ServiceModificationRequest
 
 logger = logging.getLogger(__name__)
 
 class ApprovalService:
-    def __init__(self, db):
+    def __init__(self, db: SQLAlchemy):
         self.db = db
-    
-    def initiate_approval(self, request_id: int, request_type: str) -> ApprovalWorkflow:
-        workflow = ApprovalWorkflow(request_id=request_id, request_type=request_type)
-        self.db.session.add(workflow)
+
+    def initiate_approval(self, request_type: str, request_id: int) -> ApprovalRequest:
+        approval_request = ApprovalRequest(request_type=request_type, request_id=request_id)
+        self.db.session.add(approval_request)
         self.db.session.commit()
-        logger.info(f"Initiated approval workflow for {request_type} request_id: {request_id}")
-        return workflow
+        logger.debug(f"Initiated approval request {approval_request.id} for {request_type} id={request_id}")
+        return approval_request
 
-    def get_approval_status(self, request_id: int, request_type: str) -> Optional[ApprovalWorkflow]:
-        return ApprovalWorkflow.query.filter_by(request_id=request_id, request_type=request_type).first()
-
-    def update_approval_status(self, workflow_id: int, status: str) -> bool:
-        workflow = ApprovalWorkflow.query.get(workflow_id)
-        if workflow:
-            workflow.status = status
-            workflow.processed_at = datetime.utcnow() if status in ['approved', 'rejected'] else None
+    def approve_request(self, approval_request_id: int):
+        approval_request = ApprovalRequest.query.get(approval_request_id)
+        if approval_request:
+            approval_request.status = "Approved"
+            if approval_request.request_type == "AccountOpening":
+                self._approve_account_opening(approval_request.request_id)
+            elif approval_request.request_type == "ServiceModification":
+                self._approve_service_modification(approval_request.request_id)
             self.db.session.commit()
-            logger.info(f"Updated approval workflow {workflow_id} status to {status}")
-            return True
-        return False
+            logger.debug(f"Approved request {approval_request_id} for {approval_request.request_type} id={approval_request.request_id}")
+        else:
+            logger.warn(f"Approval request {approval_request_id} not found or invalid.")
+
+    def _approve_account_opening(self, request_id: int):
+        opening_request = OpeningRequest.query.get(request_id)
+        if not opening_request:
+            logger.warn(f"Account opening request {request_id} not found.")
+            raise ValueError("Account opening request not found")
+
+        opening_request.status = "Approved"
+        self.db.session.commit()
+        logger.debug(f"Account opening request {request_id} approved.")
+
+    def _approve_service_modification(self, request_id: int):
+        modification_request = ServiceModificationRequest.query.get(request_id)
+        if not modification_request:
+            logger.warn(f"Service modification request {request_id} not found.")
+            raise ValueError("Service modification request not found")
+
+        modification_request.status = "Approved"
+        self.db.session.commit()
+        logger.debug(f"Service modification request {request_id} approved.")
