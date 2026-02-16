@@ -1,15 +1,17 @@
-To send email notifications for significant updates on user requests and transactions, we'll integrate an email service in our application. This will require us to manage email configuration and implement the logic to send emails when certain statuses change.
+To provide real-time status updates on user requests, we need to integrate WebSockets with Flask to push updates to the client-side whenever the status of a request changes.
 
-Epic Title: Real-time Status Updates and Notifications
+Epic Title: Real-time Status Updates
 
 We will:
-1. Create a service for sending emails.
-2. Extend the status update logic to send email notifications for significant events.
-3. Ensure the application configuration includes necessary email settings.
+1. Set up a WebSocket server using Flask-SocketIO.
+2. Create the necessary models to track request statuses.
+3. Implement the server-side logic to emit socket events when statuses change.
+4. Create the client-side logic to listen for and display real-time updates.
 
 Here are the steps:
 
-1. Implement an email service.
-2. Update the status controller to send email notifications.
+1. Define models for requests and statuses.
+2. Implement WebSocket communication on the server-side.
+3. Create the front-end logic to handle real-time updates.
 
-Let's start by implementing the necessary changes:
+Let's start by defining our necessary files:
