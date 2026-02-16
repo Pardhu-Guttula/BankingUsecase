@@ -1,4 +1,4 @@
-# Epic Title: Implement Adaptive Layouts
+# Epic Title: Consistency Across Devices
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
