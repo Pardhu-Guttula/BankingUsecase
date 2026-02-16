@@ -1,12 +1,12 @@
-To facilitate an efficient approval and processing workflow for all requests, we need to:
+To manage service modification requests effectively, we need to:
 
-1. Create models to track request approval and processing statuses.
-2. Implement services to handle approval workflows for account opening and service modification requests.
-3. Implement controllers to manage API endpoints for initiating, approving, and processing these requests.
+1. Define models to store service modification requests.
+2. Create services to handle validation, creation, and processing of these requests.
+3. Implement controllers to manage API endpoints for service modifications.
 4. Update the routes to expose these endpoints.
 
 Epic Title: Account Opening and Service Modifications
 
-We'll create necessary files within the `backend/approval_workflow` and extend existing models and services for account opening and service modification requests.
+We'll create the necessary files within the `backend/account/service_modifications` directory to manage these modification requests and update the existing project structure.
 
-Let's begin with creating and updating the necessary files:
+Let's create and update the necessary files:
