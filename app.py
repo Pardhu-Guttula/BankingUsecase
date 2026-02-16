@@ -1,4 +1,4 @@
-# Epic Title: Personalized Dashboard
+# Epic Title: User Authentication and Security
 
 from datetime import timedelta
 from flask import Flask, render_template
@@ -8,8 +8,6 @@ from flask_socketio import SocketIO
 from requests.auth import HTTPBasicAuth
 from backend.authentication.routes import register_auth_routes
 from backend.authentication.services.mfa_service import MFAService
-from backend.dashboard.routes import register_dashboard_routes
-from backend.dashboard.services import DashboardService
 from backend.authentication.models import User
 
 app = Flask(__name__)
@@ -35,14 +33,12 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 auth = HTTPBasicAuth(app.config['CORE_BANKING_USERNAME'], app.config['CORE_BANKING_PASSWORD'])
 
 mfa_service = MFAService(db)
-dashboard_service = DashboardService(db)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 register_auth_routes(app, db, mfa_service)
-register_dashboard_routes(app, dashboard_service)
 
 if __name__ == '__main__':
     import logging
