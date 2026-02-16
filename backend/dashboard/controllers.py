@@ -33,10 +33,3 @@ def remove_widget(widget_id):
     current_user_id = get_jwt_identity()
     dashboard_service.remove_widget_for_user(current_user_id, widget_id)
     return jsonify({"message": "Widget removed successfully"}), 200
-
-@dashboard_blueprint.route('/dashboard/summary', methods=['GET'])
-@jwt_required()
-def get_financial_summary():
-    current_user_id = get_jwt_identity()
-    summary = dashboard_service.get_financial_summary(current_user_id)
-    return jsonify(summary), 200
