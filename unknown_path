@@ -1,16 +1,16 @@
-To provide the functionality where admins can define and assign roles to users, we will:
+To develop secure APIs for integration between the portal and the core banking system, we will:
 
-1. Create models to handle roles and user-role assignments.
-2. Implement services to define roles and assign roles to users.
-3. Develop controllers and routes to manage roles and user-role assignments.
-4. Ensure only admins can access the relevant functionalities.
+1. Create secure routes for API endpoints.
+2. Implement authentication and authorization mechanisms.
+3. Use appropriate security practices such as input validation and secure transmission of data.
+4. Ensure API endpoints are structured correctly and follow RESTful principles.
 
-Epic Title: Role-based Access Control
+Epic Title: Core Banking System Integration
 
 Given the folder structure and user story, we will:
-1. Define the `Role` and `UserRole` models.
-2. Implement the service to handle operations related to roles and user-role assignments.
-3. Create controllers and routes for managing roles.
-4. Make sure these operations are only accessible to admins.
+1. Set up routes for API endpoints.
+2. Implement controllers to handle core banking system interactions.
+3. Implement security measures such as JWT authentication.
+4. Ensure data is securely transmitted.
 
 Let's proceed with the implementation:
