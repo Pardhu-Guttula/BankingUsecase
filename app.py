@@ -1,4 +1,4 @@
-# Epic Title: Interaction History and Documentation Upload
+# Epic Title: Maintain Interaction History
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -14,13 +14,10 @@ from backend.history.routes import register_history_routes
 from backend.access.services.email_service import EmailService
 from backend.status.services import StatusService
 from backend.history.services import InteractionHistoryService
-from backend.documents.services import DocumentService
-from backend.document_upload.routes import register_document_upload_routes
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydatabase'
 app.config['JWT_SECRET_KEY'] = 'super-secret' 
-app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['SMTP_SERVER'] = 'smtp.example.com'
 app.config['SMTP_PORT'] = 587
 app.config['SMTP_USERNAME'] = 'your-email@example.com'
@@ -39,7 +36,6 @@ email_service = EmailService(
 
 status_service = StatusService(db, socketio, email_service)
 history_service = InteractionHistoryService(db)
-document_service = DocumentService(db, app.config['UPLOAD_FOLDER'])
 
 @app.route('/')
 def index():
@@ -52,7 +48,6 @@ register_service_modification_routes(app)
 register_approval_workflow_routes(app)
 register_status_routes(app, status_service)
 register_history_routes(app, history_service)
-register_document_upload_routes(app, document_service)
 
 if __name__ == '__main__':
     import logging
