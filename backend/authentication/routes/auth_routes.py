@@ -1,4 +1,4 @@
-# Epic Title: Create Secure User Sessions
+# Epic Title: Manage Secure Storage of Credentials
 
 from flask import Blueprint, request, jsonify
 from backend.authentication.services.authentication_service import AuthenticationService
